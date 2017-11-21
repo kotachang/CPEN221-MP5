@@ -75,25 +75,25 @@ Reviews
 
 #### Review
 Price
-+int, ranging from 1 to 5
++ int, ranging from 1 to 5
 Quality of Product
-+int, ranging from 1 to 5
++ int, ranging from 1 to 5
 Description
-+String
++ String
 Quality of service
-+int ranging from 1 to 5
++ int ranging from 1 to 5
 Overall Experience
-+int from 1 to 5
-+or possible a double with a specified number of decimals of precision
++ int from 1 to 5
++ or possible a double with a specified number of decimals of precision
 User
-+User ID (from User type)
++ User ID (from User type)
 
 #### User
 Name
-+String or list/array of strings for F M L names
++ String or list/array of strings for F M L names
 ID
-+String of numbers and characters
-+or an int
++ String of numbers and characters
++ or an int
 Review
-+List<Review> 
++ List<Review> 
 
