@@ -86,8 +86,8 @@ All of the other characteristics are basically the same. Having the general busi
 #### Reviews
 +Review type
 
-#### Review
-# Price
+### Review
+#### Price
 + int, ranging from 1 to 5
 
 #### Quality of Product
