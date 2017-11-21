@@ -84,7 +84,7 @@ All of the other characteristics are basically the same. Having the general busi
 + double[2] for coordinate pairs
 
 #### Reviews
-+Review type
++ Review type
 
 ### Review
 #### Price
