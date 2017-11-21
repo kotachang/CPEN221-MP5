@@ -23,7 +23,7 @@ Type of product
 + Reviews associated with this business (see Review type below).
 
 ### Review
-# Price
+#### Price
 + This is a rating of the price of the service provided by this business.
 + For example, how expensive the food was, how expensive the printers were compared to other stores, how expensive the massage was compared to other masseuse.
 + Could be a rating from 1 to 5, 5 being more expensive.
@@ -52,7 +52,7 @@ Type of product
 + Could be anonymous (to the user / business owner).
 
 ### User
-# Name
+#### Name
 + username of the user.
 + does not necessarily need to be their real name.
 
@@ -74,10 +74,10 @@ All of the other characteristics are basically the same. Having the general busi
 
 ### Business
 #### Types of Product
-+ List<String> where the Strings are different product types they sell.
++ List(String) where the Strings are different product types they sell.
 
 #### Name
-+String
++ String
 
 #### Location
 + String for the street address
@@ -115,5 +115,5 @@ All of the other characteristics are basically the same. Having the general busi
 + or an int
 
 #### Review
-+ List<Review> 
++ List(Review) 
 
