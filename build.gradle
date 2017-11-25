@@ -1,6 +1,7 @@
 plugins {
   id 'com.github.kt3k.coveralls' version '2.6.3'
-}
+	// https://mvnrepository.com/artifact/org.glassfish/javax.json
+compile group: ‘org.glassfish’, name: ‘javax.json’, version: ‘1.0.4'}
 
 apply plugin: 'java'
 apply plugin: 'jacoco'
@@ -29,7 +30,7 @@ jacocoTestReport {
         csv.enabled = false
         html.enabled = true
         // html.destination "${buildDir}/reports/coverage"
-        // https://mvnrepository.com/artifact/org.glassfish/javax.json
-compile group: ‘org.glassfish’, name: ‘javax.json’, version: ‘1.0.4’        // xml.destination "${buildDir}/reports/coverage"
+        // xml.destination "${buildDir}/reports/coverage"
     }
 }
+	
