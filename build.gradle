@@ -1,7 +1,6 @@
 plugins {
   id 'com.github.kt3k.coveralls' version '2.6.3'
-	
-compile group: ‘org.glassfish’, name: ‘javax.json’, version: ‘1.0.4'}
+}
 
 apply plugin: 'java'
 apply plugin: 'jacoco'
@@ -16,7 +15,8 @@ repositories {
 
 dependencies {
     // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'	// https://mvnrepository.com/artifact/org.glassfish/javax.json
+compile group: ‘org.glassfish’, name: ‘javax.json’, version: ‘1.0.4’
 }
 
 test.testLogging {
