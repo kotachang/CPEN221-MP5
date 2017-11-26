@@ -35,7 +35,7 @@ public class Review {
 	}
 	
 	private boolean addAttribute(String attribute) {
-		if(attributes.containsKey(attribute)) {
+		if(attributes.containsKey(attribute)) {	
 			return false;
 		}
 		else {

@@ -17,6 +17,7 @@ public class User {
 	
 	
 	public String hashId() {
+		
 		String hash = "";
 		for(Character c : this.username.toCharArray()) {
 			hash += c.hashCode()*43/11;
@@ -32,7 +33,6 @@ public class User {
 			}
 		}
 		return hash.substring(0,22);
-		
 	}
 	
 	public int reviewCount() {
