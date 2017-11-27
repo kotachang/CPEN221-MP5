@@ -4,19 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Location {
-	public String longitude;
-	public String latitude;
-	public int deltaLong;
-	public int deltaLat;
-	public Map<String, String> coordinate;
+	public double longitude;
+	public double latitude;
+	public double deltaLong;
+	public double deltaLat;
+	
 
 	public Location() {
-		coordinate = new HashMap<String, String>();
-		longitude = "";
-		latitude = "";
+		//coordinate = new HashMap<double, double>();
+		//longitude = "";
+		//latitude = "";
 	}
 
-	public Location(String retaurant, String longitude, String latitude) throws NullPointerException {
+	public Location(String retaurant, double longitude, double latitude) throws NullPointerException {
 		coordinate = new HashMap<String, String>();
 		this.longitude = longitude;
 		this.latitude = latitude;
