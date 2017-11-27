@@ -22,4 +22,8 @@ public class Cluster {
 	public Integer getCluster(String business) {
 		return clusters.get(business);
 	}
+
+	public void findCenter() {
+
+	}
 }
