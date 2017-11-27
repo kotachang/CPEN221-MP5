@@ -9,10 +9,5 @@ public class Client {
 		thread = new Thread(newServer);
 		thread.start();
 	}
-	
-	try {
-		
-	} catch (InterruptedException e) {
-		
-	}
+
 }

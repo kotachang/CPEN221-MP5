@@ -11,12 +11,12 @@ public class Business {
 	private String city;
 	private String state;
 	private String postalCode;
-	private String longitude;
-	private String latitude;
+	private double longitude;
+	private double latitude;
 	private String neighbourhood;
 	private List<String> attributes;
 	private Map<String, String> hours;
-	private List<Review> reviews;
+	private List<Review> reviews; 
 
 	/**
 	 * 
