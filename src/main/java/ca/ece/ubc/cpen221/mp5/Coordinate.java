@@ -3,10 +3,21 @@ package ca.ece.ubc.cpen221.mp5;
 public class Coordinate {
 	private double latitude;
 	private double longitude;
+	private double deltaLat;
+	private double deltaLong;
 
 	public Coordinate(double latitude, double longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
+	}
+
+	public Coordinate(double latitude, double latitude2, double longitude, double longitude2) {
+		this.deltaLat = Math.abs(latitude - latitude2);
+		this.deltaLong = Math.abs(longitude - longitude2);
+	}
+
+	private double distance() {
+		return Math.sqrt(Math.pow(deltaLat, 2) + Math.pow(deltaLong, 2));
 	}
 
 	public double Long() {
