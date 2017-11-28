@@ -43,8 +43,8 @@ public class Business {
 		this.city = address[1];
 		this.state = address[2];
 		this.postalCode = address[3];
-		this.longitude = address[4];
-		this.latitude = address[5];
+		this.longitude = Double.parseDouble(address[4]);
+		this.latitude = Double.parseDouble(address[5]);
 	}
 
 	/**
