@@ -140,5 +140,14 @@ public class Business {
 	public void changeHours(Map<String, String> hours) {
 		this.hours = hours;
 	}
+	
+	public boolean equals(Business b) {
+		if(this.id == b.id) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
 }
