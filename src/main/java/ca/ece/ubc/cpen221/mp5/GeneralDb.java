@@ -137,11 +137,14 @@ public class GeneralDb<T> implements MP5Db<T> {
 	@Override
 	public String kMeansClusters_json(int k) {
 
+		
+		
 		return null;
 	}
 
-	public void clusterHelp(int nk) {
+	public List<Cluster> firstCluster(int nk) {
 		List<Cluster> sublist = new ArrayList<Cluster>();
+		List<Cluster> previous = new ArrayList<Cluster>();
 		int k = 0;
 		double distance = 0;
 		int closest = 0;
@@ -152,22 +155,32 @@ public class GeneralDb<T> implements MP5Db<T> {
 			k += nk;
 		}
 		sublist.add(new Cluster(businesses.subList(k, businesses.size() - 1)));
+		previous.addAll(sublist);
 
-		for (int a = 0; a < businesses.size(); a++) {
-			for (int b = 0; b < sublist.size(); b++) {
-				if (sublist.get(b).contains(businesses.get(a))) {
-					removeI = b;
+		while (true) {
+			for (int a = 0; a < businesses.size(); a++) {
+				for (int b = 0; b < sublist.size(); b++) {
+					if (sublist.get(b).contains(businesses.get(a))) {
+						removeI = b;
+					}
+					if (distance < (businesses.get(a).getCoordinates().distance(sublist.get(b).findCenter()))) {
+						distance = (businesses.get(a).getCoordinates().distance(sublist.get(b).findCenter()));
+						closest = b;
+					}
 				}
-				if (distance < (businesses.get(a).getCoordinates().distance(sublist.get(b).findCenter()))) {
-					distance = (businesses.get(a).getCoordinates().distance(sublist.get(b).findCenter()));
-					closest = b;
-				}
+				sublist.get(removeI).remove(businesses.get(a));
+				sublist.get(closest).add(businesses.get(a));
+
 			}
-			sublist.get(removeI).remove(businesses.get(a));
-			sublist.get(closest).add(businesses.get(a));
-
+			if (previous.equals(sublist)) {
+				break;
+			} else {
+				previous.clear();
+				previous.addAll(sublist);
+			}
 		}
 
+		return sublist;
 	}
 
 	/**
