@@ -89,7 +89,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	/**
 	 * Populates the businesses from a given JSON file.
 	 * 
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	private void populateBusinesses(String filePath) throws IOException {
 		File file = new File(filePath);
@@ -130,16 +130,21 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	/**
-	 * @return 
+	 * @return
 	 * 
 	 */
 	@Override
 	public String kMeansClusters_json(int k) {
-		// TODO Auto-generated method stub
+
+		return null;
+	}
+
+	public List<Cluster> kMeansClustersHelper(int k) {
+		
 		
 		return null;
 	}
-			
+
 	/**
 	 * 
 	 */
