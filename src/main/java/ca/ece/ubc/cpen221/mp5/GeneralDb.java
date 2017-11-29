@@ -21,6 +21,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	private List<Business> businesses;
 	private List<Review> reviews;
 	private List<User> users;
+	private static final double R = 6371 * 1000;// in meters
 
 	/**
 	 * Constructor for an empty database
@@ -139,10 +140,33 @@ public class GeneralDb<T> implements MP5Db<T> {
 		return null;
 	}
 
-	public List<Cluster> kMeansClustersHelper(int k) {
-		
-		
-		return null;
+	public void clusterHelp(int nk) {
+		List<Cluster> sublist = new ArrayList<Cluster>();
+		int k = 0;
+		double distance = 0;
+		int closest = 0;
+		int removeI = 0;
+
+		for (int i = 0; i < nk - 1; i++) {
+			sublist.add(new Cluster(businesses.subList(k, nk + k)));
+			k += nk;
+		}
+
+		sublist.add(new Cluster(businesses.subList(k, businesses.size() - 1)));
+
+		for (int a = 0; a < businesses.size(); a++) {
+			for (int b = 0; b < sublist.size(); b++) {
+				removeI = b;
+				if (distance < (businesses.get(a).getCoordinates().distance(sublist.get(b).findCenter()))) {
+					distance = (businesses.get(a).getCoordinates().distance(sublist.get(b).findCenter()));
+					closest = b;
+				}
+			}
+
+			sublist.get(closest).add(businesses.get(a));
+
+		}
+
 	}
 
 	/**

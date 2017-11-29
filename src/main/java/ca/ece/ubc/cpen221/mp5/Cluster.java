@@ -8,40 +8,49 @@ import java.util.Set;
 
 public class Cluster {
 
-	Map<Business, Integer> clusters;
-	Set<Business> locations;
-	Coordinate dvirIsAnIdiot;
+	Set<Business> businesses;
+	Coordinate center;
 
 	double startLat = Math.random();
 	double startLong = Math.random();
 
+	public Cluster() {
+		businesses = new HashSet<Business>();
+	}
+
 	public Cluster(List<Business> businesses) {
-		clusters = new HashMap<Business, Integer>();
-		dvirIsAnIdiot = new Coordinate(startLat, startLong);
+		this.businesses = new HashSet<Business>();
+		this.businesses.addAll(businesses);
+		center = new Coordinate(startLat, startLong);
 	}
 
-	public void group(Business business, Integer cluster) {
-		clusters.put(business, cluster);
+	public Cluster(Business business) {
+		businesses.add(business);
 	}
 
-	public void shortestDistance() {
+	public void add(Business business) {
+		this.businesses.add(business);
+	}
+
+	public void remove(Business business) {
 
 	}
 
 	public void clear() {
-		clusters.clear();
+		businesses.clear();
 	}
 
-	public Integer getCluster(Coordinate business) {
-		return clusters.get(business);
-	}
+	public Coordinate findCenter() {
+		double sumLong = 0;
+		double sumLat = 0;
 
-	public void findCenter() {
-		locations = new HashSet<Business>();
-		locations = clusters.keySet();
-
-		for (Business b : locations) {
-
+		for (Business b : businesses) {
+			sumLong += b.getCoordinates().Long();
+			sumLat += b.getCoordinates().Lat();
 		}
+
+		center = new Coordinate(sumLat / businesses.size(), sumLong / businesses.size());
+		return center;
 	}
+
 }

@@ -15,6 +15,7 @@ public class YelpDB<Restuarant, T> extends GeneralDb<T> {
 	public YelpDB() {
 		super();
 	}
-
+	
+	
 	
 }

@@ -5,21 +5,21 @@ public class Coordinate {
 	private double longitude;
 	private double deltaLat;
 	private double deltaLong;
-	private static final double R = 6372.8 * 1000;// in meters
+	private static final double R = 6371 * 1000;// in meters
 
 	public Coordinate(double latitude, double longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
 
-	public double distance(double lat1, double long1, double lat2, double long2) {
-		double dLat = Math.toRadians(lat2 - lat1);
-		double dLon = Math.toRadians(long2 - long1);
-		lat1 = Math.toRadians(lat1);
-		lat2 = Math.toRadians(lat2);
+	public double distance(Coordinate otherC) {
+		double lat = this.Lat();
+		double lat2 = otherC.Lat();
+		double dLat = Math.toRadians(otherC.Lat() - this.Lat());
+		double dLon = Math.toRadians(otherC.Long() - this.Long());
 
-		double a = Math.pow(Math.sin(dLat / 2), 2) + Math.pow(Math.sin(dLon / 2), 2) * Math.cos(lat1) * Math.cos(lat2);
-		double c = 2 * Math.asin(Math.sqrt(a));
+		double a = Math.pow(Math.sin(dLat / 2), 2) + Math.pow(Math.sin(dLon / 2), 2) * Math.cos(lat) * Math.cos(lat2);
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 		return R * c;
 	}
 
