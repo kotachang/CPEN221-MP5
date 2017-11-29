@@ -12,7 +12,7 @@ public class Business {
 	private String city;
 	private String state;
 	private String postalCode;
-	private double longitude;
+	private Coordinate coordinate;
 	private double latitude;
 	private String neighbourhood;
 	private Map<String, Integer> attributes;
@@ -45,16 +45,14 @@ public class Business {
 	 * @param address
 	 *            an array of strings where the: first element = street address;
 	 *            second element = city; third element = state; fourth element =
-	 *            postal code; fifth element = longitudinal coordinate; sixth
-	 *            element = latitudinal coordinate
+	 *            postal code; fifth element = coordinates.
 	 */
 	public void setAddress(String[] address) {
 		this.address = address[0];
 		this.city = address[1];
 		this.state = address[2];
 		this.postalCode = address[3];
-		this.longitude = Double.parseDouble(address[4]);
-		this.latitude = Double.parseDouble(address[5]);
+		this.coordinate = new Coordinate(Double.parseDouble(address[4]) , Double.parseDouble(address[5]));
 	}
 
 	/**
@@ -139,6 +137,10 @@ public class Business {
 	 */
 	public void changeHours(Map<String, String> hours) {
 		this.hours = hours;
+	}
+	
+	public Coordinate getCoordinates(){
+		return this.coordinate;
 	}
 	
 	public boolean equals(Business b) {

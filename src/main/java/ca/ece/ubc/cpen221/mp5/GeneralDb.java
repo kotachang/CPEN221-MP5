@@ -71,8 +71,8 @@ public class GeneralDb<T> implements MP5Db<T> {
 		address[1] = data.getString("city");
 		address[2] = data.getString("state");
 		address[3] = data.getString("postal code");
-		address[4] = data.getString("longitude");
-		address[5] = data.getString("latitude");
+		address[4] = data.getString("latitude");
+		address[5] = data.getString("longitude");
 
 		// Standard characteristics
 		Business business = new Business(data.getString("business_id"));
@@ -83,6 +83,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 		Map<String, String> hours = new HashMap<String, String>();
 		
 		
+		
 		return null;
 
 	}
@@ -90,7 +91,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	/**
 	 * Populates the businesses from a given JSON file.
 	 * 
-	 * @throws IOException
+	 * @throws IOException 
 	 */
 	private void populateBusinesses(String filePath) throws IOException {
 		File file = new File(filePath);
@@ -138,7 +139,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+			
 	/**
 	 * 
 	 */
