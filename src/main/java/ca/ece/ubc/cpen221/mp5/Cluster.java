@@ -33,11 +33,15 @@ public class Cluster {
 	}
 
 	public void remove(Business business) {
-
+		this.businesses.remove(business);
 	}
 
 	public void clear() {
 		businesses.clear();
+	}
+
+	public boolean contains(Business b) {
+		return (this.businesses.contains(b));
 	}
 
 	public Coordinate findCenter() {

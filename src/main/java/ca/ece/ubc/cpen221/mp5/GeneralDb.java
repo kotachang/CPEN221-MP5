@@ -151,18 +151,19 @@ public class GeneralDb<T> implements MP5Db<T> {
 			sublist.add(new Cluster(businesses.subList(k, nk + k)));
 			k += nk;
 		}
-
 		sublist.add(new Cluster(businesses.subList(k, businesses.size() - 1)));
 
 		for (int a = 0; a < businesses.size(); a++) {
 			for (int b = 0; b < sublist.size(); b++) {
-				removeI = b;
+				if (sublist.get(b).contains(businesses.get(a))) {
+					removeI = b;
+				}
 				if (distance < (businesses.get(a).getCoordinates().distance(sublist.get(b).findCenter()))) {
 					distance = (businesses.get(a).getCoordinates().distance(sublist.get(b).findCenter()));
 					closest = b;
 				}
 			}
-
+			sublist.get(removeI).remove(businesses.get(a));
 			sublist.get(closest).add(businesses.get(a));
 
 		}
