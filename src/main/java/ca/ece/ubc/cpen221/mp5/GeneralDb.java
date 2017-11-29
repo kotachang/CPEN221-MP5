@@ -81,8 +81,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 
 		// Hours
 		Map<String, String> hours = new HashMap<String, String>();
-		
-		
+
 		return null;
 
 	}
