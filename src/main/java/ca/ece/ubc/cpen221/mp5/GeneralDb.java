@@ -136,9 +136,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 */
 	@Override
 	public String kMeansClusters_json(int k) {
-
-		
-		
+		String weight = "1";
 		return null;
 	}
 
