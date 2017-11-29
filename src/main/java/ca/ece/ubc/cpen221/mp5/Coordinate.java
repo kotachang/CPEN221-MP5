@@ -5,19 +5,22 @@ public class Coordinate {
 	private double longitude;
 	private double deltaLat;
 	private double deltaLong;
+	private static final double R = 6372.8 * 1000;// in meters
 
 	public Coordinate(double latitude, double longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
 
-	public Coordinate(double latitude, double latitude2, double longitude, double longitude2) {
-		this.deltaLat = Math.abs(latitude - latitude2);
-		this.deltaLong = Math.abs(longitude - longitude2);
-	}
+	public double distance(double lat1, double long1, double lat2, double long2) {
+		double dLat = Math.toRadians(lat2 - lat1);
+		double dLon = Math.toRadians(long2 - long1);
+		lat1 = Math.toRadians(lat1);
+		lat2 = Math.toRadians(lat2);
 
-	private double distance() {
-		return Math.sqrt(Math.pow(deltaLat, 2) + Math.pow(deltaLong, 2));
+		double a = Math.pow(Math.sin(dLat / 2), 2) + Math.pow(Math.sin(dLon / 2), 2) * Math.cos(lat1) * Math.cos(lat2);
+		double c = 2 * Math.asin(Math.sqrt(a));
+		return R * c;
 	}
 
 	public double Long() {

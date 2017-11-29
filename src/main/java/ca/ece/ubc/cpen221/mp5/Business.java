@@ -13,7 +13,6 @@ public class Business {
 	private String state;
 	private String postalCode;
 	private Coordinate coordinate;
-	private double latitude;
 	private String neighbourhood;
 	private Map<String, Integer> attributes;
 	private Map<String, String> hours;
@@ -52,7 +51,7 @@ public class Business {
 		this.city = address[1];
 		this.state = address[2];
 		this.postalCode = address[3];
-		this.coordinate = new Coordinate(Double.parseDouble(address[4]) , Double.parseDouble(address[5]));
+		this.coordinate = new Coordinate(Double.parseDouble(address[4]), Double.parseDouble(address[5]));
 	}
 
 	/**
@@ -138,16 +137,15 @@ public class Business {
 	public void changeHours(Map<String, String> hours) {
 		this.hours = hours;
 	}
-	
-	public Coordinate getCoordinates(){
+
+	public Coordinate getCoordinates() {
 		return this.coordinate;
 	}
-	
+
 	public boolean equals(Business b) {
-		if(this.id == b.id) {
+		if (this.id == b.id) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}

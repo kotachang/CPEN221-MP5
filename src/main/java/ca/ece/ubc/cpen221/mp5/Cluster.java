@@ -7,15 +7,23 @@ import java.util.Set;
 
 public class Cluster {
 
-	Map<Coordinate, Integer> clusters;
-	Set<Coordinate> locations;
+	Map<Business, Integer> clusters;
+	Set<Business> locations;
+
+	double startLat = Math.random();
+	double startLong = Math.random();
 
 	public Cluster() {
-		clusters = new HashMap<Coordinate, Integer>();
+		clusters = new HashMap<Business, Integer>();
+
 	}
 
-	public void group(Coordinate business, Integer cluster) {
+	public void group(Business business, Integer cluster) {
 		clusters.put(business, cluster);
+	}
+
+	public void shortestDistance() {
+
 	}
 
 	public void clear() {
@@ -27,9 +35,10 @@ public class Cluster {
 	}
 
 	public void findCenter() {
-		locations = new HashSet<Coordinate>();
+		locations = new HashSet<Business>();
 		locations = clusters.keySet();
-		for (Coordinate c : locations) {
+
+		for (Business b : locations) {
 
 		}
 	}

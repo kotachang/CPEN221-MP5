@@ -16,7 +16,7 @@ public class kMeansClusters {
 	}
 
 	private void putGroups() {
-
+		
 	}
 
 	// return List<Set<Restaurant>>
