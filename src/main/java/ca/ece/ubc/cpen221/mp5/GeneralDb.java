@@ -217,7 +217,6 @@ public class GeneralDb<T> implements MP5Db<T> {
 		List<Cluster> sublist = new ArrayList<Cluster>();
 		List<Cluster> previous = new ArrayList<Cluster>();
 		int k = 0;
-		double distance = 0;
 		int closest = 0;
 		int removeI = 0;
 
@@ -230,11 +229,16 @@ public class GeneralDb<T> implements MP5Db<T> {
 
 		while (true) {
 			for (int a = 0; a < businesses.size(); a++) {
+				double distance = Integer.MAX_VALUE;
 				for (int b = 0; b < sublist.size(); b++) {
 					if (sublist.get(b).contains(businesses.get(a))) {
 						removeI = b;
 					}
-					if (distance < (businesses.get(a).getCoordinates().distance(sublist.get(b).findCenter()))) {
+					/*
+					 * comment for Kota : try to optimize by storing the center val then switching
+					 * after recalculating , assign the value;
+					 */
+					if (distance > (businesses.get(a).getCoordinates().distance(sublist.get(b).findCenter()))) {
 						distance = (businesses.get(a).getCoordinates().distance(sublist.get(b).findCenter()));
 						closest = b;
 					}
