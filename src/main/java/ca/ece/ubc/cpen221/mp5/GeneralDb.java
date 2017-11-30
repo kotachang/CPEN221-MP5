@@ -196,14 +196,16 @@ public class GeneralDb<T> implements MP5Db<T> {
 			List<Business> b = new ArrayList<Business>(l.get(i).businesses);
 			for (int a = 0; a < b.size(); a++) {
 				/**
-				 * List l should have a list of the different clusters that are made, 
+				 * List l should have a list of the different clusters that are made,
 				 * 
-				 * so the List b should be the list of businesses that are in the particular cluster
-				 * so if u want a particular info of a business u should be able to get it by
-				 * doing something like b.get(a).getCoordinates().Lat(); < something like this
+				 * so the List b should be the list of businesses that are in the particular
+				 * cluster so if u want a particular info of a business u should be able to get
+				 * it by doing something like b.get(a).getCoordinates().Lat(); < something like
+				 * this
 				 * 
-				 * the formatting that we need is now outside of the visualize folder (I had to move it to run the python simulation)
-				 * it should be under the README.md file called "voronoi.json"
+				 * the formatting that we need is the file called "voronoi.json" within
+				 * "visualize" folder or under README.md (I moved the file around to run the
+				 * python thingy but not sure if it's moved for u as well so just check both?)
 				 * 
 				 */
 			}
@@ -220,8 +222,8 @@ public class GeneralDb<T> implements MP5Db<T> {
 		int removeI = 0;
 
 		for (int i = 0; i < nk - 1; i++) {
-			sublist.add(new Cluster(businesses.subList(k, nk + k)));
-			k += nk;
+			sublist.add(new Cluster(businesses.subList(k, k + 1)));
+			k++;
 		}
 		sublist.add(new Cluster(businesses.subList(k, businesses.size() - 1)));
 		previous.addAll(sublist);
