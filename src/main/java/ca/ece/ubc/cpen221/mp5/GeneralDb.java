@@ -157,7 +157,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	private Review parseReview(JsonObject data) {
-		
+
 		Review review = new Review(data.getString("business_id"));
 		review.setUser(data.getString("user_id"));
 		review.setId(data.getString("review_id"));
@@ -165,11 +165,11 @@ public class GeneralDb<T> implements MP5Db<T> {
 		review.setDate(data.getString("date"));
 		review.setReviewRating(data.getInt("useful"), data.getInt("funny"), data.getInt("cool"));
 		review.setText(data.getString("text"));
-		
-		//Adds review to business
+
+		// Adds review to business
 		Business change = new Business(data.getString("business_id"));
-		for(Business b : this.businesses) {
-			if(b.equals(change)) {
+		for (Business b : this.businesses) {
+			if (b.equals(change)) {
 				change = b;
 				break;
 			}
@@ -177,12 +177,12 @@ public class GeneralDb<T> implements MP5Db<T> {
 		this.businesses.remove(change);
 		change.addReview(review);
 		this.businesses.add(change);
-		
-		//Adds review to user
+
+		// Adds review to user
 		User user = new User(data.getString("lol"));
 		user.setId(data.getString("user_id"));
-		for(User u : this.users) {
-			if(u.equals(user)) {
+		for (User u : this.users) {
+			if (u.equals(user)) {
 				user = u;
 				break;
 			}
@@ -190,8 +190,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 		this.users.remove(user);
 		user.addReview(review);
 		this.users.add(user);
-		
-		
+
 		return review;
 	}
 
@@ -230,29 +229,21 @@ public class GeneralDb<T> implements MP5Db<T> {
 	@Override
 	public String kMeansClusters_json(int k) {
 		String weight = "1";
-		String result = "[{";
+		String result = "";
 		List<Cluster> l = new ArrayList<Cluster>();
 		l = firstCluster(k);
 
+		//I did the thing!!!
 		for (int i = 0; i < l.size(); i++) {
 			List<Business> b = new ArrayList<Business>(l.get(i).businesses);
 			for (int a = 0; a < b.size(); a++) {
-				/**
-				 * List l should have a list of the different clusters that are made,
-				 * 
-				 * so the List b should be the list of businesses that are in the particular
-				 * cluster so if u want a particular info of a business u should be able to get
-				 * it by doing something like b.get(a).getCoordinates().Lat(); < something like
-				 * this
-				 * 
-				 * the formatting that we need is the file called "voronoi.json" within
-				 * "visualize" folder or under README.md (I moved the file around to run the
-				 * python thingy but not sure if it's moved for u as well so just check both?)
-				 * 
-				 */
+				JsonObject restaurant = Json.createObjectBuilder().add("x", b.get(a).getCoordinates().Lat())
+						.add("y", b.get(a).getCoordinates().Long()).add("name", b.get(a).name()).add("cluster", i + 1)
+						.add("weight", weight).build();
+				result += restaurant.toString();
 			}
 		}
-		return null;
+		return result;
 	}
 
 	public List<Cluster> firstCluster(int nk) {

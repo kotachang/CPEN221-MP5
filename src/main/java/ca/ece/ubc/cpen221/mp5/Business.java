@@ -43,6 +43,10 @@ public class Business {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String name() {
+		return this.name;
+	}
 
 	/**
 	 * Sets the address of the business
