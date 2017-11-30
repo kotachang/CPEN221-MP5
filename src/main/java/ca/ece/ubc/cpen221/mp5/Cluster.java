@@ -1,5 +1,6 @@
 package ca.ece.ubc.cpen221.mp5;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -56,7 +57,7 @@ public class Cluster {
 		center = new Coordinate(sumLat / businesses.size(), sumLong / businesses.size());
 		return center;
 	}
-
+	
 	public boolean equals(Cluster c) {
 		if (this.businesses.equals(c)) {
 			return true;

@@ -82,14 +82,14 @@ public class GeneralDb<T> implements MP5Db<T> {
 		business.setName(data.getString("name"));
 		business.addNeighbourhood(data.getString("neighborhood"));
 		business.setOpen(data.getInt("is_open"));
-		
-		//Recursive types
+
+		// Recursive types
 		JsonArray categories = data.getJsonArray("categories");
-		for(int i = 0; i < categories.size(); i++) {
+		for (int i = 0; i < categories.size(); i++) {
 			business.addCategory(categories.getString(i));
 		}
 		JsonArray attributes = data.getJsonArray("attributes");
-		for(int i = 0; i < attributes.size(); i++) {
+		for (int i = 0; i < attributes.size(); i++) {
 			business.addAttribute((JsonObject) attributes.get(i));
 		}
 
@@ -97,10 +97,10 @@ public class GeneralDb<T> implements MP5Db<T> {
 		Map<String, String> hours = new HashMap<String, String>();
 
 		JsonArray hoursArray = data.getJsonArray("hours");
-		for(int i = 0; i < hoursArray.size();i++) {
+		for (int i = 0; i < hoursArray.size(); i++) {
 			hours.put(hoursArray.get(i).toString(), hoursArray.getString(i));
 		}
-		
+
 		return business;
 
 	}
@@ -123,16 +123,16 @@ public class GeneralDb<T> implements MP5Db<T> {
 		}
 		fileReader.close();
 	}
-	
+
 	private User parseUser(JsonObject data) {
-		
-			
+
 		return null;
 	}
 
 	/**
 	 * Populates the users from a given JSON file.
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	private void populateUsers(String filePath) throws IOException {
 		File file = new File(filePath);
@@ -147,15 +147,16 @@ public class GeneralDb<T> implements MP5Db<T> {
 		}
 		fileReader.close();
 	}
-	
+
 	private Review parseReview(JsonObject data) {
-		
+
 		return null;
 	}
 
 	/**
 	 * Populates the reviews from a given JSON file.
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	private void populateReviews(String filePath) throws IOException {
 		File file = new File(filePath);
@@ -187,14 +188,26 @@ public class GeneralDb<T> implements MP5Db<T> {
 	@Override
 	public String kMeansClusters_json(int k) {
 		String weight = "1";
-		String result;
+		String result = "[{";
 		List<Cluster> l = new ArrayList<Cluster>();
 		l = firstCluster(k);
 
 		for (int i = 0; i < l.size(); i++) {
-			
+			List<Business> b = new ArrayList<Business>(l.get(i).businesses);
+			for (int a = 0; a < b.size(); a++) {
+				/**
+				 * List l should have a list of the different clusters that are made, 
+				 * 
+				 * so the List b should be the list of businesses that are in the particular cluster
+				 * so if u want a particular info of a business u should be able to get it by
+				 * doing something like b.get(a).getCoordinates().Lat(); < something like this
+				 * 
+				 * the formatting that we need is now outside of the visualize folder (I had to move it to run the python simulation)
+				 * it should be under the README.md file called "voronoi.json"
+				 * 
+				 */
+			}
 		}
-
 		return null;
 	}
 
