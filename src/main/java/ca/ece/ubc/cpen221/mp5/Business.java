@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+
 public class Business {
 
 	private String id;
@@ -14,9 +18,11 @@ public class Business {
 	private String postalCode;
 	private Coordinate coordinate;
 	private String neighbourhood;
-	private Map<String, Integer> attributes;
+	private List<JsonObject> attributes;
 	private Map<String, String> hours;
 	private List<Review> reviews;
+	private int isOpen;
+	private List<String> categories;
 
 	/**
 	 * Constructs a new business
@@ -102,20 +108,24 @@ public class Business {
 	 * @param attribute
 	 *            the attribute to associate this business with
 	 */
-	public void addAttribute(String attribute) {
-		if (attributes.containsKey(attribute)) {
-			attributes.put(attribute, attributes.get(attribute) + 1);
-		} else {
-			attributes.put(attribute, 1);
-		}
+	public void addAttribute(JsonObject attribute) {
+			this.attributes.add(attribute);
+	}
+
+	public void addCategory(String category) {
+		this.categories.add(category);
+	}
+
+	public List<String> categories() {
+		return this.categories;
 	}
 
 	/**
 	 * 
 	 * @return a set of attributes associated with this business
 	 */
-	public Set<String> attributes() {
-		return attributes.keySet();
+	public List<JsonObject> attributes() {
+		return this.attributes;
 	}
 
 	/**
@@ -138,8 +148,20 @@ public class Business {
 		this.hours = hours;
 	}
 
+	public int isOpen() {
+		return this.isOpen;
+	}
+
+	public void setOpen(int open) {
+		this.isOpen = open;
+	}
+
 	public Coordinate getCoordinates() {
 		return this.coordinate;
+	}
+
+	public int reviewCount() {
+		return this.reviews().size();
 	}
 
 	public boolean equals(Business b) {

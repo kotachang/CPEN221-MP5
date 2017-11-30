@@ -2,6 +2,7 @@ package ca.ece.ubc.cpen221.mp5;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
@@ -13,6 +14,7 @@ import java.util.Set;
 import java.util.function.ToDoubleBiFunction;
 
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
@@ -79,11 +81,27 @@ public class GeneralDb<T> implements MP5Db<T> {
 		Business business = new Business(data.getString("business_id"));
 		business.setName(data.getString("name"));
 		business.addNeighbourhood(data.getString("neighborhood"));
+		business.setOpen(data.getInt("is_open"));
+		
+		//Recursive types
+		JsonArray categories = data.getJsonArray("categories");
+		for(int i = 0; i < categories.size(); i++) {
+			business.addCategory(categories.getString(i));
+		}
+		JsonArray attributes = data.getJsonArray("attributes");
+		for(int i = 0; i < attributes.size(); i++) {
+			business.addAttribute((JsonObject) attributes.get(i));
+		}
 
 		// Hours
 		Map<String, String> hours = new HashMap<String, String>();
 
-		return null;
+		JsonArray hoursArray = data.getJsonArray("hours");
+		for(int i = 0; i < hoursArray.size();i++) {
+			hours.put(hoursArray.get(i).toString(), hoursArray.getString(i));
+		}
+		
+		return business;
 
 	}
 
@@ -101,24 +119,56 @@ public class GeneralDb<T> implements MP5Db<T> {
 			JsonReader parseFile = Json.createReader(sr);
 			JsonObject data = parseFile.readObject();
 			Business newBusiness = this.parseBusiness(data);
+			this.addBusiness(newBusiness);
 		}
 		fileReader.close();
+	}
+	
+	private User parseUser(JsonObject data) {
+		
+			
+		return null;
 	}
 
 	/**
 	 * Populates the users from a given JSON file.
+	 * @throws IOException 
 	 */
-	private void populateUsers() {
-		User user = new User("placeholder");
-		this.addUser(user);
+	private void populateUsers(String filePath) throws IOException {
+		File file = new File(filePath);
+		BufferedReader fileReader = new BufferedReader(new FileReader(file));
+		String line;
+		while ((line = fileReader.readLine()) != null) {
+			StringReader sr = new StringReader(line);
+			JsonReader parseFile = Json.createReader(sr);
+			JsonObject data = parseFile.readObject();
+			User newUser = this.parseUser(data);
+			this.addUser(newUser);
+		}
+		fileReader.close();
+	}
+	
+	private Review parseReview(JsonObject data) {
+		
+		return null;
 	}
 
 	/**
 	 * Populates the reviews from a given JSON file.
+	 * @throws IOException 
 	 */
-	private void populateReviews() {
-		Review review = new Review("placeholder");
-		this.addReview(review);
+	private void populateReviews(String filePath) throws IOException {
+		File file = new File(filePath);
+		BufferedReader fileReader = new BufferedReader(new FileReader(file));
+		String line;
+		while ((line = fileReader.readLine()) != null) {
+			StringReader sr = new StringReader(line);
+			JsonReader parseFile = Json.createReader(sr);
+			JsonObject data = parseFile.readObject();
+			Review newReview = this.parseReview(data);
+			this.addReview(newReview);
+		}
+		fileReader.close();
 	}
 
 	/**
