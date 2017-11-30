@@ -9,6 +9,8 @@ public class User {
 	private String id;
 	private String username;
 	private List<Review> reviews;
+	private String date;
+	private List<String> friends;
 
 	/**
 	 * 
@@ -28,6 +30,10 @@ public class User {
 	public String getId() {
 		return this.id;
 	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	/**
 	 * 
@@ -35,6 +41,10 @@ public class User {
 	 */
 	public int reviewCount() {
 		return this.reviews.size();
+	}
+	
+	public void addFriend(String id) {
+		this.friends.add(id);
 	}
 
 	/**
@@ -44,6 +54,17 @@ public class User {
 	 */
 	public void addReview(Review review) {
 		this.reviews.add(review);
+	}
+	
+	public void accountDate(String date) {
+		this.date = date;
+	}
+	
+	public boolean equals(User u) {
+		if(u.getId() == this.getId()) {
+			return true;
+		}
+		return false;
 	}
 
 }

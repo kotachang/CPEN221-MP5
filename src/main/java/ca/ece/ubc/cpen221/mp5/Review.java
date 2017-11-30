@@ -5,11 +5,15 @@ import java.util.Set;
 
 public class Review {
 
+	public static String reviewId = "1111111111111111111111";
 	private String user;
+	private String id;
 	private String business;
-	private int rating;
+	private int stars;
 	private String date;
+	private String userId;
 	private Map<String, Integer> attributes;
+	private String text;
 
 	/**
 	 * Constructor for a review
@@ -19,6 +23,12 @@ public class Review {
 	 */
 	public Review(String businessId) {
 		this.business = businessId;
+		this.id = reviewId;
+		reviewId = Double.toString(Double.parseDouble(reviewId) + 1);
+	}
+	
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	/**
@@ -37,16 +47,16 @@ public class Review {
 	 * @param star
 	 *            the rating from 1 to 5
 	 */
-	public void setRating(int star) {
-		this.rating = star;
+	public void setStars(int star) {
+		this.stars = star;
 	}
 
 	/**
 	 * 
 	 * @return the rating associated with this review.
 	 */
-	public int rating() {
-		return rating;
+	public int stars() {
+		return stars;
 	}
 
 	/**
@@ -67,29 +77,29 @@ public class Review {
 		return attributes.keySet();
 	}
 
-	/**
-	 * 
-	 * @param attribute
-	 * @return true if the attribute was not already associated with this review,
-	 *         false if it was already associated with this review.
-	 */
-	private boolean addAttribute(String attribute) {
-		if (attributes.containsKey(attribute)) {
-			return false;
-		} else {
-			attributes.put(attribute, 0);
+	public void setReviewRating(int useful, int funny, int cool) {
+		this.attributes.put("useful", useful);
+		this.attributes.put("funny", funny);
+		this.attributes.put("cool", cool);
+	}
+	
+	public Map<String,Integer> reviewRatings(){
+		return this.attributes;
+	}
+	
+	public void setText(String text) {
+		this.text = text;
+	}
+	
+	public String text() {
+		return text;
+	}
+	
+	public boolean equals(Review r) {
+		if(r.id == this.id) {
 			return true;
 		}
-	}
-
-	/**
-	 * Probably gonna get rid of this?
-	 * @param attribute
-	 */
-	public void voteAttribute(String attribute) {
-		if (!this.addAttribute(attribute)) {
-			attributes.replace(attribute, attributes.get(attribute) + 1);
-		}
+		return false;
 	}
 
 }

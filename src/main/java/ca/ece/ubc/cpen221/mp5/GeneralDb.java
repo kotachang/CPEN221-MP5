@@ -125,8 +125,16 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	private User parseUser(JsonObject data) {
+		User user = new User(data.getString("name"));
+		user.setId(data.getString("user_id"));
+		user.accountDate(data.getString("yelping_since"));
 
-		return null;
+		JsonArray friends = data.getJsonArray("friends");
+		for (int i = 0; i < friends.size(); i++) {
+			user.addFriend(friends.getString(i));
+		}
+
+		return user;
 	}
 
 	/**
@@ -149,8 +157,42 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	private Review parseReview(JsonObject data) {
-
-		return null;
+		
+		Review review = new Review(data.getString("business_id"));
+		review.setUser(data.getString("user_id"));
+		review.setId(data.getString("review_id"));
+		review.setStars(data.getInt("stars"));
+		review.setDate(data.getString("date"));
+		review.setReviewRating(data.getInt("useful"), data.getInt("funny"), data.getInt("cool"));
+		review.setText(data.getString("text"));
+		
+		//Adds review to business
+		Business change = new Business(data.getString("business_id"));
+		for(Business b : this.businesses) {
+			if(b.equals(change)) {
+				change = b;
+				break;
+			}
+		}
+		this.businesses.remove(change);
+		change.addReview(review);
+		this.businesses.add(change);
+		
+		//Adds review to user
+		User user = new User(data.getString("lol"));
+		user.setId(data.getString("user_id"));
+		for(User u : this.users) {
+			if(u.equals(user)) {
+				user = u;
+				break;
+			}
+		}
+		this.users.remove(user);
+		user.addReview(review);
+		this.users.add(user);
+		
+		
+		return review;
 	}
 
 	/**
