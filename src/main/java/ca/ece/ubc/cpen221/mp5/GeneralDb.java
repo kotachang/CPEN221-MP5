@@ -66,6 +66,12 @@ public class GeneralDb<T> implements MP5Db<T> {
 		this.reviews.add(review);
 	}
 
+	public void populateDatabase(String businessFile, String userFile, String reviewFile) throws IOException {
+		this.populateBusinesses(businessFile);
+		this.populateUsers(userFile);
+		this.populateReviews(reviewFile);
+	}
+
 	private Business parseBusiness(JsonObject data) {
 
 		// Address array
@@ -100,7 +106,6 @@ public class GeneralDb<T> implements MP5Db<T> {
 		for (int i = 0; i < hoursArray.size(); i++) {
 			hours.put(hoursArray.get(i).toString(), hoursArray.getString(i));
 		}
-
 		return business;
 
 	}
@@ -139,10 +144,11 @@ public class GeneralDb<T> implements MP5Db<T> {
 
 	/**
 	 * Populates the users from a given JSON file.
+	 * @return 
 	 * 
 	 * @throws IOException
 	 */
-	private void populateUsers(String filePath) throws IOException {
+	protected void populateUsers(String filePath) throws IOException {
 		File file = new File(filePath);
 		BufferedReader fileReader = new BufferedReader(new FileReader(file));
 		String line;
@@ -199,7 +205,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 * 
 	 * @throws IOException
 	 */
-	private void populateReviews(String filePath) throws IOException {
+	protected void populateReviews(String filePath) throws IOException {
 		File file = new File(filePath);
 		BufferedReader fileReader = new BufferedReader(new FileReader(file));
 		String line;
@@ -233,7 +239,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 		List<Cluster> l = new ArrayList<Cluster>();
 		l = firstCluster(k);
 
-		//I did the thing!!!
+		// I did the thing!!!
 		for (int i = 0; i < l.size(); i++) {
 			List<Business> b = new ArrayList<Business>(l.get(i).businesses);
 			for (int a = 0; a < b.size(); a++) {
