@@ -81,7 +81,7 @@ public class Business {
 			throw new NullPointerException();
 		} else {
 			for (Review r : this.reviews) {
-				average += r.rating();
+				average += r.stars();
 				count++;
 			}
 			return average / count;
