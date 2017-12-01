@@ -9,9 +9,7 @@ public class TestRip {
 		String user = "data/users.json";
 		String review = "data/reviews.json";
 
-		YelpDB db = new YelpDB();
-		
-		db.populateDatabase(rest, user, review);
+		YelpDB db = new YelpDB(rest, user, review);
 
 		System.out.println("ripness over");
 		System.out.println(db.kMeansClusters_json(5));

@@ -28,11 +28,16 @@ public class GeneralDb<T> implements MP5Db<T> {
 
 	/**
 	 * Constructor for an empty database
+	 * 
+	 * @throws IOException
 	 */
-	public GeneralDb() {
+	public GeneralDb(String businessFile, String userFile, String reviewFile) throws IOException {
 		this.businesses = new ArrayList<Business>();
 		this.reviews = new ArrayList<Review>();
 		this.users = new ArrayList<User>();
+		this.populateBusinesses(businessFile);
+		this.populateUsers(userFile);
+		this.populateReviews(reviewFile);
 	}
 
 	/**
@@ -67,45 +72,39 @@ public class GeneralDb<T> implements MP5Db<T> {
 		this.reviews.add(review);
 	}
 
-	public void populateDatabase(String businessFile, String userFile, String reviewFile) throws IOException {
-		this.populateBusinesses(businessFile);
-		this.populateUsers(userFile);
-		this.populateReviews(reviewFile);
-	}
-
 	private Business parseBusiness(JsonObject data) {
 
 		// Address array
-		String[] address = new String[6];
-		address[0] = data.getString("address");
+		String[] address = new String[5];
+		address[0] = data.getString("full_address");
 		address[1] = data.getString("city");
 		address[2] = data.getString("state");
-		address[3] = data.getString("postal code");
-		address[4] = data.getString("latitude");
-		address[5] = data.getString("longitude");
+		address[3] = data.getJsonNumber("latitude").toString();
+		address[4] = data.getJsonNumber("longitude").toString();
 
 		// Standard characteristics
 		Business business = new Business(data.getString("business_id"));
+		business.setAddress(address);
 		business.setName(data.getString("name"));
-		business.addNeighbourhood(data.getString("neighborhood"));
-		business.setOpen(data.getInt("is_open"));
+		business.setOpen(data.getBoolean("open"));
+		business.setURL(data.getString("url"));
+		business.setPhoto(data.getString("photo_url"));
+		business.setPrice(data.getInt("price"));
 
 		// Recursive types
+		JsonArray schools = data.getJsonArray("schools");
+		for (int i = 0; i < schools.size(); i++) {
+			business.addSchool(schools.getString(i));
+		}
+
+		JsonArray neighborhoods = data.getJsonArray("neighborhoods");
+		for (int i = 0; i < neighborhoods.size(); i++) {
+			business.addNeighbourhood(neighborhoods.getString(i));
+		}
+
 		JsonArray categories = data.getJsonArray("categories");
 		for (int i = 0; i < categories.size(); i++) {
 			business.addCategory(categories.getString(i));
-		}
-		JsonArray attributes = data.getJsonArray("attributes");
-		for (int i = 0; i < attributes.size(); i++) {
-			business.addAttribute((JsonObject) attributes.get(i));
-		}
-
-		// Hours
-		Map<String, String> hours = new HashMap<String, String>();
-
-		JsonArray hoursArray = data.getJsonArray("hours");
-		for (int i = 0; i < hoursArray.size(); i++) {
-			hours.put(hoursArray.get(i).toString(), hoursArray.getString(i));
 		}
 		return business;
 
@@ -131,14 +130,11 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	private User parseUser(JsonObject data) {
-		User user = new User(data.getString("name"));
-		user.setId(data.getString("user_id"));
-		user.accountDate(data.getString("yelping_since"));
-
-		JsonArray friends = data.getJsonArray("friends");
-		for (int i = 0; i < friends.size(); i++) {
-			user.addFriend(friends.getString(i));
-		}
+		User user = new User(data.getString("user_id"));
+		user.setURL(data.getString("url"));
+		JsonObject votes = data.getJsonObject("votes");
+		user.addVote(votes.getInt("funny"), votes.getInt("useful"), votes.getInt("cool"));
+		user.setName(data.getString("name"));
 
 		return user;
 	}
@@ -166,12 +162,15 @@ public class GeneralDb<T> implements MP5Db<T> {
 
 	private Review parseReview(JsonObject data) {
 
-		Review review = new Review(data.getString("business_id"));
+		Review review = new Review(data.getString("review_id"));
 		review.setUser(data.getString("user_id"));
-		review.setId(data.getString("review_id"));
+		review.setBusiness(data.getString("business_id"));
 		review.setStars(data.getInt("stars"));
 		review.setDate(data.getString("date"));
-		review.setReviewRating(data.getInt("useful"), data.getInt("funny"), data.getInt("cool"));
+		JsonObject votes = data.getJsonObject("votes");
+		if (!(votes.isNull("userful") || votes.isNull("funny") || votes.isNull("cool"))) {
+			review.setReviewRating(votes.getInt("useful"), votes.getInt("funny"), votes.getInt("cool"));
+		}
 		review.setText(data.getString("text"));
 
 		// Adds review to business
@@ -187,8 +186,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 		this.businesses.add(change);
 
 		// Adds review to user
-		User user = new User(data.getString("lol"));
-		user.setId(data.getString("user_id"));
+		User user = new User(data.getString("user_id"));
 		for (User u : this.users) {
 			if (u.equals(user)) {
 				user = u;
@@ -255,7 +253,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 		try {
 			FileWriter writer = new FileWriter("visualize/voronoi.json");
 			writer.write(result);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;

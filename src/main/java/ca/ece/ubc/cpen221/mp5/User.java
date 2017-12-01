@@ -1,26 +1,34 @@
 package ca.ece.ubc.cpen221.mp5;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class User {
 
-	public static String userId = "1111111111111111111111";
 	private String id;
-	private String username;
+	private String name;
 	private List<Review> reviews;
 	private String date;
-	private List<String> friends;
+	private Map<String, Integer> votes = new HashMap<String, Integer>();
+	private String url;
 
 	/**
 	 * 
 	 * @param username
 	 *            represents the users unique chosen username.
 	 */
-	public User(String username) {
-		this.username = username;
+	public User(String userId) {
 		this.id = userId;
-		userId = Double.toString(Double.parseDouble(userId) + 1);
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return this.name;
 	}
 
 	/**
@@ -30,10 +38,6 @@ public class User {
 	public String getId() {
 		return this.id;
 	}
-	
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	/**
 	 * 
@@ -42,9 +46,18 @@ public class User {
 	public int reviewCount() {
 		return this.reviews.size();
 	}
-	
-	public void addFriend(String id) {
-		this.friends.add(id);
+
+	public float averageStars() {
+		if (this.reviews.size() != 0) {
+			float sum = 0;
+			for (int i = 0; i < this.reviews.size(); i++) {
+				sum += this.reviews.get(i).stars();
+			}
+			return sum / this.reviews.size();
+		}
+		else {
+			return 0;
+		}
 	}
 
 	/**
@@ -56,12 +69,26 @@ public class User {
 		this.reviews.add(review);
 	}
 	
-	public void accountDate(String date) {
-		this.date = date;
+	public void setURL(String url) {
+		this.url = url;
+	}
+	
+	public String getURL() {
+		return this.url;
+	}
+
+	public void addVote(int funny, int useful, int cool) {
+		this.votes.put("funny", funny);
+		this.votes.put("useful", useful);
+		this.votes.put("cool", cool);
+	}
+	
+	public Map<String, Integer> votes(){
+		return this.votes;
 	}
 	
 	public boolean equals(User u) {
-		if(u.getId() == this.getId()) {
+		if (u.getId() == this.getId()) {
 			return true;
 		}
 		return false;
