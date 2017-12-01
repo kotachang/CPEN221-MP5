@@ -4,8 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class Review {
-
-	public static String reviewId = "1111111111111111111111";
+	
 	private String user;
 	private String id;
 	private String business;
@@ -21,15 +20,23 @@ public class Review {
 	 * @param businessId
 	 *            the id of the business that this review is for.
 	 */
-	public Review(String businessId) {
-		this.business = businessId;
+	public Review(String reviewId) {
 		this.id = reviewId;
-		reviewId = Double.toString(Double.parseDouble(reviewId) + 1);
 	}
 	
-	public void setId(String id) {
-		this.id = id;
+	public String getId() {
+		return this.id;
 	}
+	
+	public void setBusiness(String businessId) {
+		this.business = businessId;
+	}
+	
+	public String getBusiness() {
+		return this.business;
+	}
+	
+
 
 	/**
 	 * Sets the user who gave this review.
@@ -40,6 +47,11 @@ public class Review {
 	public void setUser(String id) {
 		this.user = id;
 	}
+	
+	public String getUser() {
+		return this.user;
+	}
+	
 
 	/**
 	 * Sets the rating given for the business (integer from 1 to 5)

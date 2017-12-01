@@ -1,5 +1,7 @@
 package ca.ece.ubc.cpen221.mp5;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,14 +17,15 @@ public class Business {
 	private String address;
 	private String city;
 	private String state;
-	private String postalCode;
 	private Coordinate coordinate;
-	private String neighbourhood;
-	private List<JsonObject> attributes;
-	private Map<String, String> hours;
-	private List<Review> reviews;
-	private int isOpen;
-	private List<String> categories;
+	private List<String> neighbourhood = new ArrayList<String>();
+	private List<Review> reviews = new ArrayList<Review>();;
+	private boolean isOpen;
+	private List<String> categories = new ArrayList<String>();
+	private String url;
+	private String photoURL;
+	private List<String> schools = new ArrayList<String>();
+	private int price;
 
 	/**
 	 * Constructs a new business
@@ -43,7 +46,7 @@ public class Business {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String name() {
 		return this.name;
 	}
@@ -60,8 +63,31 @@ public class Business {
 		this.address = address[0];
 		this.city = address[1];
 		this.state = address[2];
-		this.postalCode = address[3];
-		this.coordinate = new Coordinate(Double.parseDouble(address[4]), Double.parseDouble(address[5]));
+		this.coordinate = new Coordinate(Double.parseDouble(address[3]), Double.parseDouble(address[4]));
+	}
+
+	public void setURL(String url) {
+		this.url = url;
+	}
+
+	public String getURL() {
+		return this.url;
+	}
+
+	public void setPhoto(String url) {
+		this.photoURL = url;
+	}
+
+	public String getPhoto() {
+		return this.photoURL;
+	}
+
+	public void addSchool(String school) {
+		this.schools.add(school);
+	}
+
+	public List<String> getSchools() {
+		return this.schools;
 	}
 
 	/**
@@ -71,7 +97,15 @@ public class Business {
 	 *            neighborhood name to associate with business
 	 */
 	public void addNeighbourhood(String name) {
-		this.neighbourhood = name;
+		this.neighbourhood.add(name);
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public int getPrice() {
+		return this.price;
 	}
 
 	/**
@@ -105,17 +139,7 @@ public class Business {
 		reviews.add(review);
 	}
 
-	/**
-	 * Associates the attribute with this business, or increments the count of the
-	 * attribute if it is already associated with the business
-	 * 
-	 * @param attribute
-	 *            the attribute to associate this business with
-	 */
-	public void addAttribute(JsonObject attribute) {
-			this.attributes.add(attribute);
-	}
-
+	
 	public void addCategory(String category) {
 		this.categories.add(category);
 	}
@@ -124,39 +148,11 @@ public class Business {
 		return this.categories;
 	}
 
-	/**
-	 * 
-	 * @return a set of attributes associated with this business
-	 */
-	public List<JsonObject> attributes() {
-		return this.attributes;
-	}
-
-	/**
-	 * 
-	 * @return a map where the keys are the days of the week, and the values are the
-	 *         hours they are open on that day.
-	 */
-	public Map<String, String> hours() {
-		return this.hours;
-	}
-
-	/**
-	 * Updates the hours of operations for this business
-	 * 
-	 * @param hours
-	 *            map where the keys are the days of the week, and the values are
-	 *            the hours they are open on that day.
-	 */
-	public void changeHours(Map<String, String> hours) {
-		this.hours = hours;
-	}
-
-	public int isOpen() {
+	public boolean isOpen() {
 		return this.isOpen;
 	}
 
-	public void setOpen(int open) {
+	public void setOpen(boolean open) {
 		this.isOpen = open;
 	}
 
