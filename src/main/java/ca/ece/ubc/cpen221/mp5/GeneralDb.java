@@ -40,10 +40,18 @@ public class GeneralDb<T> implements MP5Db<T> {
 		this.populateReviews(reviewFile);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Business> getBusinesses() {
 		return new ArrayList<Business>(businesses);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Review> getReviews() {
 		return new ArrayList<Review>(reviews);
 	}
@@ -80,6 +88,11 @@ public class GeneralDb<T> implements MP5Db<T> {
 		this.reviews.add(review);
 	}
 
+	/**
+	 * 
+	 * @param data
+	 * @return
+	 */
 	private Business parseBusiness(JsonObject data) {
 
 		// Address array
@@ -137,6 +150,11 @@ public class GeneralDb<T> implements MP5Db<T> {
 		fileReader.close();
 	}
 
+	/**
+	 * 
+	 * @param data
+	 * @return
+	 */
 	private User parseUser(JsonObject data) {
 		User user = new User(data.getString("user_id"));
 		user.setURL(data.getString("url"));
@@ -168,6 +186,11 @@ public class GeneralDb<T> implements MP5Db<T> {
 		fileReader.close();
 	}
 
+	/**
+	 * 
+	 * @param data
+	 * @return
+	 */
 	private Review parseReview(JsonObject data) {
 
 		Review review = new Review(data.getString("review_id"));
@@ -252,7 +275,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 		for (int i = 0; i < l.size(); i++) {
 			List<Business> b = new ArrayList<Business>(l.get(i).getBusinesses());
 			for (int a = 0; a < b.size(); a++) {
-				if(a != 0) {
+				if (a != 0) {
 					result += ",";
 				}
 				JsonObject restaurant = Json.createObjectBuilder().add("x", b.get(a).getCoordinates().Lat())
@@ -273,6 +296,11 @@ public class GeneralDb<T> implements MP5Db<T> {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param nk
+	 * @return
+	 */
 	public List<Cluster> Cluster(int nk) {
 		List<Cluster> sublist = new ArrayList<Cluster>();
 		List<Cluster> previous = new ArrayList<Cluster>();
@@ -318,6 +346,12 @@ public class GeneralDb<T> implements MP5Db<T> {
 		return sublist;
 	}
 
+	/**
+	 * 
+	 * @param l
+	 * @param l2
+	 * @return
+	 */
 	public boolean equals(List<Cluster> l, List<Cluster> l2) {
 		for (int i = 0; i < l.size(); i++) {
 			if (!(l.get(i).equals(l2.get(i)))) {
@@ -327,6 +361,12 @@ public class GeneralDb<T> implements MP5Db<T> {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @param c
+	 * @param c2
+	 * @return
+	 */
 	public boolean equals(Cluster c, Cluster c2) {
 		if (c.businesses.equals(c2.businesses)) {
 			return true;

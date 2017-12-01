@@ -29,7 +29,6 @@ public class Business {
 	public Business(String id) {
 		this.id = id;
 	}
-	
 
 	/**
 	 * Sets the name of the business to the specified name
@@ -41,10 +40,18 @@ public class Business {
 		this.name = name;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getId() {
 		return this.id;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String name() {
 		return this.name;
 	}
@@ -64,26 +71,50 @@ public class Business {
 		this.coordinate = new Coordinate(Double.parseDouble(address[3]), Double.parseDouble(address[4]));
 	}
 
+	/**
+	 * 
+	 * @param url
+	 */
 	public void setURL(String url) {
 		this.url = url;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getURL() {
 		return this.url;
 	}
 
+	/**
+	 * 
+	 * @param url
+	 */
 	public void setPhoto(String url) {
 		this.photoURL = url;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getPhoto() {
 		return this.photoURL;
 	}
 
+	/**
+	 * 
+	 * @param school
+	 */
 	public void addSchool(String school) {
 		this.schools.add(school);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<String> getSchools() {
 		return this.schools;
 	}
@@ -98,10 +129,18 @@ public class Business {
 		this.neighbourhood.add(name);
 	}
 
+	/**
+	 * 
+	 * @param price
+	 */
 	public void setPrice(int price) {
 		this.price = price;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int getPrice() {
 		return this.price;
 	}
@@ -133,34 +172,65 @@ public class Business {
 		return this.reviews;
 	}
 
+	/**
+	 * 
+	 * @param review
+	 */
 	public void addReview(Review review) {
 		reviews.add(review);
 	}
 
+	/**
+	 * 
+	 * @param category
+	 */
 	public void addCategory(String category) {
 		this.categories.add(category);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<String> categories() {
 		return this.categories;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isOpen() {
 		return this.isOpen;
 	}
 
+	/**
+	 * 
+	 * @param open
+	 */
 	public void setOpen(boolean open) {
 		this.isOpen = open;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Coordinate getCoordinates() {
 		return this.coordinate;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int reviewCount() {
 		return this.reviews().size();
 	}
 
+	/**
+	 * 
+	 */
 	public boolean equals(Object business) {
 		if (!(business instanceof Business)) {
 			return false;

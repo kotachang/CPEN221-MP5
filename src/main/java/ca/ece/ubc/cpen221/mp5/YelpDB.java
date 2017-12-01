@@ -13,12 +13,23 @@ import javax.json.JsonReader;
 
 public class YelpDB extends GeneralDb<Restaurant> {
 
+	/**
+	 * 
+	 * @param businessFile
+	 * @param userFile
+	 * @param reviewFile
+	 * @throws IOException
+	 */
 	public YelpDB(String businessFile, String userFile, String reviewFile) throws IOException {
 		super(businessFile, userFile, reviewFile);
 	}
 
+	/**
+	 * 
+	 * @param data
+	 * @return
+	 */
 	private Restaurant parseRestaurant(JsonObject data) {
-		// Address array
 		// Address array
 		String[] address = new String[5];
 		address[0] = data.getString("full_address");
@@ -29,6 +40,7 @@ public class YelpDB extends GeneralDb<Restaurant> {
 
 		// Standard characteristics
 		Restaurant business = new Restaurant(data.getString("business_id"));
+		business.setAddress(address);
 		business.setName(data.getString("name"));
 		business.setOpen(data.getBoolean("open"));
 		business.setURL(data.getString("url"));
@@ -39,6 +51,11 @@ public class YelpDB extends GeneralDb<Restaurant> {
 		JsonArray schools = data.getJsonArray("schools");
 		for (int i = 0; i < schools.size(); i++) {
 			business.addSchool(schools.getString(i));
+		}
+
+		JsonArray neighborhoods = data.getJsonArray("neighborhoods");
+		for (int i = 0; i < neighborhoods.size(); i++) {
+			business.addNeighbourhood(neighborhoods.getString(i));
 		}
 
 		JsonArray categories = data.getJsonArray("categories");
@@ -61,7 +78,9 @@ public class YelpDB extends GeneralDb<Restaurant> {
 			JsonReader parseFile = Json.createReader(sr);
 			JsonObject data = parseFile.readObject();
 			Restaurant newRestaurant = this.parseRestaurant(data);
-			this.addBusiness(newRestaurant);
+			if (newRestaurant != null) {
+				this.addBusiness(newRestaurant);
+			}
 		}
 		fileReader.close();
 	}
