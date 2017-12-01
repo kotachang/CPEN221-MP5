@@ -33,6 +33,10 @@ public class Cluster {
 		this.businesses.add(business);
 	}
 
+	public Set<Business> getBusinesses() {
+		return new HashSet<Business>(businesses);
+	}
+
 	public void remove(Business business) {
 		this.businesses.remove(business);
 	}
@@ -57,5 +61,5 @@ public class Cluster {
 		center = new Coordinate(sumLat / businesses.size(), sumLong / businesses.size());
 		return center;
 	}
-	
+
 }

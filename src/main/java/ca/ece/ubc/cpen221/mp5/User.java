@@ -55,8 +55,7 @@ public class User {
 				sum += this.reviews.get(i).stars();
 			}
 			return sum / this.reviews.size();
-		}
-		else {
+		} else {
 			return 0;
 		}
 	}
@@ -69,11 +68,11 @@ public class User {
 	public void addReview(Review review) {
 		this.reviews.add(review);
 	}
-	
+
 	public void setURL(String url) {
 		this.url = url;
 	}
-	
+
 	public String getURL() {
 		return this.url;
 	}
@@ -83,13 +82,17 @@ public class User {
 		this.votes.put("useful", useful);
 		this.votes.put("cool", cool);
 	}
-	
-	public Map<String, Integer> votes(){
+
+	public Map<String, Integer> votes() {
 		return this.votes;
 	}
-	
+
+	public List<Review> getReview() {
+		return new ArrayList<Review>(reviews);
+	}
+
 	public boolean equals(Object user) {
-		if(!(user instanceof User)) {
+		if (!(user instanceof User)) {
 			return false;
 		}
 		User thatUser = (User) user;

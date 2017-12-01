@@ -13,18 +13,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.ToDoubleBiFunction;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.json.Json;
 import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
 public class GeneralDb<T> implements MP5Db<T> {
 
-	private List<Business> businesses;
-	private List<Review> reviews;
-	private List<User> users;
-	private static final double R = 6371 * 1000;// in meters
+	protected List<Business> businesses;
+	protected List<Review> reviews;
+	protected List<User> users;
+	protected static final double R = 6371 * 1000;// in meters
 
 	/**
 	 * Constructor for an empty database
@@ -38,6 +41,14 @@ public class GeneralDb<T> implements MP5Db<T> {
 		this.populateBusinesses(businessFile);
 		this.populateUsers(userFile);
 		this.populateReviews(reviewFile);
+	}
+
+	public List<Business> getBusinesses() {
+		return new ArrayList<Business>(businesses);
+	}
+
+	public List<Review> getReviews() {
+		return new ArrayList<Review>(reviews);
 	}
 
 	/**
@@ -237,10 +248,12 @@ public class GeneralDb<T> implements MP5Db<T> {
 		String weight = "1.0";
 		String result = "[";
 		List<Cluster> l = new ArrayList<Cluster>();
+		JsonArrayBuilder arr = Json.createArrayBuilder();
+
 		l = Cluster(k);
 
 		for (int i = 0; i < l.size(); i++) {
-			List<Business> b = new ArrayList<Business>(l.get(i).businesses);
+			List<Business> b = new ArrayList<Business>(l.get(i).getBusinesses());
 			for (int a = 0; a < b.size(); a++) {
 				JsonObject restaurant = Json.createObjectBuilder().add("x", b.get(a).getCoordinates().Lat())
 						.add("y", b.get(a).getCoordinates().Long()).add("name", b.get(a).name()).add("cluster", i + 1)
@@ -248,7 +261,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 				result += restaurant.toString();
 			}
 		}
-		
+
 		result += "]";
 
 		try {
@@ -302,7 +315,6 @@ public class GeneralDb<T> implements MP5Db<T> {
 			}
 		}
 
-		System.out.println(sublist.size());
 		return sublist;
 	}
 
@@ -327,7 +339,11 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 */
 	@Override
 	public ToDoubleBiFunction getPredictorFunction(String user) {
-		// TODO Auto-generated method stub
+		List<Review> reviewsList = this.reviews.stream().filter(r -> r.getUser().equals(user))
+				.collect(Collectors.toList());
+
+		List<String> ids = reviewsList.stream().map(r -> r.getBusiness()).collect(Collectors.toList());
+
 		return null;
 	}
 

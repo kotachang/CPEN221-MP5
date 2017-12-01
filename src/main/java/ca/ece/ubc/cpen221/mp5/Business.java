@@ -36,6 +36,7 @@ public class Business {
 	public Business(String id) {
 		this.id = id;
 	}
+	
 
 	/**
 	 * Sets the name of the business to the specified name
@@ -46,7 +47,7 @@ public class Business {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getId() {
 		return this.id;
 	}
@@ -143,7 +144,6 @@ public class Business {
 		reviews.add(review);
 	}
 
-	
 	public void addCategory(String category) {
 		this.categories.add(category);
 	}
@@ -169,7 +169,7 @@ public class Business {
 	}
 
 	public boolean equals(Object business) {
-		if(!(business instanceof Business)) {
+		if (!(business instanceof Business)) {
 			return false;
 		}
 		Business thatBusiness = (Business) business;
