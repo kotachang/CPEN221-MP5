@@ -1,5 +1,6 @@
 package ca.ece.ubc.cpen221.mp5;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,7 +12,7 @@ public class Review {
 	private int stars;
 	private String date;
 	private String userId;
-	private Map<String, Integer> attributes;
+	private Map<String, Integer> attributes = new HashMap<String, Integer>();
 	private String text;
 
 	/**

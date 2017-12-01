@@ -168,9 +168,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 		review.setStars(data.getInt("stars"));
 		review.setDate(data.getString("date"));
 		JsonObject votes = data.getJsonObject("votes");
-		if (!(votes.isNull("userful") || votes.isNull("funny") || votes.isNull("cool"))) {
-			review.setReviewRating(votes.getInt("useful"), votes.getInt("funny"), votes.getInt("cool"));
-		}
+		review.setReviewRating(votes.getInt("useful"), votes.getInt("funny"), votes.getInt("cool"));
 		review.setText(data.getString("text"));
 
 		// Adds review to business
