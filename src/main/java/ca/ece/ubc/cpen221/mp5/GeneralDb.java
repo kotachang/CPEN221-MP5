@@ -339,10 +339,34 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 */
 	@Override
 	public ToDoubleBiFunction getPredictorFunction(String user) {
-		List<Review> reviewsList = this.reviews.stream().filter(r -> r.getUser().equals(user))
-				.collect(Collectors.toList());
+		
+		Map<String, Business> idBus = new HashMap<String, Business>();
+		Map<Business, Review> busR = new HashMap<Business, Review>();
+		List<Review> tempList = new ArrayList<Review>();
+		List<String> busIds = new ArrayList<String>();
 
-		List<String> ids = reviewsList.stream().map(r -> r.getBusiness()).collect(Collectors.toList());
+		for (int i = 0; i < this.businesses.size(); i++) {
+			tempList = this.businesses.get(i).reviews();
+			for (int a = 0; a < tempList.size(); a++) {
+				if (tempList.get(a).getUser().equals(user)) {
+		
+					idBus.put(this.businesses.get(i).getId(), this.businesses.get(i));
+					busIds.add(this.businesses.get(i).getId());
+					busR.put(this.businesses.get(i), tempList.get(a));
+				}
+			}
+			tempList = new ArrayList<Review>();
+		}
+
+		List<Double> prices = new ArrayList<Double>();
+		List<Integer> stars = new ArrayList<Integer>();
+
+		for (Map.Entry<String, Business> entry : idBus.entrySet()) {
+			for (int i = 0; i < busIds.size(); i++) {
+				prices.add((double) idBus.get(busIds.get(i)).getPrice());
+				stars.add(busR.get(idBus.get(busIds.get(i))).stars());
+			}
+		}
 
 		return null;
 	}
