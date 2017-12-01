@@ -46,6 +46,10 @@ public class Business {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String getId() {
+		return this.id;
+	}
 
 	public String name() {
 		return this.name;
@@ -164,12 +168,12 @@ public class Business {
 		return this.reviews().size();
 	}
 
-	public boolean equals(Business b) {
-		if (this.id == b.id) {
-			return true;
-		} else {
+	public boolean equals(Object business) {
+		if(!(business instanceof Business)) {
 			return false;
 		}
+		Business thatBusiness = (Business) business;
+		return (this.getId().equals(thatBusiness.getId()));
 	}
 
 }

@@ -179,6 +179,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 				break;
 			}
 		}
+		
 		this.businesses.remove(change);
 		change.addReview(review);
 		this.businesses.add(change);
@@ -191,6 +192,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 				break;
 			}
 		}
+		
 		this.users.remove(user);
 		user.addReview(review);
 		this.users.add(user);

@@ -1,6 +1,7 @@
 package ca.ece.ubc.cpen221.mp5;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,7 @@ public class User {
 
 	private String id;
 	private String name;
-	private List<Review> reviews;
+	private List<Review> reviews = new ArrayList<Review>();
 	private String date;
 	private Map<String, Integer> votes = new HashMap<String, Integer>();
 	private String url;
@@ -87,11 +88,12 @@ public class User {
 		return this.votes;
 	}
 	
-	public boolean equals(User u) {
-		if (u.getId() == this.getId()) {
-			return true;
+	public boolean equals(Object user) {
+		if(!(user instanceof User)) {
+			return false;
 		}
-		return false;
+		User thatUser = (User) user;
+		return (this.getId().equals(thatUser.getId()));
 	}
 
 }
