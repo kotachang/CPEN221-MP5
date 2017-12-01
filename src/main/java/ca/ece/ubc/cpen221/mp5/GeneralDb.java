@@ -93,7 +93,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 * @param data
 	 * @return
 	 */
-	private Business parseBusiness(JsonObject data) {
+	public Business parseBusiness(JsonObject data) {
 
 		// Address array
 		String[] address = new String[5];
@@ -145,7 +145,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 			JsonReader parseFile = Json.createReader(sr);
 			JsonObject data = parseFile.readObject();
 			Business newBusiness = this.parseBusiness(data);
-			this.addBusiness(newBusiness);
+			this.addBusiness((Business) newBusiness);
 		}
 		fileReader.close();
 	}
@@ -191,7 +191,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 * @param data
 	 * @return
 	 */
-	private Review parseReview(JsonObject data) {
+	public Review parseReview(JsonObject data) {
 
 		Review review = new Review(data.getString("review_id"));
 		review.setUser(data.getString("user_id"));
@@ -204,30 +204,35 @@ public class GeneralDb<T> implements MP5Db<T> {
 
 		// Adds review to business
 		Business change = new Business(data.getString("business_id"));
+		Business currentB = new Business("nothing");
 		for (Business b : this.businesses) {
+			currentB = b;
 			if (b.equals(change)) {
 				change = b;
 				break;
 			}
 		}
-
-		this.businesses.remove(change);
-		change.addReview(review);
-		this.businesses.add(change);
+		if (currentB.equals(change)) {
+			this.businesses.remove(change);
+			change.addReview(review);
+			this.businesses.add(change);
+		}
 
 		// Adds review to user
 		User user = new User(data.getString("user_id"));
+		User currentU = new User("nothing");
 		for (User u : this.users) {
+			currentU = u;
 			if (u.equals(user)) {
 				user = u;
 				break;
 			}
 		}
-
-		this.users.remove(user);
-		user.addReview(review);
-		this.users.add(user);
-
+		if (currentU.equals(user)) {
+			this.users.remove(user);
+			user.addReview(review);
+			this.users.add(user);
+		}
 		return review;
 	}
 

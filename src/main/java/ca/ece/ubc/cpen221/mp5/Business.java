@@ -5,20 +5,20 @@ import java.util.List;
 
 public class Business {
 
-	private String id;
-	private String name;
-	private String address;
-	private String city;
-	private String state;
-	private Coordinate coordinate;
-	private List<String> neighbourhood = new ArrayList<String>();
-	private List<Review> reviews = new ArrayList<Review>();;
-	private boolean isOpen;
-	private List<String> categories = new ArrayList<String>();
-	private String url;
-	private String photoURL;
-	private List<String> schools = new ArrayList<String>();
-	private int price;
+	protected String id;
+	protected String name;
+	protected String address;
+	protected String city;
+	protected String state;
+	protected Coordinate coordinate;
+	protected List<String> neighbourhood = new ArrayList<String>();
+	protected List<Review> reviews = new ArrayList<Review>();;
+	protected boolean isOpen;
+	protected List<String> categories = new ArrayList<String>();
+	protected String url;
+	protected String photoURL;
+	protected List<String> schools = new ArrayList<String>();
+	protected int price;
 
 	/**
 	 * Constructs a new business
