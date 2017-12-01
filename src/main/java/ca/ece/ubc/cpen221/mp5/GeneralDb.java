@@ -255,6 +255,9 @@ public class GeneralDb<T> implements MP5Db<T> {
 		for (int i = 0; i < l.size(); i++) {
 			List<Business> b = new ArrayList<Business>(l.get(i).getBusinesses());
 			for (int a = 0; a < b.size(); a++) {
+				if(a != 0) {
+					result += ",";
+				}
 				JsonObject restaurant = Json.createObjectBuilder().add("x", b.get(a).getCoordinates().Lat())
 						.add("y", b.get(a).getCoordinates().Long()).add("name", b.get(a).name()).add("cluster", i + 1)
 						.add("weight", weight).build();
