@@ -65,6 +65,7 @@ public class YelpDB<Restuarant, T> extends GeneralDb<T> {
 		}
 		else return null;
 	}
+	
 	private void populateRestaurants(String filePath) throws IOException {
 		File file = new File(filePath);
 		BufferedReader fileReader = new BufferedReader(new FileReader(file));

@@ -14,8 +14,8 @@ public class TestRip {
 		db.populateDatabase(rest, user, review);
 
 		System.out.println("ripness over");
-
 		System.out.println(db.kMeansClusters_json(5));
+		
 	}
 
 }
