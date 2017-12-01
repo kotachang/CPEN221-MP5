@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -144,7 +145,8 @@ public class GeneralDb<T> implements MP5Db<T> {
 
 	/**
 	 * Populates the users from a given JSON file.
-	 * @return 
+	 * 
+	 * @return
 	 * 
 	 * @throws IOException
 	 */
@@ -237,9 +239,10 @@ public class GeneralDb<T> implements MP5Db<T> {
 		String weight = "1";
 		String result = "";
 		List<Cluster> l = new ArrayList<Cluster>();
-		l = firstCluster(k);
+		l = Cluster(k);
 
 		// I did the thing!!!
+		// nice
 		for (int i = 0; i < l.size(); i++) {
 			List<Business> b = new ArrayList<Business>(l.get(i).businesses);
 			for (int a = 0; a < b.size(); a++) {
@@ -249,10 +252,16 @@ public class GeneralDb<T> implements MP5Db<T> {
 				result += restaurant.toString();
 			}
 		}
+		try {
+			FileWriter writer = new FileWriter("visualize/voronoi.json");
+			writer.write(result);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 
-	public List<Cluster> firstCluster(int nk) {
+	public List<Cluster> Cluster(int nk) {
 		List<Cluster> sublist = new ArrayList<Cluster>();
 		List<Cluster> previous = new ArrayList<Cluster>();
 		int k = 0;
