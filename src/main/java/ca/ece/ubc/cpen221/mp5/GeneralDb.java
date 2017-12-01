@@ -42,7 +42,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 
 	/**
 	 * 
-	 * @return
+	 * @return list of all businesses in the database
 	 */
 	public List<Business> getBusinesses() {
 		return new ArrayList<Business>(businesses);
@@ -50,13 +50,14 @@ public class GeneralDb<T> implements MP5Db<T> {
 
 	/**
 	 * 
-	 * @return
+	 * @return list of all reviews in the database
 	 */
 	public List<Review> getReviews() {
 		return new ArrayList<Review>(reviews);
 	}
 
 	/**
+	 * Adds a user ot the database
 	 * 
 	 * @param user
 	 *            represents the user that will be added to the database. Should
@@ -67,6 +68,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	/**
+	 * Adds a business to the database
 	 * 
 	 * @param business
 	 *            represents a business to be added to the database
@@ -79,6 +81,8 @@ public class GeneralDb<T> implements MP5Db<T> {
 
 	/**
 	 * 
+	 * Adds a review to the database
+	 * 
 	 * @param review
 	 *            represents a review to be added to the database. Will also add
 	 *            associated businesses that are not already in the database to the
@@ -90,8 +94,11 @@ public class GeneralDb<T> implements MP5Db<T> {
 
 	/**
 	 * 
+	 * Creates a business from the input JsonObject
+	 * 
 	 * @param data
-	 * @return
+	 *            JsonObject containing the business information
+	 * @return the business parsed from the information
 	 */
 	public Business parseBusiness(JsonObject data) {
 
@@ -151,11 +158,14 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	/**
+	 * Creates a user from the input data
 	 * 
 	 * @param data
-	 * @return
+	 *            JsonObject containing the user information
+	 * @return the user parsed from the data
 	 */
 	private User parseUser(JsonObject data) {
+		// Standard Characteristics
 		User user = new User(data.getString("user_id"));
 		user.setURL(data.getString("url"));
 		JsonObject votes = data.getJsonObject("votes");
@@ -166,11 +176,13 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	/**
-	 * Populates the users from a given JSON file.
 	 * 
-	 * @return
+	 * Populates the users from a given Json file.
 	 * 
+	 * @param filePath
+	 *            the file path of the input user data file (JSON)
 	 * @throws IOException
+	 *             if the file path is not a file
 	 */
 	protected void populateUsers(String filePath) throws IOException {
 		File file = new File(filePath);
@@ -187,12 +199,15 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	/**
+	 * Creates a reivew from the given data
 	 * 
 	 * @param data
-	 * @return
+	 *            JsonObject containing the review information
+	 * @return the review parsed from the data
 	 */
 	public Review parseReview(JsonObject data) {
 
+		// Standard characteristics
 		Review review = new Review(data.getString("review_id"));
 		review.setUser(data.getString("user_id"));
 		review.setBusiness(data.getString("business_id"));
@@ -202,10 +217,12 @@ public class GeneralDb<T> implements MP5Db<T> {
 		review.setReviewRating(votes.getInt("useful"), votes.getInt("funny"), votes.getInt("cool"));
 		review.setText(data.getString("text"));
 
-		// Adds review to business
+		// Adds review to business associated with the review
 		Business change = new Business(data.getString("business_id"));
 		Business currentB = new Business("nothing");
 		for (Business b : this.businesses) {
+			// finds the business in the database, makes a copy of it, adds the review, and
+			// replaces it back into the database
 			currentB = b;
 			if (b.equals(change)) {
 				change = b;
@@ -222,6 +239,8 @@ public class GeneralDb<T> implements MP5Db<T> {
 		User user = new User(data.getString("user_id"));
 		User currentU = new User("nothing");
 		for (User u : this.users) {
+			// finds the user in the database, makes a copy of it, adds the review, and
+			// replaces it back into the database
 			currentU = u;
 			if (u.equals(user)) {
 				user = u;
@@ -357,6 +376,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 * @param l2
 	 * @return
 	 */
+	//PUT THIS SOMEWHERE NOT HERE LOL
 	public boolean equals(List<Cluster> l, List<Cluster> l2) {
 		for (int i = 0; i < l.size(); i++) {
 			if (!(l.get(i).equals(l2.get(i)))) {
@@ -372,6 +392,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 * @param c2
 	 * @return
 	 */
+	//PUT THIS SOMEWHERE NOT HERE LOL
 	public boolean equals(Cluster c, Cluster c2) {
 		if (c.businesses.equals(c2.businesses)) {
 			return true;
