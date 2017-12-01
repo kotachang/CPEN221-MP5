@@ -339,17 +339,22 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 */
 	@Override
 	public ToDoubleBiFunction getPredictorFunction(String user) {
-		
+
 		Map<String, Business> idBus = new HashMap<String, Business>();
 		Map<Business, Review> busR = new HashMap<Business, Review>();
 		List<Review> tempList = new ArrayList<Review>();
 		List<String> busIds = new ArrayList<String>();
 
+		/*
+		 * Keep track of a business's specific review written by the user from the input argument.
+		 * ** rep invariant for review = only 1 review per user per business **
+		 * 
+		 */
 		for (int i = 0; i < this.businesses.size(); i++) {
 			tempList = this.businesses.get(i).reviews();
 			for (int a = 0; a < tempList.size(); a++) {
 				if (tempList.get(a).getUser().equals(user)) {
-		
+
 					idBus.put(this.businesses.get(i).getId(), this.businesses.get(i));
 					busIds.add(this.businesses.get(i).getId());
 					busR.put(this.businesses.get(i), tempList.get(a));
@@ -361,6 +366,11 @@ public class GeneralDb<T> implements MP5Db<T> {
 		List<Double> prices = new ArrayList<Double>();
 		List<Integer> stars = new ArrayList<Integer>();
 
+		/*
+		 * Get the prices of the business and the review of that business entered by the input argument user.
+		 * put them in separate lists for map, filter, reduce processes but same index for the same business. 
+		 * 
+		 */
 		for (Map.Entry<String, Business> entry : idBus.entrySet()) {
 			for (int i = 0; i < busIds.size(); i++) {
 				prices.add((double) idBus.get(busIds.get(i)).getPrice());
