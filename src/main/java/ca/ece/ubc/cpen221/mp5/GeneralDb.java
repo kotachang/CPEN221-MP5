@@ -346,8 +346,9 @@ public class GeneralDb<T> implements MP5Db<T> {
 		List<String> busIds = new ArrayList<String>();
 
 		/*
-		 * Keep track of a business's specific review written by the user from the input argument.
-		 * ** rep invariant for review = only 1 review per user per business **
+		 * Keep track of a business's specific review written by the user from the input
+		 * argument. ** rep invariant for review = only 1 review per user per business
+		 * **
 		 * 
 		 */
 		for (int i = 0; i < this.businesses.size(); i++) {
@@ -367,8 +368,9 @@ public class GeneralDb<T> implements MP5Db<T> {
 		List<Integer> stars = new ArrayList<Integer>();
 
 		/*
-		 * Get the prices of the business and the review of that business entered by the input argument user.
-		 * put them in separate lists for map, filter, reduce processes but same index for the same business. 
+		 * Get the prices of the business and the review of that business entered by the
+		 * input argument user. put them in separate lists for map, filter, reduce
+		 * processes but same index for the same business.
 		 * 
 		 */
 		for (Map.Entry<String, Business> entry : idBus.entrySet()) {
@@ -377,6 +379,10 @@ public class GeneralDb<T> implements MP5Db<T> {
 				stars.add(busR.get(idBus.get(busIds.get(i))).stars());
 			}
 		}
+
+		/*
+		 * Declare the object type Predictor (Sxx, Syy, Sxy)
+		 */
 
 		return null;
 	}
