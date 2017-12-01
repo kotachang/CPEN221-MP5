@@ -13,7 +13,7 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
-public class YelpDB<Restuarant, T> extends GeneralDb<T> {
+public class YelpDB<Restuarant> extends GeneralDb<Restaurant> {
 
 	public YelpDB() {
 		super();
