@@ -6,7 +6,7 @@ public class Predictor<T> implements ToDoubleBiFunction<MP5Db<T>,String>{
 
 	@Override
 	public double applyAsDouble(MP5Db<T> t, String u) {
-		// TODO Auto-generated method stub
+	
 		return 0;
 	}
 

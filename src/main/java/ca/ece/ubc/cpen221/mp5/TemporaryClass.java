@@ -16,6 +16,7 @@ public class TemporaryClass {
 
 	public ToDoubleBiFunction getPredictorFunction(String user) {
 		// TODO Auto-generated method stub
+		
 		return null;
 	}
 	

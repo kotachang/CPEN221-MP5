@@ -58,11 +58,4 @@ public class Cluster {
 		return center;
 	}
 	
-	public boolean equals(Cluster c) {
-		if (this.businesses.equals(c)) {
-			return true;
-		}
-		return false;
-	}
-
 }

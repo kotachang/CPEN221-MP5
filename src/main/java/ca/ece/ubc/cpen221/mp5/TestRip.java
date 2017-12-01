@@ -13,7 +13,6 @@ public class TestRip {
 
 		System.out.println("ripness over");
 		System.out.println(db.kMeansClusters_json(5));
-		
 	}
 
 }

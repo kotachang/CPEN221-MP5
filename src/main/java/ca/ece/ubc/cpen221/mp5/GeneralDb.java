@@ -179,7 +179,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 				break;
 			}
 		}
-		
+
 		this.businesses.remove(change);
 		change.addReview(review);
 		this.businesses.add(change);
@@ -192,7 +192,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 				break;
 			}
 		}
-		
+
 		this.users.remove(user);
 		user.addReview(review);
 		this.users.add(user);
@@ -234,13 +234,11 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 */
 	@Override
 	public String kMeansClusters_json(int k) {
-		String weight = "1";
-		String result = "";
+		String weight = "1.0";
+		String result = "[";
 		List<Cluster> l = new ArrayList<Cluster>();
 		l = Cluster(k);
 
-		// I did the thing!!!
-		// nice
 		for (int i = 0; i < l.size(); i++) {
 			List<Business> b = new ArrayList<Business>(l.get(i).businesses);
 			for (int a = 0; a < b.size(); a++) {
@@ -250,6 +248,9 @@ public class GeneralDb<T> implements MP5Db<T> {
 				result += restaurant.toString();
 			}
 		}
+		
+		result += "]";
+
 		try {
 			FileWriter writer = new FileWriter("visualize/voronoi.json");
 			writer.write(result);
@@ -301,7 +302,24 @@ public class GeneralDb<T> implements MP5Db<T> {
 			}
 		}
 
+		System.out.println(sublist.size());
 		return sublist;
+	}
+
+	public boolean equals(List<Cluster> l, List<Cluster> l2) {
+		for (int i = 0; i < l.size(); i++) {
+			if (!(l.get(i).equals(l2.get(i)))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public boolean equals(Cluster c, Cluster c2) {
+		if (c.businesses.equals(c2.businesses)) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
