@@ -29,7 +29,8 @@ public class YelpDB extends GeneralDb<Restaurant> {
 	 * @param data
 	 * @return
 	 */
-	private Restaurant parseRestaurant(JsonObject data) {
+	@Override
+	public Business parseBusiness(JsonObject data) {
 		// Address array
 		String[] address = new String[5];
 		address[0] = data.getString("full_address");
@@ -62,27 +63,57 @@ public class YelpDB extends GeneralDb<Restaurant> {
 		for (int i = 0; i < categories.size(); i++) {
 			business.addCategory(categories.getString(i));
 		}
-
-		if (categories.contains("Restaurants") == true) {
-			return business;
+		if (business.categories().contains("Restaurants")) {
+			return (Business) business;
 		} else
 			return null;
 	}
+	
+	public Review parseReview(JsonObject data) {
 
-	private void populateRestaurants(String filePath) throws IOException {
-		File file = new File(filePath);
-		BufferedReader fileReader = new BufferedReader(new FileReader(file));
-		String line;
-		while ((line = fileReader.readLine()) != null) {
-			StringReader sr = new StringReader(line);
-			JsonReader parseFile = Json.createReader(sr);
-			JsonObject data = parseFile.readObject();
-			Restaurant newRestaurant = this.parseRestaurant(data);
-			if (newRestaurant != null) {
-				this.addBusiness(newRestaurant);
+		Review review = new Review(data.getString("review_id"));
+		review.setUser(data.getString("user_id"));
+		review.setBusiness(data.getString("business_id"));
+		review.setStars(data.getInt("stars"));
+		review.setDate(data.getString("date"));
+		JsonObject votes = data.getJsonObject("votes");
+		review.setReviewRating(votes.getInt("useful"), votes.getInt("funny"), votes.getInt("cool"));
+		review.setText(data.getString("text"));
+
+		// Adds review to business
+		Restaurant change = new Restaurant(data.getString("business_id"));
+		Restaurant currentR = new Restaurant("nothing");
+		for (Business b : this.businesses) {
+			currentR = (Restaurant) b;
+			if (change.equals(b)) {
+				change = (Restaurant) b;
+				break;
 			}
 		}
-		fileReader.close();
+		if (currentR.equals(change)) {
+			this.businesses.remove(change);
+			change.addReview(review);
+			this.businesses.add(change);
+		}
+
+		// Adds review to user
+		User user = new User(data.getString("user_id"));
+		User currentU = new User("nothing");
+		for (User u : this.users) {
+			currentU = u;
+			if (u.equals(user)) {
+				user = u;
+				break;
+			}
+		}
+		if (currentU.equals(user)) {
+			this.users.remove(user);
+			user.addReview(review);
+			this.users.add(user);
+		}
+
+		return review;
 	}
+
 
 }
