@@ -5,11 +5,21 @@ public class Coordinate {
 	private double longitude;
 	private static final double R = 6371 * 1000;// in meters
 
+	/**
+	 * 
+	 * @param latitude
+	 * @param longitude
+	 */
 	public Coordinate(double latitude, double longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
 
+	/**
+	 * 
+	 * @param otherC
+	 * @return
+	 */
 	public double distance(Coordinate otherC) {
 		double lat = this.Lat();
 		double lat2 = otherC.Lat();
@@ -21,10 +31,18 @@ public class Coordinate {
 		return R * c;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public double Long() {
 		return longitude;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public double Lat() {
 		return latitude;
 	}

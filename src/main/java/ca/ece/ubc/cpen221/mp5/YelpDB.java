@@ -31,6 +31,7 @@ public class YelpDB extends GeneralDb<Restaurant> {
 	 * @param data
 	 *            JsonObject containing the business(restaurant) information
 	 * @return the business(restaurant) parsed from the information
+	 * 
 	 */
 	@Override
 	public Business parseBusiness(JsonObject data) {
