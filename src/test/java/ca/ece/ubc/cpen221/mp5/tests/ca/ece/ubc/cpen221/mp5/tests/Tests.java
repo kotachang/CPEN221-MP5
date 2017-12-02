@@ -1,4 +1,4 @@
-package ca.ece.ubc.cpen221.mp5.tests;
+package ca.ece.ubc.cpen221.mp5.tests.ca.ece.ubc.cpen221.mp5.tests;
 
 import static org.junit.Assert.*;
 
@@ -12,6 +12,7 @@ import org.junit.Test;
 import ca.ece.ubc.cpen221.mp5.Business;
 import ca.ece.ubc.cpen221.mp5.Cluster;
 import ca.ece.ubc.cpen221.mp5.Coordinate;
+import ca.ece.ubc.cpen221.mp5.GeneralDb;
 import ca.ece.ubc.cpen221.mp5.YelpDB;
 
 public class Tests {
@@ -47,5 +48,22 @@ public class Tests {
 		YelpDB db = new YelpDB(rest, user, review);
 
 		System.out.println(db.kMeansClusters_json(3));
+	}
+	
+	@Test
+	public void businessTest1() throws IOException {
+		String rest = "data/restaurants.json";
+		String user = "data/users.json";
+		String review = "data/reviews.json";
+		
+		GeneralDb<Business> db = new GeneralDb(rest,user,review);
+		
+		for(Business b : db.getBusinesses()) {
+			if(b.getId().equals("FWadSZw0G7HsgKXq7gHTnw")) {
+				Business PeppermintGrill = b;
+				break;
+			}
+		}
+		assertTrue(true);
 	}
 	}
