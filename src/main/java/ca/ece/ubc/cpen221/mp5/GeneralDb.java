@@ -7,11 +7,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.ToDoubleBiFunction;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -19,6 +23,13 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
+/**
+ * RI : 
+ * 
+ * @param <T>
+ *            general type T
+ * 
+ */
 public class GeneralDb<T> implements MP5Db<T> {
 
 	protected List<Business> businesses;
@@ -57,7 +68,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	/**
-	 * Adds a user ot the database
+	 * Adds a user on the database
 	 * 
 	 * @param user
 	 *            represents the user that will be added to the database. Should
@@ -284,7 +295,10 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	/**
-	 * @return
+	 * @param k
+	 *            = number of desired clusters
+	 * @return json file formatted string of each of the restaurants and their
+	 *         clusters to run the visualizer
 	 * 
 	 */
 	@Override
@@ -302,7 +316,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 				}
 				JsonObject restaurant = Json.createObjectBuilder().add("x", b.get(a).getCoordinates().Lat())
 						.add("y", b.get(a).getCoordinates().Long()).add("name", b.get(a).name()).add("cluster", i + 1)
-						.add("weight", 1.0).build();
+						.add("weight", 500.0).build();
 
 				result += restaurant.toString();
 			}
@@ -310,21 +324,39 @@ public class GeneralDb<T> implements MP5Db<T> {
 
 		result += "]";
 
-		try {
-			FileWriter writer = new FileWriter("visualize/voronoi.json");
-			writer.write(result);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		return result;
 	}
 
 	/**
 	 * 
-	 * @param nk
-	 * @return
+	 * @param number
+	 *            of desired clusters
+	 * @return List of Sets of restaurants. each set representing a cluster
 	 */
-	public List<Cluster> Cluster(int nk) {
+	public List<Set<Restaurant>> returnClusters(int k) {
+		List<Set<Restaurant>> list = new ArrayList<Set<Restaurant>>();
+		List<Cluster> clusters = new ArrayList<Cluster>();
+		Set<Restaurant> set;
+
+		clusters.addAll(Cluster(k));
+
+		for (int i = 0; i < clusters.size(); i++) {
+			set = new HashSet<Restaurant>();
+			set.add((Restaurant) clusters.get(i).getBusinesses());
+			list.add(set);
+		}
+
+		return list;
+	}
+
+	/**
+	 * 
+	 * @param nk
+	 *            = number of desired clusters
+	 * @return list of clusters that are optimized based on the locations of the
+	 *         restaurants
+	 */
+	private List<Cluster> Cluster(int nk) {
 		List<Cluster> sublist = new ArrayList<Cluster>();
 		List<Cluster> previous = new ArrayList<Cluster>();
 		int k = 0;
@@ -370,10 +402,9 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	/**
-	 * 
 	 * @param l
 	 * @param l2
-	 * @return
+	 * @return true if the two lists of clusters are equal
 	 */
 	// PUT THIS SOMEWHERE NOT HERE LOL
 	public boolean equals(List<Cluster> l, List<Cluster> l2) {
@@ -389,7 +420,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 * 
 	 * @param c
 	 * @param c2
-	 * @return
+	 * @return true if the two clusters are equal
 	 */
 	// PUT THIS SOMEWHERE NOT HERE LOL
 	public boolean equals(Cluster c, Cluster c2) {
@@ -400,51 +431,38 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	/**
+	 * @param String
+	 *            = userID
+	 * @return a function that predicts the user's rating on a business according to
+	 *         the prices
 	 * 
 	 */
 	@Override
 	public ToDoubleBiFunction getPredictorFunction(String user) {
 
-		Map<String, Business> idBus = new HashMap<String, Business>();
-		Map<Business, Review> busR = new HashMap<Business, Review>();
-		List<Review> tempList = new ArrayList<Review>();
-		List<String> busIds = new ArrayList<String>();
-
 		/*
 		 * Keep track of a business's specific review written by the user from the input
 		 * argument. ** rep invariant for review = only 1 review per user per business
-		 * **
-		 * 
 		 */
+
+		List<Review> tempListofReviews = new ArrayList<Review>();
+		List<Business> business = new ArrayList<Business>();
+		List<Review> review = new ArrayList<Review>();
 
 		for (int i = 0; i < this.businesses.size(); i++) {
-			tempList = this.businesses.get(i).reviews();
-			for (int a = 0; a < tempList.size(); a++) {
-				if (tempList.get(a).getUser().equals(user)) {
+			tempListofReviews = this.businesses.get(i).reviews();
+			for (int a = 0; a < tempListofReviews.size(); a++) {
+				if (tempListofReviews.get(a).getUser().equals(user)) {
 
-					idBus.put(this.businesses.get(i).getId(), this.businesses.get(i));
-					busIds.add(this.businesses.get(i).getId());
-					busR.put(this.businesses.get(i), tempList.get(a));
+					business.add(businesses.get(i));
+					review.add(tempListofReviews.get(a));
 				}
 			}
-			tempList = new ArrayList<Review>();
+			tempListofReviews = new ArrayList<Review>();
 		}
 
-		List<Double> prices = new ArrayList<Double>();
-		List<Double> stars = new ArrayList<Double>();
-
-		/*
-		 * Get the prices of the business and the review of that business entered by the
-		 * input argument user. put them in separate lists for map, filter, reduce
-		 * processes but same index for the same business.
-		 * 
-		 */
-		for (Map.Entry<String, Business> entry : idBus.entrySet()) {
-			for (int i = 0; i < busIds.size(); i++) {
-				prices.add((double) idBus.get(busIds.get(i)).getPrice());
-				stars.add((double) busR.get(idBus.get(busIds.get(i))).stars());
-			}
-		}
+		List<Double> prices = business.stream().map(p -> (double) p.getPrice()).collect(Collectors.toList());
+		List<Double> stars = review.stream().map(r -> (double) r.stars()).collect(Collectors.toList());
 
 		double sumX = 0;
 		for (int i = 0; i < prices.size(); i++) {
@@ -460,8 +478,18 @@ public class GeneralDb<T> implements MP5Db<T> {
 
 		double Sxx = prices.stream().reduce(0.0, (x, p) -> x + Math.pow(p - meanX, 2));
 		double Syy = stars.stream().reduce(0.0, (y, s) -> y + Math.pow(s - meanY, 2));
-		
-		return null;
+		double Sxy = 0.0;
+		for (int i = 0; i < prices.size(); i++) {
+			Sxy += (prices.get(i) - meanX) * (stars.get(i) - meanY);
+		}
+
+		double b = Sxy / Sxx;
+		double a = meanY - b * meanX;
+		double rSquared = Math.sqrt(Math.pow(Sxy, 2) / (Sxx * Syy));
+
+		Predictor<T> predict = new Predictor<T>(a, b);
+
+		return predict;
 	}
 
 }

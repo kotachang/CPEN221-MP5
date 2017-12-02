@@ -4,6 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * 
+ *  @RI : Only one review per user for a business
+ *
+ */
+
 public class Review {
 	
 	private String user;

@@ -20,6 +20,7 @@ public class Cluster {
 	 */
 	public Cluster() {
 		businesses = new HashSet<Business>();
+		center = new Coordinate(startLat, startLong);
 	}
 
 	/**
@@ -41,6 +42,7 @@ public class Cluster {
 	 */
 	public Cluster(Business business) {
 		businesses.add(business);
+		center = new Coordinate(startLat, startLong);
 	}
 
 	/**

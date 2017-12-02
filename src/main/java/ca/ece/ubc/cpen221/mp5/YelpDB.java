@@ -73,15 +73,7 @@ public class YelpDB extends GeneralDb<Restaurant> {
 			return null;
 	}
 
-	/**
-	 * 
-	 * Creates a review from the input JsonObject
-	 * 
-	 * @param data
-	 *            JsonObject containing the review information
-	 * @return the review parsed from the information
-	 */
-	@Override
+
 	public Review parseReview(JsonObject data) {
 
 		Review review = new Review(data.getString("review_id"));
