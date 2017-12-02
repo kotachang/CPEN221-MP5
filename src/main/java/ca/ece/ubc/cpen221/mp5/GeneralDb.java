@@ -7,7 +7,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -312,13 +314,22 @@ public class GeneralDb<T> implements MP5Db<T> {
 
 		result += "]";
 
-		try {
-			FileWriter writer = new FileWriter("visualize/voronoi.json");
-			writer.write(result);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		return result;
+	}
+
+	public List<Set<Restaurant>> returnClusters(int k) {
+		List<Set<Restaurant>> list = new ArrayList<Set<Restaurant>>();
+		List<Cluster> clusters = new ArrayList<Cluster>();
+		Set<Restaurant> set;
+		
+		clusters.addAll(Cluster(k));
+		
+		for (int i = 0; i < clusters.size(); i++) {
+			set = new HashSet<Restaurant>();
+			set.add((Restaurant) clusters.get(i).getBusinesses());
+			list.add(set);
+		}
+		return list;
 	}
 
 	/**
@@ -326,7 +337,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 * @param nk
 	 * @return
 	 */
-	public List<Cluster> Cluster(int nk) {
+	private List<Cluster> Cluster(int nk) {
 		List<Cluster> sublist = new ArrayList<Cluster>();
 		List<Cluster> previous = new ArrayList<Cluster>();
 		int k = 0;

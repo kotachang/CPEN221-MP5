@@ -5,6 +5,12 @@ import java.util.List;
 import java.util.function.ToDoubleBiFunction;
 import java.util.stream.Stream;
 
+/**
+ * RI: 
+ * AF:  applyAsDouble function returns predicted rating of a restaurant based on the prices
+ *
+ * @param <T> argument general type T as MP5Db
+ */
 public class Predictor<T> implements ToDoubleBiFunction<MP5Db<T>, String> {
 	double a;
 	double b;
