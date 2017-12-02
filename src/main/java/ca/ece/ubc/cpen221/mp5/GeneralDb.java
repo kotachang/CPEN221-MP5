@@ -23,6 +23,13 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
+/**
+ * RI : 
+ * 
+ * @param <T>
+ *            general type T
+ * 
+ */
 public class GeneralDb<T> implements MP5Db<T> {
 
 	protected List<Business> businesses;
@@ -61,7 +68,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	/**
-	 * Adds a user ot the database
+	 * Adds a user on the database
 	 * 
 	 * @param user
 	 *            represents the user that will be added to the database. Should
@@ -288,8 +295,10 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	/**
-	 * @param k = number of desired clusters
-	 * @return json file formatted string of each of the restaurants and their clusters to run the visualizer
+	 * @param k
+	 *            = number of desired clusters
+	 * @return json file formatted string of each of the restaurants and their
+	 *         clusters to run the visualizer
 	 * 
 	 */
 	@Override
@@ -320,29 +329,32 @@ public class GeneralDb<T> implements MP5Db<T> {
 
 	/**
 	 * 
-	 * @param number of desired clusters
+	 * @param number
+	 *            of desired clusters
 	 * @return List of Sets of restaurants. each set representing a cluster
 	 */
 	public List<Set<Restaurant>> returnClusters(int k) {
 		List<Set<Restaurant>> list = new ArrayList<Set<Restaurant>>();
 		List<Cluster> clusters = new ArrayList<Cluster>();
 		Set<Restaurant> set;
-		
+
 		clusters.addAll(Cluster(k));
-		
+
 		for (int i = 0; i < clusters.size(); i++) {
 			set = new HashSet<Restaurant>();
 			set.add((Restaurant) clusters.get(i).getBusinesses());
 			list.add(set);
 		}
-		
+
 		return list;
 	}
 
 	/**
 	 * 
-	 * @param nk = number of desired clusters
-	 * @return list of clusters that are optimized based on the locations of the restaurants
+	 * @param nk
+	 *            = number of desired clusters
+	 * @return list of clusters that are optimized based on the locations of the
+	 *         restaurants
 	 */
 	private List<Cluster> Cluster(int nk) {
 		List<Cluster> sublist = new ArrayList<Cluster>();
@@ -419,8 +431,10 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	/**
-	 * @param String = userID
-	 * @return a function that predicts the user's rating on a business according to the prices
+	 * @param String
+	 *            = userID
+	 * @return a function that predicts the user's rating on a business according to
+	 *         the prices
 	 * 
 	 */
 	@Override

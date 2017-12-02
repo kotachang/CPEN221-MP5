@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 /**
  * RI: 
- * AF:  applyAsDouble function returns predicted rating of a restaurant based on the prices
+ * AF: applyAsDouble function returns predicted rating of a restaurant based on the prices
  *
  * @param <T> argument general type T as MP5Db
  */
@@ -20,6 +20,12 @@ public class Predictor<T> implements ToDoubleBiFunction<MP5Db<T>, String> {
 		this.b = b;
 	}
 
+	/**
+	 * @param MP5Db<T> database interface
+	 * @param u = String = businessID
+	 * 
+	 * @return predicted double rating that the user might give to the restaurant
+	 */
 	@Override
 	public double applyAsDouble(MP5Db<T> t, String u) {
 		YelpDB yelpDb = (YelpDB) t;
