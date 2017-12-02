@@ -291,7 +291,6 @@ public class GeneralDb<T> implements MP5Db<T> {
 	public String kMeansClusters_json(int k) {
 		String result = "[";
 		List<Cluster> l = new ArrayList<Cluster>();
-		JsonArrayBuilder arr = Json.createArrayBuilder();
 
 		l = Cluster(k);
 
@@ -461,6 +460,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 
 		double Sxx = prices.stream().reduce(0.0, (x, p) -> x + Math.pow(p - meanX, 2));
 		double Syy = stars.stream().reduce(0.0, (y, s) -> y + Math.pow(s - meanY, 2));
+		
 		return null;
 	}
 
