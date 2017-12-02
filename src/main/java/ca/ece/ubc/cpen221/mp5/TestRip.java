@@ -11,7 +11,6 @@ public class TestRip {
 
 		YelpDB db = new YelpDB(rest, user, review);
 
-		System.out.println("ripness over");
 		System.out.println(db.kMeansClusters_json(5));
 	}
 

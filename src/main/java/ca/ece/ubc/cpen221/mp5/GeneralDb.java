@@ -391,6 +391,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 		 * **
 		 * 
 		 */
+		
 		for (int i = 0; i < this.businesses.size(); i++) {
 			tempList = this.businesses.get(i).reviews();
 			for (int a = 0; a < tempList.size(); a++) {
