@@ -56,7 +56,7 @@ public class Tests {
 		String user = "data/users.json";
 		String review = "data/reviews.json";
 		
-		GeneralDb<Business> db = new GeneralDb(rest,user,review);
+		GeneralDb<Business> db = new GeneralDb<Business>(rest,user,review);
 		
 		for(Business b : db.getBusinesses()) {
 			if(b.getId().equals("FWadSZw0G7HsgKXq7gHTnw")) {

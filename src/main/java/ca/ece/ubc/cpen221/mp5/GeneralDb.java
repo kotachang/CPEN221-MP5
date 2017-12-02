@@ -438,7 +438,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 * 
 	 */
 	@Override
-	public ToDoubleBiFunction getPredictorFunction(String user) {
+	public ToDoubleBiFunction<MP5Db<T>,String> getPredictorFunction(String user) {
 
 		/*
 		 * Keep track of a business's specific review written by the user from the input
