@@ -454,7 +454,9 @@ public class GeneralDb<T> implements MP5Db<T> {
 		double a = meanY - b * meanX;
 		double rSquared = Math.sqrt(Math.pow(Sxy, 2) / (Sxx * Syy));
 
-		return null;
+		Predictor<T> predict = new Predictor<T>(a, b);
+
+		return predict;
 	}
 
 }
