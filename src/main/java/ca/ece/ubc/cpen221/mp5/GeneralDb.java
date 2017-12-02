@@ -289,7 +289,6 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 */
 	@Override
 	public String kMeansClusters_json(int k) {
-		String weight = "1.0";
 		String result = "[";
 		List<Cluster> l = new ArrayList<Cluster>();
 		JsonArrayBuilder arr = Json.createArrayBuilder();
@@ -301,10 +300,13 @@ public class GeneralDb<T> implements MP5Db<T> {
 			for (int a = 0; a < b.size(); a++) {
 				if (a != 0) {
 					result += ",";
+					System.out.println(b.get(a).name());
 				}
+				System.out.println(b.get(a).name());
 				JsonObject restaurant = Json.createObjectBuilder().add("x", b.get(a).getCoordinates().Lat())
 						.add("y", b.get(a).getCoordinates().Long()).add("name", b.get(a).name()).add("cluster", i + 1)
-						.add("weight", weight).build();
+						.add("weight", 1.0).build();
+
 				result += restaurant.toString();
 			}
 		}
@@ -376,7 +378,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 * @param l2
 	 * @return
 	 */
-	//PUT THIS SOMEWHERE NOT HERE LOL
+	// PUT THIS SOMEWHERE NOT HERE LOL
 	public boolean equals(List<Cluster> l, List<Cluster> l2) {
 		for (int i = 0; i < l.size(); i++) {
 			if (!(l.get(i).equals(l2.get(i)))) {
@@ -392,7 +394,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 * @param c2
 	 * @return
 	 */
-	//PUT THIS SOMEWHERE NOT HERE LOL
+	// PUT THIS SOMEWHERE NOT HERE LOL
 	public boolean equals(Cluster c, Cluster c2) {
 		if (c.businesses.equals(c2.businesses)) {
 			return true;
@@ -417,7 +419,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 		 * **
 		 * 
 		 */
-		
+
 		for (int i = 0; i < this.businesses.size(); i++) {
 			tempList = this.businesses.get(i).reviews();
 			for (int a = 0; a < tempList.size(); a++) {
