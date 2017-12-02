@@ -68,7 +68,7 @@ public class YelpDB extends GeneralDb<Restaurant> {
 		} else
 			return null;
 	}
-	
+
 	public Review parseReview(JsonObject data) {
 
 		Review review = new Review(data.getString("review_id"));
@@ -114,6 +114,5 @@ public class YelpDB extends GeneralDb<Restaurant> {
 
 		return review;
 	}
-
 
 }
