@@ -300,9 +300,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 			for (int a = 0; a < b.size(); a++) {
 				if (a != 0) {
 					result += ",";
-					System.out.println(b.get(a).name());
 				}
-				System.out.println(b.get(a).name());
 				JsonObject restaurant = Json.createObjectBuilder().add("x", b.get(a).getCoordinates().Lat())
 						.add("y", b.get(a).getCoordinates().Long()).add("name", b.get(a).name()).add("cluster", i + 1)
 						.add("weight", 1.0).build();
@@ -449,10 +447,18 @@ public class GeneralDb<T> implements MP5Db<T> {
 			}
 		}
 
-		/*
-		 * Declare the object type Predictor (Sxx, Syy, Sxy)
-		 */
+		int meanX = 0;
+		for (int i = 0; i < prices.size(); i++) {
+			meanX += prices.get(i);
+		}
+		meanX = meanX / prices.size();
 
+		int meanY = 0;
+		for (int i = 0; i < stars.size(); i++) {
+			meanY += stars.get(i);
+		}
+		meanY = meanY / stars.size();
+		double Sxx = prices.stream().reduce(0.0, (p, p2) -> (Math.pow((p - (p + p2) / 2), 2)));
 		return null;
 	}
 
