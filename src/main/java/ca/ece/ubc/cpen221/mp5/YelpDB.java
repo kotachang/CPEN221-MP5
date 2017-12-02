@@ -26,8 +26,11 @@ public class YelpDB extends GeneralDb<Restaurant> {
 
 	/**
 	 * 
+	 * Creates a business(restaurant) from the input JsonObject
+	 * 
 	 * @param data
-	 * @return
+	 *            JsonObject containing the business(restaurant) information
+	 * @return the business(restaurant) parsed from the information
 	 */
 	@Override
 	public Business parseBusiness(JsonObject data) {
@@ -68,7 +71,16 @@ public class YelpDB extends GeneralDb<Restaurant> {
 		} else
 			return null;
 	}
-	
+
+	/**
+	 * 
+	 * Creates a review from the input JsonObject
+	 * 
+	 * @param data
+	 *            JsonObject containing the review information
+	 * @return the review parsed from the information
+	 */
+	@Override
 	public Review parseReview(JsonObject data) {
 
 		Review review = new Review(data.getString("review_id"));
@@ -114,6 +126,5 @@ public class YelpDB extends GeneralDb<Restaurant> {
 
 		return review;
 	}
-
 
 }

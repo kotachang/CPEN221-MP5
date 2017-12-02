@@ -25,14 +25,28 @@ public class Review {
 		this.id = reviewId;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getId() {
 		return this.id;
 	}
 	
+	/**
+	 * Sets the business id associated with this review
+	 * 
+	 * @param businessId the string of the business id
+	 */
 	public void setBusiness(String businessId) {
 		this.business = businessId;
 	}
 	
+	/**
+	 * Gets the business id associated with this review
+	 * 
+	 * @return a string of the business id
+	 */
 	public String getBusiness() {
 		return this.business;
 	}
@@ -49,6 +63,11 @@ public class Review {
 		this.user = id;
 	}
 	
+	/**
+	 * Gets the user who wrote this review
+	 * 
+	 * @return a string of the user's id
+	 */
 	public String getUser() {
 		return this.user;
 	}
@@ -83,36 +102,49 @@ public class Review {
 	}
 
 	/**
+	 * Initializes or updates this review's assigned ratings
 	 * 
-	 * @return
+	 * @param useful the rating of "useful" category  
+	 * @param funny the rating of "funny" category 
+	 * @param cool the rating of "cool" category
 	 */
-	public Set<String> attributes() {
-		return attributes.keySet();
-	}
-
 	public void setReviewRating(int useful, int funny, int cool) {
 		this.attributes.put("useful", useful);
 		this.attributes.put("funny", funny);
 		this.attributes.put("cool", cool);
 	}
 	
+	/**
+	 * 
+	 * @return a map of the rating categories and the review's user-voted ratings
+	 */
 	public Map<String,Integer> reviewRatings(){
 		return this.attributes;
 	}
 	
+	/**
+	 * Sets the text of the review (the written review)
+	 * 
+	 * @param text string of text
+	 */
 	public void setText(String text) {
 		this.text = text;
 	}
 	
+	/**
+	 * 
+	 * @return a string of the user's written review
+	 */
 	public String text() {
 		return text;
 	}
 	
-	public boolean equals(Review r) {
-		if(r.id == this.id) {
-			return true;
+	public boolean equals(Object review) {
+		if (!(review instanceof Review)) {
+			return false;
 		}
-		return false;
+		Review thatReview = (Review) review;
+		return (this.getId().equals(thatReview.getId()));
 	}
 
 }

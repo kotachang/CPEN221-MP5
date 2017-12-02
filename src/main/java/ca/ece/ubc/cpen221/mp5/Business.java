@@ -41,16 +41,19 @@ public class Business {
 	}
 
 	/**
+	 * Gets the business id
 	 * 
-	 * @return
+	 * @return a string of the business id
 	 */
 	public String getId() {
 		return this.id;
 	}
 
 	/**
+	 * gets the name of the business
 	 * 
-	 * @return
+	 * @return a string of the name of the business (null if it hasn't been
+	 *         initialized)
 	 */
 	public String name() {
 		return this.name;
@@ -60,9 +63,9 @@ public class Business {
 	 * Sets the address of the business
 	 * 
 	 * @param address
-	 *            an array of strings where the: first element = street address;
-	 *            second element = city; third element = state; fourth element =
-	 *            postal code; fifth element = coordinates.
+	 *            an array of strings where the: first element = address; second
+	 *            element = city; third element = state; fourth element =
+	 *            coordinates.
 	 */
 	public void setAddress(String[] address) {
 		this.address = address[0];
@@ -72,40 +75,48 @@ public class Business {
 	}
 
 	/**
+	 * Sets the url for this business's yelp site
 	 * 
 	 * @param url
+	 *            the string of the url
 	 */
 	public void setURL(String url) {
 		this.url = url;
 	}
 
 	/**
+	 * Gets the url for this business's yelp site
 	 * 
-	 * @return
+	 * @return the string of the url, null if it has no website/has not been set
 	 */
 	public String getURL() {
 		return this.url;
 	}
 
 	/**
+	 * Sets the url for this business's photo for their yelp site
 	 * 
 	 * @param url
+	 *            the string of the url for the photo
 	 */
 	public void setPhoto(String url) {
 		this.photoURL = url;
 	}
 
 	/**
+	 * Gets the url for this business's photo for their yelp site
 	 * 
-	 * @return
+	 * @return the string of the url for the photo
 	 */
 	public String getPhoto() {
 		return this.photoURL;
 	}
 
 	/**
+	 * Adds the school to list of schools close to business
 	 * 
 	 * @param school
+	 *            string of the name of the school
 	 */
 	public void addSchool(String school) {
 		this.schools.add(school);
@@ -113,7 +124,7 @@ public class Business {
 
 	/**
 	 * 
-	 * @return
+	 * @return a list of the names of schools nearby this business
 	 */
 	public List<String> getSchools() {
 		return this.schools;
@@ -130,16 +141,21 @@ public class Business {
 	}
 
 	/**
+	 * Sets the price rating of this business
 	 * 
 	 * @param price
+	 *            the rating of the price of this business, an integer ranging from
+	 *            1 to 5
 	 */
 	public void setPrice(int price) {
 		this.price = price;
 	}
 
 	/**
+	 * Gets the price rating of this business
 	 * 
-	 * @return
+	 * @return the rating of the price of this business, and inteer ranging from 1
+	 *         to 5
 	 */
 	public int getPrice() {
 		return this.price;
@@ -173,16 +189,20 @@ public class Business {
 	}
 
 	/**
+	 * Associates a review with this business
 	 * 
 	 * @param review
+	 *            the review to be added to this business
 	 */
 	public void addReview(Review review) {
 		reviews.add(review);
 	}
 
 	/**
+	 * Adds a category that helps describe this business
 	 * 
 	 * @param category
+	 *            a string that represents the category
 	 */
 	public void addCategory(String category) {
 		this.categories.add(category);
@@ -190,13 +210,14 @@ public class Business {
 
 	/**
 	 * 
-	 * @return
+	 * @return list of the categories associated with this business
 	 */
 	public List<String> categories() {
 		return this.categories;
 	}
 
 	/**
+	 * Tells if the business currently operating
 	 * 
 	 * @return
 	 */
@@ -205,16 +226,19 @@ public class Business {
 	}
 
 	/**
+	 * Sets if this business is operational
 	 * 
 	 * @param open
+	 *            true if it is open, false if it is closed down.
 	 */
 	public void setOpen(boolean open) {
 		this.isOpen = open;
 	}
 
 	/**
+	 * Gets the coordinate (Lat,Long) of the location of this business
 	 * 
-	 * @return
+	 * @return a Coordinate pair of the location of this business
 	 */
 	public Coordinate getCoordinates() {
 		return this.coordinate;
@@ -222,7 +246,7 @@ public class Business {
 
 	/**
 	 * 
-	 * @return
+	 * @return the number of reviews associated with this business
 	 */
 	public int reviewCount() {
 		return this.reviews().size();
