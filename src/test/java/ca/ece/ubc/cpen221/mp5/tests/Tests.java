@@ -38,4 +38,14 @@ public class Tests {
 		assertEquals((Double) c.distance(c2), (Double) 2911958.6039025364);
 	}
 
-}
+	@Test
+	public void test2() throws IOException{
+		String rest = "data/restaurants.json";
+		String user = "data/users.json";
+		String review = "data/reviews.json";
+
+		YelpDB db = new YelpDB(rest, user, review);
+
+		System.out.println(db.kMeansClusters_json(3));
+	}
+	}

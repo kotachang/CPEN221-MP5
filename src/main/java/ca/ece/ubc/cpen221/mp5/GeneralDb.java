@@ -316,7 +316,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 				}
 				JsonObject restaurant = Json.createObjectBuilder().add("x", b.get(a).getCoordinates().Lat())
 						.add("y", b.get(a).getCoordinates().Long()).add("name", b.get(a).name()).add("cluster", i + 1)
-						.add("weight", 1.0).build();
+						.add("weight", 500.0).build();
 
 				result += restaurant.toString();
 			}
