@@ -298,7 +298,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 		for (int i = 0; i < l.size(); i++) {
 			List<Business> b = new ArrayList<Business>(l.get(i).getBusinesses());
 			for (int a = 0; a < b.size(); a++) {
-				if (a != 0) {
+				if (!(a == 0 && i == 0)) {
 					result += ",";
 				}
 				JsonObject restaurant = Json.createObjectBuilder().add("x", b.get(a).getCoordinates().Lat())
@@ -432,7 +432,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 		}
 
 		List<Double> prices = new ArrayList<Double>();
-		List<Integer> stars = new ArrayList<Integer>();
+		List<Double> stars = new ArrayList<Double>();
 
 		/*
 		 * Get the prices of the business and the review of that business entered by the
@@ -443,22 +443,24 @@ public class GeneralDb<T> implements MP5Db<T> {
 		for (Map.Entry<String, Business> entry : idBus.entrySet()) {
 			for (int i = 0; i < busIds.size(); i++) {
 				prices.add((double) idBus.get(busIds.get(i)).getPrice());
-				stars.add(busR.get(idBus.get(busIds.get(i))).stars());
+				stars.add((double) busR.get(idBus.get(busIds.get(i))).stars());
 			}
 		}
 
-		int meanX = 0;
+		double sumX = 0;
 		for (int i = 0; i < prices.size(); i++) {
-			meanX += prices.get(i);
+			sumX += prices.get(i);
 		}
-		meanX = meanX / prices.size();
+		double meanX = sumX / prices.size();
 
-		int meanY = 0;
+		double sumY = 0;
 		for (int i = 0; i < stars.size(); i++) {
-			meanY += stars.get(i);
+			sumY += stars.get(i);
 		}
-		meanY = meanY / stars.size();
-		double Sxx = prices.stream().reduce(0.0, (p, p2) -> (Math.pow((p - (p + p2) / 2), 2)));
+		double meanY = sumY / stars.size();
+
+		double Sxx = prices.stream().reduce(0.0, (x, p) -> x + Math.pow(p - meanX, 2));
+		double Syy = stars.stream().reduce(0.0, (y, s) -> y + Math.pow(s - meanY, 2));
 		return null;
 	}
 
