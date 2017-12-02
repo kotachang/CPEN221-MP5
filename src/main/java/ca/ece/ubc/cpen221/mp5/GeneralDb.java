@@ -288,7 +288,8 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	/**
-	 * @return
+	 * @param k = number of desired clusters
+	 * @return json file formatted string of each of the restaurants and their clusters to run the visualizer
 	 * 
 	 */
 	@Override
@@ -317,6 +318,11 @@ public class GeneralDb<T> implements MP5Db<T> {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param number of desired clusters
+	 * @return List of Sets of restaurants. each set representing a cluster
+	 */
 	public List<Set<Restaurant>> returnClusters(int k) {
 		List<Set<Restaurant>> list = new ArrayList<Set<Restaurant>>();
 		List<Cluster> clusters = new ArrayList<Cluster>();
@@ -329,13 +335,14 @@ public class GeneralDb<T> implements MP5Db<T> {
 			set.add((Restaurant) clusters.get(i).getBusinesses());
 			list.add(set);
 		}
+		
 		return list;
 	}
 
 	/**
 	 * 
-	 * @param nk
-	 * @return
+	 * @param nk = number of desired clusters
+	 * @return list of clusters that are optimized based on the locations of the restaurants
 	 */
 	private List<Cluster> Cluster(int nk) {
 		List<Cluster> sublist = new ArrayList<Cluster>();
@@ -383,10 +390,9 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	/**
-	 * 
 	 * @param l
 	 * @param l2
-	 * @return
+	 * @return true if the two lists of clusters are equal
 	 */
 	// PUT THIS SOMEWHERE NOT HERE LOL
 	public boolean equals(List<Cluster> l, List<Cluster> l2) {
@@ -402,7 +408,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 * 
 	 * @param c
 	 * @param c2
-	 * @return
+	 * @return true if the two clusters are equal
 	 */
 	// PUT THIS SOMEWHERE NOT HERE LOL
 	public boolean equals(Cluster c, Cluster c2) {
@@ -413,6 +419,8 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	/**
+	 * @param String = userID
+	 * @return a function that predicts the user's rating on a business according to the prices
 	 * 
 	 */
 	@Override
