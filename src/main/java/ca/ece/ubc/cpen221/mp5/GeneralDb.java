@@ -23,14 +23,26 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
-/**
- * RI : 
- * 
- * @param <T>
- *            general type T
- * 
- */
 public class GeneralDb<T> implements MP5Db<T> {
+	/**
+	 * @AF: businesses = List of business contained in the database. reviews = List
+	 *      of reviews contained in the database, each being associated with a user
+	 *      and a business in the database. users = List of users contained in the
+	 *      database,
+	 * 
+	 *      For example, a Business named "McDonalds" with business Id "1234" might
+	 *      have a review with id "4321" written by a user "John" with user id
+	 *      "ABCD".
+	 * 
+	 * @RI:a Business contained in businesses is not null the businessFile is a JSON
+	 *       file that contains specific fields that describe and provide details
+	 *       about the business a Review contained in reviews is not null the
+	 *       reviewFile is a JSON file that contains specific fields that describe
+	 *       and provide details about the review a Review must have an associated
+	 *       user and an associated business a User contained in users is not null
+	 *       the userFile is a JSON file that contains specific fields that describe
+	 *       and provide details about the user
+	 */
 
 	protected List<Business> businesses;
 	protected List<Review> reviews;
@@ -38,8 +50,15 @@ public class GeneralDb<T> implements MP5Db<T> {
 	protected static final double R = 6371 * 1000;// in meters
 
 	/**
-	 * Constructor for an empty database
+	 * Creates the database from the provided business, user, and review files,
+	 * where all businesses must be restaurants.
 	 * 
+	 * @param businessFile
+	 *            string for the file path to the restaurant data file
+	 * @param userFile
+	 *            string for the file path to the user data file
+	 * @param reviewFile
+	 *            string for the file path to the review file
 	 * @throws IOException
 	 */
 	public GeneralDb(String businessFile, String userFile, String reviewFile) throws IOException {
@@ -66,8 +85,8 @@ public class GeneralDb<T> implements MP5Db<T> {
 	public List<Review> getReviews() {
 		return new ArrayList<Review>(reviews);
 	}
-	
-	public List<User> getUsers(){
+
+	public List<User> getUsers() {
 		return new ArrayList<User>(users);
 	}
 
@@ -441,7 +460,9 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 * 
 	 */
 	@Override
-	public ToDoubleBiFunction<MP5Db<T>,String> getPredictorFunction(String user) {
+	public ToDoubleBiFunction<MP5Db<T>, String> getPredictorFunction(String user) {
+
+
 		/*
 		 * Keep track of a business's specific review written by the user from the input
 		 * argument. ** rep invariant for review = only 1 review per user per business
