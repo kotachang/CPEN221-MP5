@@ -23,16 +23,15 @@ import ca.ece.ubc.cpen221.mp5.YelpDB;
 public class PredictorAndClusterTests {
 
 	@Test
-	public void test0() throws IOException {
+	public void clusteringvisualize() throws IOException {
 		ToDoubleBiFunction<MP5Db<String>, String> predict = new Predictor<String>(1, 2);
 		String rest = "data/restaurants.json";
 		String user = "data/users.json";
 		String review = "data/reviews.json";
 		YelpDB db = new YelpDB(rest, user, review);
-		//System.out.println(db.kMeansClusters_json(10));
-		/*
-		 * tested through the visualizer
-		 */
+		// System.out.println(db.kMeansClusters_json(10));
+		// tested through the visualizer
+
 	}
 
 	@Test
@@ -41,9 +40,30 @@ public class PredictorAndClusterTests {
 		String user = "data/users.json";
 		String review = "data/reviews.json";
 		YelpDB db = new YelpDB(rest, user, review);
-		double prediction = db.getPredictorFunction("Y61y11_nYsbc2UWjDh8ZEA").applyAsDouble(db, "8PE1KtG_ZMxcgqCseHhmLA");
-		System.out.println(prediction);
-		//assertTrue(prediction == 1.6);
+		double prediction = db.getPredictorFunction("uqSE9YipS_6ilhcVgpPXWA").applyAsDouble(db,
+				"G3d-xJF_Rt-P_za2eZ1q-Q");
+		assertTrue(prediction == 2.2857142857142856);
+	}
 
+	@Test
+	public void predictionTest1() throws IOException {
+		String rest = "data/restaurants.json";
+		String user = "data/users.json";
+		String review = "data/reviews.json";
+		YelpDB db = new YelpDB(rest, user, review);
+		double prediction = db.getPredictorFunction("QScfKdcxsa7t5qfE0Ev0Cw").applyAsDouble(db,
+				"G3d-xJF_Rt-P_za2eZ1q-Q");
+		assertTrue(prediction == 1.0);
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void test3() throws UnsupportedOperationException, IOException {
+		String rest = "data/restaurants.json";
+		String user = "data/users.json";
+		String review = "data/reviews.json";
+		YelpDB db = new YelpDB(rest, user, review);
+		double prediction = db.getPredictorFunction("zkjy_XoVgR2EFjLjtzFDNw").applyAsDouble(db,
+				"G3d-xJF_Rt-P_za2eZ1q-Q");
+		System.out.println(prediction);
 	}
 }

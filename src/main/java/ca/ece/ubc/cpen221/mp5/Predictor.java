@@ -33,6 +33,7 @@ public class Predictor<T> implements ToDoubleBiFunction<MP5Db<T>, String> {
 	 * @return predicted double rating that the user might give to the restaurant if
 	 *         the predicted rating is less than 1, return 1. if the predicted
 	 *         rating is greater than 5, return 5.
+	 * 
 	 */
 	@Override
 	public double applyAsDouble(MP5Db<T> t, String u) {

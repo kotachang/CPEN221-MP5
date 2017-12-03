@@ -351,7 +351,8 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	/**
-	 * Converts the List of clusters to a list of sets of restuarants for specs. 
+	 * Converts the List of clusters to a list of sets of restuarants for specs.
+	 * 
 	 * @param number
 	 *            of desired clusters
 	 * @return List of Sets of restaurants. each set representing a cluster
@@ -407,7 +408,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 					if (distance > (businesses.get(a).getCoordinates().distance(sublist.get(b).findCenter()))) {
 						distance = (businesses.get(a).getCoordinates().distance(sublist.get(b).findCenter()));
 						closest = b;
-					} 
+					}
 				}
 				sublist.get(removeI).remove(businesses.get(a));
 				sublist.get(closest).add(businesses.get(a));
@@ -421,21 +422,6 @@ public class GeneralDb<T> implements MP5Db<T> {
 		}
 
 		return sublist;
-	}
-
-	/**
-	 * @param l
-	 * @param l2
-	 * @return true if the two lists of clusters are equal
-	 */
-	// PUT THIS SOMEWHERE NOT HERE LOL
-	public boolean equals(List<Cluster> l, List<Cluster> l2) {
-		for (int i = 0; i < l.size(); i++) {
-			if (!(l.get(i).equals(l2.get(i)))) {
-				return false;
-			}
-		}
-		return true;
 	}
 
 	/**
@@ -458,16 +444,14 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 * @return a function that predicts the user's rating on a business according to
 	 *         the prices
 	 * 
+	 * @throws exception if the user has already wrote a review for the business
 	 */
 	@Override
 	public ToDoubleBiFunction<MP5Db<T>, String> getPredictorFunction(String user) {
-
-
 		/*
 		 * Keep track of a business's specific review written by the user from the input
 		 * argument. ** rep invariant for review = only 1 review per user per business
 		 */
-
 		List<Review> tempListofReviews = new ArrayList<Review>();
 		List<Business> business = new ArrayList<Business>();
 		List<Review> review = new ArrayList<Review>();
@@ -505,7 +489,10 @@ public class GeneralDb<T> implements MP5Db<T> {
 		for (int i = 0; i < prices.size(); i++) {
 			Sxy += (prices.get(i) - meanX) * (stars.get(i) - meanY);
 		}
-
+		
+		if (Sxx==0) {
+			throw new UnsupportedOperationException();
+		}
 		double b = Sxy / Sxx;
 		double a = meanY - b * meanX;
 		double rSquared = Math.sqrt(Math.pow(Sxy, 2) / (Sxx * Syy));
@@ -513,8 +500,6 @@ public class GeneralDb<T> implements MP5Db<T> {
 		Predictor<T> predict = new Predictor<T>(a, b);
 
 		return predict;
-
-
 
 	}
 
