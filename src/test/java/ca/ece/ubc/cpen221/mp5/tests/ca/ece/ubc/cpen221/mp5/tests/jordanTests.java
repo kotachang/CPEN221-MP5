@@ -10,6 +10,7 @@ import ca.ece.ubc.cpen221.mp5.Business;
 import ca.ece.ubc.cpen221.mp5.GeneralDb;
 import ca.ece.ubc.cpen221.mp5.Restaurant;
 import ca.ece.ubc.cpen221.mp5.Review;
+import ca.ece.ubc.cpen221.mp5.User;
 import ca.ece.ubc.cpen221.mp5.YelpDB;
 
 public class jordanTests {
@@ -123,9 +124,11 @@ public class jordanTests {
 		assertEquals("" + test.reviewRatings().get("useful"), "1");
 		assertEquals("" + test.reviewRatings().get("funny"), "2");
 		assertEquals(test.getDate(), "2007-07-23");
-		assertEquals(test.text(),"Let's begin in 1988. I'm a freshman at Cal and living in the Unit 1 dorms. Though I'm living on the meal plan, sometimes late at night I get cravings that can't be satisfied by whatever I have in my teeny dorm fridge. So off I go to the Top Dog on Durant. The mean and surly guy behind the counter often regales customers with funny stories of his awful ex-wife.\n\nCut to 2005: I find myself back in Berkeley on a regular basis, and a much younger guy is running the grill at the Center St. location. I stop going because, frankly, the guy is an asshat, and we nearly got into it once over my inability to say the entire name of the particular dog I want.\n\nCut to 2007: I'm still in downtown Berkeley, and the asshat got fired a year or so ago. The successive grillers are much more amiable. I'm back to going there more regularly.\n\nThe dogs, of course, have always been great. Bummer that they no longer have pickles, but some things aren't forever.");
+		assertEquals(test.text(),
+				"Let's begin in 1988. I'm a freshman at Cal and living in the Unit 1 dorms. Though I'm living on the meal plan, sometimes late at night I get cravings that can't be satisfied by whatever I have in my teeny dorm fridge. So off I go to the Top Dog on Durant. The mean and surly guy behind the counter often regales customers with funny stories of his awful ex-wife.\n\nCut to 2005: I find myself back in Berkeley on a regular basis, and a much younger guy is running the grill at the Center St. location. I stop going because, frankly, the guy is an asshat, and we nearly got into it once over my inability to say the entire name of the particular dog I want.\n\nCut to 2007: I'm still in downtown Berkeley, and the asshat got fired a year or so ago. The successive grillers are much more amiable. I'm back to going there more regularly.\n\nThe dogs, of course, have always been great. Bummer that they no longer have pickles, but some things aren't forever.");
 
 	}
+
 	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	public void test6() {
@@ -134,16 +137,66 @@ public class jordanTests {
 		Review review = new Review("1234");
 		assertFalse(review.equals(test));
 	}
-	
+
 	@Test
 	public void test7() {
-		//equlas method test for same object types
+		// equals method test for same object types
 		Review review1 = new Review("1234");
 		Review review2 = new Review("4321");
 		Review review3 = new Review("1234");
-		
+
 		assertFalse(review1.equals(review2));
 		assertTrue(review1.equals(review3));
+	}
+
+	@Test
+	public void test8() throws IOException {
+		// Testing general business methods
+		String rest = "data/restaurants.json";
+		String user = "data/users.json";
+		String review = "data/reviews.json";
+
+		YelpDB db = new YelpDB(rest, user, review);
+		User test = new User("Placeholder");
+		for (User u : db.getUsers()) {
+			if (u.getId().equals("VQxZA1Va8MBVpI3fw3nsqg")) {
+				test = u;
+				break;
+			}
+		}
+
+		assertEquals(test.getId(), "VQxZA1Va8MBVpI3fw3nsqg");
+		assertEquals(test.getName(), "Annie M.");
+		assertEquals(test.reviewCount(), 1);
+		assertEquals(test.reviewCount(), test.getReview().size());
+		assertEquals(test.getURL(), "http://www.yelp.com/user_details?userid=VQxZA1Va8MBVpI3fw3nsqg");
+		assertEquals("" + test.votes().get("cool"), "18");
+		assertEquals("" + test.votes().get("useful"), "36");
+		assertEquals("" + test.votes().get("funny"), "3");
+		assertEquals("" + test.averageStars(), "5.0");
+		
+		User nullReviewTest = new User("1234");
+		assertEquals("" + nullReviewTest.averageStars(), "0.0");
+	}
+
+	@Test
+	public void test9() {
+		// equals method test for same object types
+		User user1 = new User("1234");
+		User user2 = new User("4321");
+		User user3 = new User("1234");
+
+		assertFalse(user1.equals(user2));
+		assertTrue(user1.equals(user3));
+	}
+	
+	@SuppressWarnings("unlikely-arg-type")
+	@Test
+	public void test10() {
+		// equals method test for different object types
+		User test = new User("1234");
+		Review review = new Review("1234");
+		assertFalse(test.equals(review));
 	}
 
 }
