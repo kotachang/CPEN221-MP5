@@ -5,6 +5,24 @@ import java.util.List;
 
 public class Business {
 
+	/**
+	 * @AF:A business is created by the parameters: businessId, name, address, url
+	 *       Other characteristics such as neighborhoods, reviews can be added
+	 *       later, and are not necessary to represent a business.
+	 * 
+	 *       For example, a business named "CIBC" with businessId "1357" located at
+	 *       "123 ABC St. Vancouver, BC V1A 2B3" with site url "yelp.blah" is fully
+	 *       characterized, but as users add reviews and associate neighborhoods and
+	 *       price ratings, the characteristics grow.
+	 * 
+	 * @RI:id is not null, and is unique to this business in its database name is
+	 *        not null, but not necessarily unique (there could be 2 different
+	 *        locations of McDonalds, with different reviews etc.) address is
+	 *        notnull price is 0 if not assigned yet. url is not null, but photourl
+	 *        can be null if there is no photo. reviews can be an empty list, but
+	 *        should not be null and should not contain null reviews.
+	 */
+
 	protected String id;
 	protected String name;
 	protected String address;
@@ -18,7 +36,7 @@ public class Business {
 	protected String url;
 	protected String photoURL;
 	protected List<String> schools = new ArrayList<String>();
-	protected int price;
+	protected int price = 0;
 
 	/**
 	 * Constructs a new business
@@ -73,7 +91,7 @@ public class Business {
 		this.state = address[2];
 		this.coordinate = new Coordinate(Double.parseDouble(address[3]), Double.parseDouble(address[4]));
 	}
-	
+
 	public String getAddress() {
 		return this.address;
 	}

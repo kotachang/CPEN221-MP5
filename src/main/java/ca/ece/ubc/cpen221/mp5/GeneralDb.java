@@ -44,8 +44,6 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 *       and provide details about the user
 	 */
 
-	// Abstraction Function:
-
 	protected List<Business> businesses;
 	protected List<Review> reviews;
 	protected List<User> users;
@@ -341,7 +339,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 				}
 				JsonObject restaurant = Json.createObjectBuilder().add("x", b.get(a).getCoordinates().Lat())
 						.add("y", b.get(a).getCoordinates().Long()).add("name", b.get(a).name()).add("cluster", i + 1)
-						.add("weight", 500.0).build();
+						.add("weight", 1.0).build();
 
 				result += restaurant.toString();
 			}
@@ -353,7 +351,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	/**
-	 * 
+	 * Converts the List of clusters to a list of sets of restuarants for specs. 
 	 * @param number
 	 *            of desired clusters
 	 * @return List of Sets of restaurants. each set representing a cluster
@@ -385,8 +383,6 @@ public class GeneralDb<T> implements MP5Db<T> {
 		List<Cluster> sublist = new ArrayList<Cluster>();
 		List<Cluster> previous = new ArrayList<Cluster>();
 		int k = 0;
-		int closest = 0;
-		int removeI = 0;
 
 		for (int i = 0; i < nk - 1; i++) {
 			sublist.add(new Cluster(businesses.subList(k, k + 1)));
@@ -397,6 +393,8 @@ public class GeneralDb<T> implements MP5Db<T> {
 
 		while (true) {
 			for (int a = 0; a < businesses.size(); a++) {
+				int closest = 0;
+				int removeI = 0;
 				double distance = Integer.MAX_VALUE;
 				for (int b = 0; b < sublist.size(); b++) {
 					if (sublist.get(b).contains(businesses.get(a))) {
@@ -409,11 +407,10 @@ public class GeneralDb<T> implements MP5Db<T> {
 					if (distance > (businesses.get(a).getCoordinates().distance(sublist.get(b).findCenter()))) {
 						distance = (businesses.get(a).getCoordinates().distance(sublist.get(b).findCenter()));
 						closest = b;
-					}
+					} 
 				}
 				sublist.get(removeI).remove(businesses.get(a));
 				sublist.get(closest).add(businesses.get(a));
-
 			}
 			if (previous.equals(sublist)) {
 				break;

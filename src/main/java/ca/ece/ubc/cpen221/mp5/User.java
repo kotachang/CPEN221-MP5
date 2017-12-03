@@ -6,6 +6,25 @@ import java.util.List;
 import java.util.Map;
 
 public class User {
+	/**
+	 * @AF:Given the following parameters: userId, name creates a new user for a
+	 *           database. More information can be assigned to the user, such as
+	 *           reviews they've written, url for their page on a website, attribute
+	 *           votes assigned by other users.
+	 * 
+	 *           For example, a user with userId "1234" and name "John H." could
+	 *           have 5 reviews, where other users have assigned 11 votes for the
+	 *           "funny" attribute of their reviews, and their average rating
+	 *           assignment is 3.5 / 5.
+	 * 
+	 * @RI:That the userId of this user is unique for the database that they belong
+	 *          to, and is not null Their name does not need to be unique, but it
+	 *          cannot be null. If they have made reviews, they must be associated
+	 *          with another business. The votes for attributes are not null, and
+	 *          simply zero if there are no votes yet. The url must either be a
+	 *          properly formated url or be null if there is no site for this user.
+	 * 
+	 */
 
 	private String id;
 	private String name;
