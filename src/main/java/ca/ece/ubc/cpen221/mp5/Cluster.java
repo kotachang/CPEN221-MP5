@@ -33,6 +33,7 @@ public class Cluster {
 		this.businesses = new HashSet<Business>();
 		this.businesses.addAll(businesses);
 		center = new Coordinate(startLat, startLong);
+		findCenter();
 	}
 
 	/**
@@ -43,6 +44,7 @@ public class Cluster {
 	public Cluster(Business business) {
 		businesses.add(business);
 		center = new Coordinate(startLat, startLong);
+		findCenter();
 	}
 
 	/**
@@ -53,6 +55,8 @@ public class Cluster {
 	 */
 	public void add(Business business) {
 		this.businesses.add(business);
+		center = new Coordinate(startLat, startLong);
+		findCenter();
 	}
 
 	/**
@@ -71,6 +75,8 @@ public class Cluster {
 	 */
 	public void remove(Business business) {
 		this.businesses.remove(business);
+		center = new Coordinate(startLat, startLong);
+		findCenter();
 	}
 
 	/**
