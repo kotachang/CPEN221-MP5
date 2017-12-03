@@ -1,6 +1,6 @@
 # Work Division
 
-##Jordan Yarschenko
+## Jordan Yarschenko
 #### Part 1
 * Business.java
 * Restaurant.java
@@ -11,7 +11,7 @@
 * Test Writing (For part 1)
 * Specs, AF, RI
 
-##Kota Chang
+## Kota Chang
 #### Part 2
 * Coordinate.java
 * Cluster.java
