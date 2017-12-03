@@ -52,7 +52,7 @@ public class Tests {
 
 		YelpDB db = new YelpDB(rest, user, review);
 
-		System.out.println(db.kMeansClusters_json(3));
+		assertTrue(db.kMeansClusters_json(3).contains("G"));
 	}
 
 	@Test
