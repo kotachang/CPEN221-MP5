@@ -17,15 +17,17 @@ public class Tests {
 	public void test0() throws IOException {
 		Cluster c1 = new Cluster();
 		Cluster c2 = new Cluster();
-		Business b = new Business("McDonalds");
-		c1.add(b);
+		Business b = new Business("fcdjnsgO8Z5LthXUx3y-lA");
+		c1.add(b); 
 		c2.add(b);
 		String rest = "data/restaurants.json";
 		String user = "data/users.json";
 		String review = "data/reviews.json";
 		YelpDB db = new YelpDB(rest, user, review);
 		assertTrue(db.equals(c1, c2));
-		assertTrue(c1.contains(b));
+		assertTrue(c1.contains(b)); 
+		c2.clear();
+		assertTrue(!c2.contains(b));
 	}
 
 	@Test
@@ -36,7 +38,7 @@ public class Tests {
 	}
 
 	@Test
-	public void test2() throws IOException{
+	public void test2() throws IOException {
 		String rest = "data/restaurants.json";
 		String user = "data/users.json";
 		String review = "data/reviews.json";
@@ -45,21 +47,22 @@ public class Tests {
 
 		System.out.println(db.kMeansClusters_json(3));
 	}
-	
+
 	@Test
 	public void businessTest1() throws IOException {
 		String rest = "data/restaurants.json";
 		String user = "data/users.json";
 		String review = "data/reviews.json";
-		
-		GeneralDb<Business> db = new GeneralDb<Business>(rest,user,review);
-		
-		for(Business b : db.getBusinesses()) {
-			if(b.getId().equals("FWadSZw0G7HsgKXq7gHTnw")) {
+
+		GeneralDb<Business> db = new GeneralDb<Business>(rest, user, review);
+
+		for (Business b : db.getBusinesses()) {
+			if (b.getId().equals("FWadSZw0G7HsgKXq7gHTnw")) {
 				Business PeppermintGrill = b;
 				break;
 			}
 		}
 		assertTrue(true);
 	}
-	}
+	
+}

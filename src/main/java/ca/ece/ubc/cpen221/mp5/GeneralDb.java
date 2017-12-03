@@ -320,7 +320,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 				}
 				JsonObject restaurant = Json.createObjectBuilder().add("x", b.get(a).getCoordinates().Lat())
 						.add("y", b.get(a).getCoordinates().Long()).add("name", b.get(a).name()).add("cluster", i + 1)
-						.add("weight", 500.0).build();
+						.add("weight", 1.0).build();
 
 				result += restaurant.toString();
 			}
@@ -332,7 +332,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	}
 
 	/**
-	 * 
+	 * Converts the List of clusters to a list of sets of restuarants for specs. 
 	 * @param number
 	 *            of desired clusters
 	 * @return List of Sets of restaurants. each set representing a cluster
@@ -388,7 +388,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 					if (distance > (businesses.get(a).getCoordinates().distance(sublist.get(b).findCenter()))) {
 						distance = (businesses.get(a).getCoordinates().distance(sublist.get(b).findCenter()));
 						closest = b;
-					}
+					} 
 				}
 				sublist.get(removeI).remove(businesses.get(a));
 				sublist.get(closest).add(businesses.get(a));

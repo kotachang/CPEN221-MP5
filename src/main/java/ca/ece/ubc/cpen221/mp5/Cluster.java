@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * 
+ * Rep Invariant : the center of an empty cluster 
+ *
+ */
 public class Cluster {
 
 	Set<Business> businesses;
@@ -37,17 +42,6 @@ public class Cluster {
 	}
 
 	/**
-	 * Constructs a cluster from a single business
-	 * 
-	 * @param business
-	 */
-	public Cluster(Business business) {
-		businesses.add(business);
-		center = new Coordinate(startLat, startLong);
-		findCenter();
-	}
-
-	/**
 	 * Adds a business to the cluster
 	 * 
 	 * @param business
@@ -56,7 +50,6 @@ public class Cluster {
 	public void add(Business business) {
 		this.businesses.add(business);
 		center = new Coordinate(startLat, startLong);
-		findCenter();
 	}
 
 	/**
