@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.ToDoubleBiFunction;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @RI: predicted rating value is for the specific user, and the specific
