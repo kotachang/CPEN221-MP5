@@ -8,9 +8,13 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * @RI : there cannot be empty clusters when finding kMeansClustering, however
+ *     empty cluster method exists for testing the clustering class in general.
+ *     An empty cluster has a randomly assigned center
  * 
- * Rep Invariant : the center of an empty cluster 
- *
+ * @AF : = a set of businesses as a 'cluster', center = average values of the
+ *     coordinates of the businesses
+ * 
  */
 public class Cluster {
 
@@ -21,7 +25,7 @@ public class Cluster {
 	double startLong = Math.random();
 
 	/**
-	 * Empty constructor for a Cluster
+	 * Empty constructor for a Cluster for testing
 	 */
 	public Cluster() {
 		businesses = new HashSet<Business>();
@@ -40,7 +44,6 @@ public class Cluster {
 		center = new Coordinate(startLat, startLong);
 		findCenter();
 	}
-	 
 
 	/**
 	 * Adds a business to the cluster

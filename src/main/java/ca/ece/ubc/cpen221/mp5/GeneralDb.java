@@ -441,10 +441,12 @@ public class GeneralDb<T> implements MP5Db<T> {
 	/**
 	 * @param String
 	 *            = userID
-	 * @return a function that predicts the user's rating on a business according to
-	 *         the prices
+	 * @return ToDoubleBiFunction<MP5Db<T>, String> = a function that predicts the
+	 *         user's rating on a business according to the prices
 	 * 
-	 * @throws exception if the user has already wrote a review for the business
+	 * @throws UnsupportedOperationException
+	 *             if Sxx is 0 , meaning it is not possible to calculate a
+	 *             prediction since the user only wrote one review
 	 */
 	@Override
 	public ToDoubleBiFunction<MP5Db<T>, String> getPredictorFunction(String user) {
@@ -489,8 +491,8 @@ public class GeneralDb<T> implements MP5Db<T> {
 		for (int i = 0; i < prices.size(); i++) {
 			Sxy += (prices.get(i) - meanX) * (stars.get(i) - meanY);
 		}
-		
-		if (Sxx==0) {
+
+		if (Sxx == 0) {
 			throw new UnsupportedOperationException();
 		}
 		double b = Sxy / Sxx;

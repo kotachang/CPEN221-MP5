@@ -3,12 +3,16 @@ package ca.ece.ubc.cpen221.mp5.tests.ca.ece.ubc.cpen221.mp5.tests;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.util.function.ToDoubleBiFunction;
+
 import org.junit.Test;
 
 import ca.ece.ubc.cpen221.mp5.Business;
 import ca.ece.ubc.cpen221.mp5.Cluster;
 import ca.ece.ubc.cpen221.mp5.Coordinate;
 import ca.ece.ubc.cpen221.mp5.GeneralDb;
+import ca.ece.ubc.cpen221.mp5.MP5Db;
+import ca.ece.ubc.cpen221.mp5.Predictor;
 import ca.ece.ubc.cpen221.mp5.Restaurant;
 import ca.ece.ubc.cpen221.mp5.Review;
 import ca.ece.ubc.cpen221.mp5.User;
@@ -21,14 +25,14 @@ public class Tests {
 		Cluster c1 = new Cluster();
 		Cluster c2 = new Cluster();
 		Business b = new Business("fcdjnsgO8Z5LthXUx3y-lA");
-		c1.add(b); 
+		c1.add(b);
 		c2.add(b);
 		String rest = "data/restaurants.json";
 		String user = "data/users.json";
 		String review = "data/reviews.json";
 		YelpDB db = new YelpDB(rest, user, review);
 		assertTrue(db.equals(c1, c2));
-		assertTrue(c1.contains(b)); 
+		assertTrue(c1.contains(b));
 		c2.clear();
 		assertTrue(!c2.contains(b));
 	}
@@ -41,7 +45,7 @@ public class Tests {
 	}
 
 	@Test
-	public void clusterTest2() throws IOException{
+	public void clusterTest2() throws IOException {
 		String rest = "data/restaurants.json";
 		String user = "data/users.json";
 		String review = "data/reviews.json";
@@ -210,7 +214,7 @@ public class Tests {
 		assertEquals("" + test.votes().get("useful"), "36");
 		assertEquals("" + test.votes().get("funny"), "3");
 		assertEquals("" + test.averageStars(), "5.0");
-		
+
 		User nullReviewTest = new User("1234");
 		assertEquals("" + nullReviewTest.averageStars(), "0.0");
 	}
@@ -225,7 +229,7 @@ public class Tests {
 		assertFalse(user1.equals(user2));
 		assertTrue(user1.equals(user3));
 	}
-	
+
 	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	public void userTest3() {
@@ -235,6 +239,50 @@ public class Tests {
 		assertFalse(test.equals(review));
 	}
 
-	
-}
+	@Test
+	public void clusteringvisualize() throws IOException {
+		ToDoubleBiFunction<MP5Db<String>, String> predict = new Predictor<String>(1, 2);
+		String rest = "data/restaurants.json";
+		String user = "data/users.json";
+		String review = "data/reviews.json";
+		YelpDB db = new YelpDB(rest, user, review);
+		db.kMeansClusters_json(3);
+		// System.out.println(db.kMeansClusters_json(10));
+		// tested through the visualizer
 
+	}
+
+	@Test
+	public void predictionTest0() throws IOException {
+		String rest = "data/restaurants.json";
+		String user = "data/users.json";
+		String review = "data/reviews.json";
+		YelpDB db = new YelpDB(rest, user, review);
+		double prediction = db.getPredictorFunction("uqSE9YipS_6ilhcVgpPXWA").applyAsDouble(db,
+				"G3d-xJF_Rt-P_za2eZ1q-Q");
+		assertTrue(prediction == 2.2857142857142856);
+	}
+
+	@Test
+	public void predictionTest1() throws IOException {
+		String rest = "data/restaurants.json";
+		String user = "data/users.json";
+		String review = "data/reviews.json";
+		YelpDB db = new YelpDB(rest, user, review);
+		double prediction = db.getPredictorFunction("QScfKdcxsa7t5qfE0Ev0Cw").applyAsDouble(db,
+				"G3d-xJF_Rt-P_za2eZ1q-Q");
+		assertTrue(prediction == 1.0);
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void test3() throws UnsupportedOperationException, IOException {
+		String rest = "data/restaurants.json";
+		String user = "data/users.json";
+		String review = "data/reviews.json";
+		YelpDB db = new YelpDB(rest, user, review);
+		double prediction = db.getPredictorFunction("zkjy_XoVgR2EFjLjtzFDNw").applyAsDouble(db,
+				"G3d-xJF_Rt-P_za2eZ1q-Q");
+		System.out.println(prediction);
+	}
+
+}

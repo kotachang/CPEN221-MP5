@@ -16,7 +16,7 @@ import java.util.Set;
  *     be unique in the database. The date must be in YYYY-MM-DD format, and
  *     cannot be null. Stars cannot be null, and has to be an integer from 1 to
  *     5. Text must be a string, and not null, but does not have a character
- *     limit.
+ *     limit. A user can only write 1 review per business.
  *
  */
 

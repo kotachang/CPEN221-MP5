@@ -7,9 +7,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * RI: predicted rating value is for the specific user, and the specific retaurant, result of the prediction is within the range of 1 and 5 including 1 and 5. 
- * AF: applyAsDouble function returns predicted rating of a restaurant based
- * on the prices
+ * @RI: predicted rating value is for the specific user, and the specific
+ *      retaurant, result of the prediction is within the range of 1 and 5
+ *      including 1 and 5.
+ *      
+ * @AF: applyAsDouble function returns predicted rating of a restaurant based on
+ *      the prices
  *
  * @param <T>
  *            argument general type T as MP5Db
@@ -17,7 +20,7 @@ import java.util.stream.Stream;
 public class Predictor<T> implements ToDoubleBiFunction<MP5Db<T>, String> {
 	double a;
 	double b;
-	
+
 	public Predictor(double a, double b) {
 		this.a = a;
 		this.b = b;
@@ -27,8 +30,8 @@ public class Predictor<T> implements ToDoubleBiFunction<MP5Db<T>, String> {
 	 * @param MP5Db<T>
 	 *            database interface
 	 * @param u
-	 *            = String = businessID
-	 * Required: String u is a valid businessID. arguments are not null. 
+	 *            = String = businessID Required: String u is a valid businessID.
+	 *            arguments are not null.
 	 * 
 	 * @return predicted double rating that the user might give to the restaurant if
 	 *         the predicted rating is less than 1, return 1. if the predicted
