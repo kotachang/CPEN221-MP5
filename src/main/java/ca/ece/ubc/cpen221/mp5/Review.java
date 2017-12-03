@@ -17,7 +17,6 @@ public class Review {
 	private String business;
 	private int stars;
 	private String date;
-	private String userId;
 	private Map<String, Integer> attributes = new HashMap<String, Integer>();
 	private String text;
 
@@ -105,6 +104,10 @@ public class Review {
 	 */
 	public void setDate(String date) {
 		this.date = date;
+	}
+	
+	public String getDate() {
+		return date;
 	}
 
 	/**

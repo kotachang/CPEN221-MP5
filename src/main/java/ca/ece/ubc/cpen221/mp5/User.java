@@ -66,7 +66,7 @@ public class User {
 			for (int i = 0; i < this.reviews.size(); i++) {
 				sum += this.reviews.get(i).stars();
 			}
-			return sum / this.reviews.size();
+			return (Math.round(sum / this.reviews.size() * 2) / 2.0f);
 		} else {
 			return 0;
 		}

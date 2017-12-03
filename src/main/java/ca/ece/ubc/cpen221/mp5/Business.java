@@ -73,6 +73,10 @@ public class Business {
 		this.state = address[2];
 		this.coordinate = new Coordinate(Double.parseDouble(address[3]), Double.parseDouble(address[4]));
 	}
+	
+	public String getAddress() {
+		return this.address;
+	}
 
 	/**
 	 * Sets the url for this business's yelp site
@@ -167,15 +171,13 @@ public class Business {
 	 */
 	public float stars() throws NullPointerException {
 		float average = 0;
-		float count = 0;
 		if (this.reviews().isEmpty()) {
 			throw new NullPointerException();
 		} else {
 			for (Review r : this.reviews) {
 				average += r.stars();
-				count++;
 			}
-			return average / count;
+			return (Math.round(average / this.reviews.size() * 2) / 2.0f);
 		}
 
 	}

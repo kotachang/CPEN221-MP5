@@ -66,6 +66,10 @@ public class GeneralDb<T> implements MP5Db<T> {
 	public List<Review> getReviews() {
 		return new ArrayList<Review>(reviews);
 	}
+	
+	public List<User> getUsers(){
+		return new ArrayList<User>(users);
+	}
 
 	/**
 	 * Adds a user on the database
