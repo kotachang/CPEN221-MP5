@@ -3,6 +3,7 @@ package ca.ece.ubc.cpen221.mp5;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.ToDoubleBiFunction;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -38,8 +39,8 @@ public class Predictor<T> implements ToDoubleBiFunction<MP5Db<T>, String> {
 		YelpDB yelpDb = (YelpDB) t;
 
 		List<Business> businesses = new ArrayList<Business>(yelpDb.getBusinesses());
-		Business restaurant = (Business) businesses.stream().filter(r -> r.getId().equals(u));
-
+		List<Business> b = businesses.stream().filter(r -> r.getId().equals(u)).collect(Collectors.toList());
+		Business restaurant = b.get(0);
 		double price = (double) restaurant.getPrice();
 		double returnPrice = (this.a * price + this.b);
 

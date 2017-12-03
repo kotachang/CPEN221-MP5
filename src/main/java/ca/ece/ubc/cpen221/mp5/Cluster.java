@@ -40,6 +40,7 @@ public class Cluster {
 		center = new Coordinate(startLat, startLong);
 		findCenter();
 	}
+	 
 
 	/**
 	 * Adds a business to the cluster

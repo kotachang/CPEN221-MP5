@@ -29,12 +29,21 @@ public class PredictorAndClusterTests {
 		String user = "data/users.json";
 		String review = "data/reviews.json";
 		YelpDB db = new YelpDB(rest, user, review);
-
-		System.out.println(db.kMeansClusters_json(10));
+		//System.out.println(db.kMeansClusters_json(10));
+		/*
+		 * tested through the visualizer
+		 */
 	}
 
 	@Test
 	public void predictionTest0() throws IOException {
+		String rest = "data/restaurants.json";
+		String user = "data/users.json";
+		String review = "data/reviews.json";
+		YelpDB db = new YelpDB(rest, user, review);
+		double prediction = db.getPredictorFunction("Y61y11_nYsbc2UWjDh8ZEA").applyAsDouble(db, "8PE1KtG_ZMxcgqCseHhmLA");
+		System.out.println(prediction);
+		//assertTrue(prediction == 1.6);
 
 	}
 }

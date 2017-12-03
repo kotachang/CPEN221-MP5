@@ -442,7 +442,6 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 */
 	@Override
 	public ToDoubleBiFunction<MP5Db<T>,String> getPredictorFunction(String user) {
-
 		/*
 		 * Keep track of a business's specific review written by the user from the input
 		 * argument. ** rep invariant for review = only 1 review per user per business
@@ -493,6 +492,9 @@ public class GeneralDb<T> implements MP5Db<T> {
 		Predictor<T> predict = new Predictor<T>(a, b);
 
 		return predict;
+
+
+
 	}
 
 }
