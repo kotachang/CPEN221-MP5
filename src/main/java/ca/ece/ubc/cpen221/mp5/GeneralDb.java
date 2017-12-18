@@ -193,7 +193,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 *            JsonObject containing the user information
 	 * @return the user parsed from the data
 	 */
-	private User parseUser(JsonObject data) {
+	public User parseUser(JsonObject data) {
 		// Standard Characteristics
 		User user = new User(data.getString("user_id"));
 		user.setJson(data);

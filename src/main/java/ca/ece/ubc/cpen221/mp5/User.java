@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.json.Json;
 import javax.json.JsonObject;
 
 public class User {
@@ -163,7 +164,17 @@ public class User {
 	public JsonObject getJson() {
 		return this.json;
 	}
+	
+	@Override
+	public String toString() {
+		JsonObject output = Json.createObjectBuilder().add("url", this.getURL())
+				.add("votes", this.votes().toString()).add("review_count", this.reviewCount()).add("type", "user")
+				.add("user_id",this.getId()).add("name", this.getName())
+				.add("average_stars", this.averageStars()).build();
+		return output.toString();
+	}
 
+	@Override
 	public boolean equals(Object user) {
 		if (!(user instanceof User)) {
 			return false;

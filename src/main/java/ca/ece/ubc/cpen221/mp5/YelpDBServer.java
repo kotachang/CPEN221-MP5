@@ -5,12 +5,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonString;
-
+import javax.json.stream.JsonParserFactory;
 
 public class YelpDBServer {
 	/** Default port number where the server listens for connections. */
@@ -18,6 +20,9 @@ public class YelpDBServer {
 	private static YelpDB database;
 
 	private ServerSocket serverSocket;
+	private static int userIds = 1;
+	private static int reviewIds = 1;
+	private static int businessIds = 1;
 
 	// Rep invariant: serverSocket != null
 	//
@@ -84,43 +89,36 @@ public class YelpDBServer {
 		// get the socket's input stream, and wrap converters around it
 		// that convert it from a byte stream to a character stream,
 		// and that buffer it so that we can read a line at a time
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-				socket.getInputStream()));
+		BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 		// similarly, wrap character=>bytestream converter around the
 		// socket output stream, and wrap a PrintWriter around that so
 		// that we have more convenient ways to write Java primitive
 		// types to it.
-		PrintWriter out = new PrintWriter(new OutputStreamWriter(
-				socket.getOutputStream()), true);
+		PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
 
 		try {
 			// each request is a single line containing a number
-			for (String line = in.readLine(); line != null; line = in
-					.readLine()) {
+			for (String line = in.readLine(); line != null; line = in.readLine()) {
 				System.err.println("request: " + line);
 				try {
 					String request = "";
 					if (request.equals("GETRESTAURANT")) {
 						String businessID = "";
-						
+
+					} else if (request.equals("ADDUSER")) {
+						// {"name": "Sathish G."}
+					} else if (request.equals("ADDRESTAURANT")) {
+
+					} else if (request.equals("ADDREVIEW")) {
+
 					}
-					else if (request.equals("ADDUSER")) {
-						//  {"name": "Sathish G."}
-					}
-					else if (request.equals("ADDRESTAURANT")) {
-						
-					}
-					else if (request.equals("ADDREVIEW")) {
-						
-					}
-					
-					/*int x = Integer.valueOf(line);
-					// compute answer and send back to client
-					BigInteger y = fibonacci(x);
-					System.err.println("reply: " + y);
-					out.println(y);
-					*/
+
+					/*
+					 * int x = Integer.valueOf(line); // compute answer and send back to client
+					 * BigInteger y = fibonacci(x); System.err.println("reply: " + y);
+					 * out.println(y);
+					 */
 				} catch (NumberFormatException e) {
 					// complain about ill-formatted request
 					System.err.println("reply: err");
@@ -138,28 +136,37 @@ public class YelpDBServer {
 
 	public synchronized static String getRestaurant(String business) {
 		Business find = new Business("Placeholder");
-		for(Business r : database.getBusinesses()) {
-			if(r.getId().equals(business)) {
+		for (Business r : database.getBusinesses()) {
+			if (r.getId().equals(business)) {
 				find = r;
 				break;
 			}
 		}
-		if(!find.getId().equals("Placeholder")) {
+		if (!find.getId().equals("Placeholder")) {
 			String s = find.getJson().toString();
 			return s;
 		}
 		return null;
 	}
+
 	public synchronized static void addUser(String user) {
-		
+		JsonObject newUser = Json.createReader(new StringReader(user)).readObject();
+		User addUser = new User("" + userIds);
+		addUser.setName(newUser.getString("name"));
+		userIds++;
+		addUser.setURL("http://www.yelp.com/user_details?userid=" + addUser.getId());
+		database.addUser(addUser);
+		System.out.println(addUser.toString());
 	}
+
 	public synchronized static void addRestarant(String restuaratnInfo) {
-		
+
 	}
-	public synchronized static void addReview (String review) {
-		
+
+	public synchronized static void addReview(String review) {
+
 	}
-	
+
 	/**
 	 * 
 	 * Start a FibonacciServerMulti running on the default port.
@@ -169,8 +176,7 @@ public class YelpDBServer {
 			String rest = "data/restaurants.json";
 			String user = "data/users.json";
 			String review = "data/reviews.json";
-			YelpDBServer server = new YelpDBServer(
-					YelpDBServer_PORT);
+			YelpDBServer server = new YelpDBServer(YelpDBServer_PORT);
 			database = new YelpDB(rest, user, review);
 			server.serve();
 		} catch (IOException e) {
@@ -178,10 +184,9 @@ public class YelpDBServer {
 		}
 	}
 
-	//@Override
+	// @Override
 	public void run() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
-
