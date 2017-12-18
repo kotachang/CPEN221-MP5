@@ -264,6 +264,8 @@ public class GeneralDb<T> implements MP5Db<T> {
 			this.businesses.remove(change);
 			change.addReview(review);
 			this.businesses.add(change);
+		} else {
+			return null;
 		}
 
 		// Adds review to user
@@ -282,6 +284,9 @@ public class GeneralDb<T> implements MP5Db<T> {
 			this.users.remove(user);
 			user.addReview(review);
 			this.users.add(user);
+		}
+		else {
+			return null;
 		}
 		return review;
 	}
