@@ -8,6 +8,8 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javax.json.JsonObject;
+
 
 public class YelpDBServer {
 	/** Default port number where the server listens for connections. */
@@ -99,6 +101,7 @@ public class YelpDBServer {
 					String request = "";
 					if (request.equals("GETRESTAURANT")) {
 						String businessID = "";
+						
 					}
 					else if (request.equals("ADDUSER")) {
 						//  {"name": "Sathish G."}
@@ -131,8 +134,8 @@ public class YelpDBServer {
 		}
 	}
 
-	public void getRestaurant(String business) {
-				
+	public synchronized JsonObject getRestaurant(String business) {
+		return null;
 	}
 	public void addUser(String user) {
 		
