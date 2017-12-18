@@ -2,8 +2,6 @@ package ca.ece.ubc.cpen221.mp5;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-
 /**
  * @AF: A review is created by the parameters: reviewId, businessId, userId,
  *      text, star rating, date created. The reviewRating characteristics

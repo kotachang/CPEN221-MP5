@@ -3,23 +3,17 @@ package ca.ece.ubc.cpen221.mp5;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.function.ToDoubleBiFunction;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.json.Json;
 import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
@@ -312,7 +306,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	 * 
 	 */
 	@Override
-	public Set getMatches(String queryString) {
+	public Set<T> getMatches(String queryString) {
 		// TODO Auto-generated method stub
 		return null;
 	}
