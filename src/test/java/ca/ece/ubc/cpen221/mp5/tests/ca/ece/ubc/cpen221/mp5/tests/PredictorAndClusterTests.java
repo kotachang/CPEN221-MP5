@@ -21,7 +21,7 @@ import ca.ece.ubc.cpen221.mp5.Restaurant;
 import ca.ece.ubc.cpen221.mp5.YelpDB;
 
 public class PredictorAndClusterTests {
-
+/*
 	@Test
 	public void clusteringvisualize() throws IOException {
 		ToDoubleBiFunction<MP5Db<String>, String> predict = new Predictor<String>(1, 2);
@@ -55,15 +55,16 @@ public class PredictorAndClusterTests {
 				"G3d-xJF_Rt-P_za2eZ1q-Q");
 		assertTrue(prediction == 1.0);
 	}
+	*/
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void test3() throws UnsupportedOperationException, IOException {
 		String rest = "data/restaurants.json";
 		String user = "data/users.json";
-		String review = "data/reviews.json";
+		String review = "data/reviews.json"; 
 		YelpDB db = new YelpDB(rest, user, review);
-		double prediction = db.getPredictorFunction("zkjy_XoVgR2EFjLjtzFDNw").applyAsDouble(db,
-				"G3d-xJF_Rt-P_za2eZ1q-Q");
+		double prediction = db.getPredictorFunction("vpsoQdJij0F-bFcrnM5qSQ").applyAsDouble(db,
+				"65ltOonS7uaG12RRdn-W3Q");
 		System.out.println(prediction);
 	}
 }
