@@ -69,6 +69,7 @@ public class YelpDB extends GeneralDb<Restaurant> {
 
 		// Standard characteristics
 		Restaurant business = new Restaurant(data.getString("business_id"));
+		business.setJson(data);
 		business.setAddress(address);
 		business.setName(data.getString("name"));
 		business.setOpen(data.getBoolean("open"));
@@ -101,6 +102,7 @@ public class YelpDB extends GeneralDb<Restaurant> {
 
 		// Standard characteristics
 		Review review = new Review(data.getString("review_id"));
+		review.setJson(data);
 		review.setUser(data.getString("user_id"));
 		review.setBusiness(data.getString("business_id"));
 		review.setStars(data.getInt("stars"));

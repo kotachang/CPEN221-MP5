@@ -140,6 +140,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 
 		// Standard characteristics
 		Business business = new Business(data.getString("business_id"));
+		business.setJson(data);
 		business.setAddress(address);
 		business.setName(data.getString("name"));
 		business.setOpen(data.getBoolean("open"));
@@ -195,6 +196,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 	private User parseUser(JsonObject data) {
 		// Standard Characteristics
 		User user = new User(data.getString("user_id"));
+		user.setJson(data);
 		user.setURL(data.getString("url"));
 		JsonObject votes = data.getJsonObject("votes");
 		user.addVote(votes.getInt("funny"), votes.getInt("useful"), votes.getInt("cool"));
@@ -237,6 +239,7 @@ public class GeneralDb<T> implements MP5Db<T> {
 
 		// Standard characteristics
 		Review review = new Review(data.getString("review_id"));
+		review.setJson(data);
 		review.setUser(data.getString("user_id"));
 		review.setBusiness(data.getString("business_id"));
 		review.setStars(data.getInt("stars"));

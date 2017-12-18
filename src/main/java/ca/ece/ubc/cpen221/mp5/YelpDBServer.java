@@ -9,11 +9,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import javax.json.JsonObject;
+import javax.json.JsonString;
 
 
 public class YelpDBServer {
 	/** Default port number where the server listens for connections. */
 	public static final int YelpDBServer_PORT = 4949;
+	private static YelpDB database;
 
 	private ServerSocket serverSocket;
 
@@ -134,16 +136,27 @@ public class YelpDBServer {
 		}
 	}
 
-	public synchronized JsonObject getRestaurant(String business) {
+	public synchronized static String getRestaurant(String business) {
+		Business find = new Business("Placeholder");
+		for(Business r : database.getBusinesses()) {
+			if(r.getId().equals(business)) {
+				find = r;
+				break;
+			}
+		}
+		if(!find.getId().equals("Placeholder")) {
+			String s = find.getJson().toString();
+			return s;
+		}
 		return null;
 	}
-	public void addUser(String user) {
+	public synchronized static void addUser(String user) {
 		
 	}
-	public void addRestarant(String restuaratnInfo) {
+	public synchronized static void addRestarant(String restuaratnInfo) {
 		
 	}
-	public void addReview (String review) {
+	public synchronized static void addReview (String review) {
 		
 	}
 	
@@ -153,8 +166,12 @@ public class YelpDBServer {
 	 */
 	public static void main(String[] args) {
 		try {
+			String rest = "data/restaurants.json";
+			String user = "data/users.json";
+			String review = "data/reviews.json";
 			YelpDBServer server = new YelpDBServer(
 					YelpDBServer_PORT);
+			database = new YelpDB(rest, user, review);
 			server.serve();
 		} catch (IOException e) {
 			e.printStackTrace();

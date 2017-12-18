@@ -2,6 +2,8 @@ package ca.ece.ubc.cpen221.mp5;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.json.JsonObject;
 /**
  * @AF: A review is created by the parameters: reviewId, businessId, userId,
  *      text, star rating, date created. The reviewRating characteristics
@@ -27,6 +29,7 @@ public class Review {
 	private String date;
 	private Map<String, Integer> attributes = new HashMap<String, Integer>();
 	private String text;
+	private JsonObject json;
 
 	/**
 	 * Constructor for a review
@@ -156,6 +159,14 @@ public class Review {
 	 */
 	public String text() {
 		return text;
+	}
+	
+	public void setJson(JsonObject json) {
+		this.json = json;
+	}
+	
+	public JsonObject getJson() {
+		return this.json;
 	}
 
 	public boolean equals(Object review) {

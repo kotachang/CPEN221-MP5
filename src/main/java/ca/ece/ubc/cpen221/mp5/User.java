@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.json.JsonObject;
+
 public class User {
 	/**
 	 * @AF:Given the following parameters: userId, name creates a new user for a
@@ -31,6 +33,7 @@ public class User {
 	private List<Review> reviews = new ArrayList<Review>();
 	private Map<String, Integer> votes = new HashMap<String, Integer>();
 	private String url;
+	private JsonObject json;
 
 	/**
 	 * 
@@ -151,6 +154,14 @@ public class User {
 	 */
 	public List<Review> getReview() {
 		return new ArrayList<Review>(reviews);
+	}
+	
+	public void setJson(JsonObject json) {
+		this.json = json;
+	}
+	
+	public JsonObject getJson() {
+		return this.json;
 	}
 
 	public boolean equals(Object user) {

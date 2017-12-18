@@ -3,6 +3,8 @@ package ca.ece.ubc.cpen221.mp5;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.json.JsonObject;
+
 public class Business {
 
 	/**
@@ -37,6 +39,7 @@ public class Business {
 	protected String photoURL;
 	protected List<String> schools = new ArrayList<String>();
 	protected int price = 0;
+	private JsonObject json;
 
 	/**
 	 * Constructs a new business
@@ -270,6 +273,14 @@ public class Business {
 	 */
 	public int reviewCount() {
 		return this.reviews().size();
+	}
+	
+	public void setJson(JsonObject json) {
+		this.json = json;
+	}
+	
+	public JsonObject getJson() {
+		return this.json;
 	}
 
 	/**
