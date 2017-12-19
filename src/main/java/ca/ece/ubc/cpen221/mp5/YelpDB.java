@@ -126,6 +126,9 @@ public class YelpDB extends GeneralDb<Restaurant> {
 			change.addReview(review);
 			this.businesses.add(change);
 		}
+		else {
+			return null;
+		}
 
 		// Adds review to user
 		User user = new User(data.getString("user_id"));
@@ -141,6 +144,9 @@ public class YelpDB extends GeneralDb<Restaurant> {
 			this.users.remove(user);
 			user.addReview(review);
 			this.users.add(user);
+		}
+		else {
+			return null;
 		}
 
 		return review;
