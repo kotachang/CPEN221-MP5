@@ -16,6 +16,7 @@ STRING : [A-Za-z'.]+ ( ' ' [A-Za-z'.]+ | ' ' '&' ' ' [A-Za-z'.]+ )*;
 WS : [ \t\r\n]+ -> skip ;
 
 
+
 // non terminals
 
 orExpr : andExpr ( OR andExpr )*;
