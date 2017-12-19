@@ -11,9 +11,7 @@ public class ServerTests {
 
 	@Test
 	public void serverTest1() throws IOException {
-		YelpDBServer server = new YelpDBServer(4949);
 		Client client1 = new Client("localhost", 4949);
-		server.serve();
 		Client.main(new String[] {""});
 		System.out.println("xd");
 	}

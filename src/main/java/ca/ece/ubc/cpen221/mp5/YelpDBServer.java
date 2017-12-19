@@ -90,7 +90,7 @@ public class YelpDBServer {
 		// that convert it from a byte stream to a character stream,
 		// and that buffer it so that we can read a line at a time
 		BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
+				
 		// similarly, wrap character=>bytestream converter around the
 		// socket output stream, and wrap a PrintWriter around that so
 		// that we have more convenient ways to write Java primitive
@@ -103,7 +103,9 @@ public class YelpDBServer {
 				System.err.println("request: " + line);
 				try {
 					line = line.trim();
-					String[] request = line.split(" ");
+					String[] request = new String[2];
+					request[0] = line.substring(0, line.indexOf(' '));
+					request[1] = line.substring(line.indexOf(' ') + 1);
 					if (request[0].equals("GETRESTAURANT")) {
 						String business = YelpDBServer.getRestaurant(request[1]);
 						out.println(business);
