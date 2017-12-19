@@ -11,8 +11,6 @@ import java.util.Scanner;
 
 public class Client {
 
-	YelpDBServer newServer = new YelpDBServer(4949);
-	Thread thread;
 	private Socket socket;
 	private BufferedReader in;
 	private PrintWriter out;

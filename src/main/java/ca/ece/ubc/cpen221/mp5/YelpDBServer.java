@@ -106,13 +106,13 @@ public class YelpDBServer {
 					String[] request = line.split(" ");
 					if (request[0].equals("GETRESTAURANT")) {
 						String business = YelpDBServer.getRestaurant(request[1]);
-						System.out.println(business);
+						out.println(business);
 					} else if (request[0].equals("ADDUSER")) {
-						YelpDBServer.addUser(request[1]);
+						out.println(YelpDBServer.addUser(request[1]));
 					} else if (request[0].equals("ADDRESTAURANT")) {
-						YelpDBServer.addRestarant(request[1]);
+						out.println(YelpDBServer.addRestarant(request[1]));
 					} else if (request[0].equals("ADDREVIEW")) {
-						YelpDBServer.addReview(request[1]);
+						out.println(YelpDBServer.addReview(request[1]));
 					}
 					else {
 						System.err.println("ERR: ILLEGAL_REQUEST");
@@ -154,7 +154,7 @@ public class YelpDBServer {
 		return null;
 	}
 
-	public synchronized static void addUser(String user) {
+	public synchronized static String addUser(String user) {
 		JsonObject newUser = Json.createReader(new StringReader(user)).readObject();
 		User addUser = new User("" + userIds);
 		try {
@@ -162,23 +162,26 @@ public class YelpDBServer {
 			userIds++;
 			addUser.setURL("http://www.yelp.com/user_details?userid=" + addUser.getId());
 			database.addUser(addUser);
-			System.out.println(addUser.toString());
+			return addUser.toString();
 		} catch (NullPointerException e) {
 			System.err.println("ERR: INVALID_USER_STRING");
 		}
+		return null;
 	}
 
-	public synchronized static void addRestarant(String restaurantInfo) {
+	public synchronized static String addRestarant(String restaurantInfo) {
 		JsonObject restaurantData = Json.createReader(new StringReader(restaurantInfo)).readObject();
 		try {
 			Restaurant newRestaurant = (Restaurant) database.parseBusiness(restaurantData);
 			database.addBusiness(newRestaurant);
+			return newRestaurant.getJson().toString();
 		} catch (NullPointerException e) {
 			System.err.println("ERR: INVALID_RESTAURANT_STRING");
 		}
+		return null;
 	}
 
-	public synchronized static void addReview(String review) {
+	public synchronized static String addReview(String review) {
 		JsonObject reviewData = Json.createReader(new StringReader(review)).readObject();
 		try {
 			Review newReview = database.parseReview(reviewData);
@@ -191,14 +194,17 @@ public class YelpDBServer {
 				if(!database.getBusinesses().contains(new Business(s))) {
 					System.err.println("ERR: NO_SUCH_ RESTAURANT");
 				}
+				return null;
 			}
 			else {
 				database.addReview(newReview);
+				return newReview.getJson().toString();
 			}
 
 		} catch (NullPointerException e) {
 			System.err.println("ERR: INVALID_REVIEW_STRING");
 		}
+		return null;
 	}
 
 	/**
