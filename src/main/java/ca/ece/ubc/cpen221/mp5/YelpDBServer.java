@@ -14,15 +14,13 @@ import javax.json.JsonObject;
 import javax.json.JsonString;
 import javax.json.stream.JsonParserFactory;
 
-public class YelpDBServer {
+public class YelpDBServer extends java.lang.Thread{
 	/** Default port number where the server listens for connections. */
 	public static final int YelpDBServer_PORT = 4949;
 	private static YelpDB database;
 
 	private ServerSocket serverSocket;
 	private static int userIds = 1;
-	private static int reviewIds = 1;
-	private static int businessIds = 1;
 
 	// Rep invariant: serverSocket != null
 	//
@@ -41,6 +39,10 @@ public class YelpDBServer {
 	 */
 	public YelpDBServer(int port) throws IOException {
 		serverSocket = new ServerSocket(port);
+		String rest = "data/restaurants.json";
+		String user = "data/users.json";
+		String review = "data/reviews.json";
+		database = new YelpDB(rest, user, review);
 	}
 
 	/**
@@ -215,12 +217,16 @@ public class YelpDBServer {
 	 */
 	public static void main(String[] args) {
 		try {
-			String rest = "data/restaurants.json";
-			String user = "data/users.json";
-			String review = "data/reviews.json";
 			YelpDBServer server = new YelpDBServer(YelpDBServer_PORT);
-			database = new YelpDB(rest, user, review);
 			server.serve();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void run() {
+		try {
+			this.serve();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

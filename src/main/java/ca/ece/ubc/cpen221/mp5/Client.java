@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
-public class Client {
+public class Client extends java.lang.Thread {
 	private Socket socket;
 	private BufferedReader in;
 	private PrintWriter out;
@@ -19,37 +19,49 @@ public class Client {
 		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
 	}
-	
+
 	public void sendRequest(String request) {
 		out.print(request);
 		out.flush();
 	}
-	
+
 	public String getReply() throws IOException {
 		String reply = in.readLine();
-		if(reply == null) {
+		if (reply == null) {
 			throw new IOException("connection terminated unexpectedly");
 		}
 		return reply;
 	}
-	
+
 	public void close() throws IOException {
 		in.close();
 		out.close();
 		socket.close();
 	}
-	
+
 	public static void main(String[] args) {
 		try {
 			Client client = new Client("localhost", 4949);
 			Scanner scanner = new Scanner(System.in);
 			System.out.println("Request:");
 			String request = scanner.next();
-			
+
 			client.sendRequest(request);
 			System.out.println(client.getReply());
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		catch(IOException e) {
+	}
+
+	public void run() {
+		try {
+			Scanner scanner = new Scanner(System.in);
+			System.out.println("Request:");
+			String request = scanner.nextLine();
+
+			this.sendRequest(request);
+			System.out.println(this.getReply());
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

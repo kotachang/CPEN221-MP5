@@ -11,8 +11,10 @@ public class ServerTests {
 
 	@Test
 	public void serverTest1() throws IOException {
-		Client client1 = new Client("localhost", 4949);
-		Client.main(new String[] {""});
-		System.out.println("xd");
+		Thread server = new YelpDBServer(4949);
+		Thread client = new Client("localhost",4949);
+		client.run();
+		server.run();
+		System.out.println("Finsihed");
 	}
 }
