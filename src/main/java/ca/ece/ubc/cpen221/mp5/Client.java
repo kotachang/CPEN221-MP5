@@ -61,6 +61,7 @@ public class Client extends java.lang.Thread {
 
 			this.sendRequest(request);
 			System.out.println(this.getReply());
+			scanner.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

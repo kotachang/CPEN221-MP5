@@ -21,6 +21,7 @@ public class YelpDBServer extends java.lang.Thread{
 
 	private ServerSocket serverSocket;
 	private static int userIds = 1;
+	private volatile boolean isRunning;
 
 	// Rep invariant: serverSocket != null
 	//
@@ -52,7 +53,8 @@ public class YelpDBServer extends java.lang.Thread{
 	 *             if the main server socket is broken
 	 */
 	public void serve() throws IOException {
-		while (true) {
+		isRunning = false;
+		while (!isRunning) {
 			// block until a client connects
 			final Socket socket = serverSocket.accept();
 			// create a new thread to handle that client
@@ -62,7 +64,9 @@ public class YelpDBServer extends java.lang.Thread{
 						try {
 							handle(socket);
 						} finally {
+							isRunning = true;
 							socket.close();
+							
 						}
 					} catch (IOException ioe) {
 						// this exception wouldn't terminate serve(),
