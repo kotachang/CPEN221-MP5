@@ -21,7 +21,7 @@ public class Client extends java.lang.Thread {
 	}
 
 	public void sendRequest(String request) {
-		out.print(request);
+		out.println(request);
 		out.flush();
 	}
 

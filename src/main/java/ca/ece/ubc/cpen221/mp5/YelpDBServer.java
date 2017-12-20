@@ -111,12 +111,16 @@ public class YelpDBServer extends java.lang.Thread{
 					if (request[0].equals("GETRESTAURANT")) {
 						String business = YelpDBServer.getRestaurant(request[1]);
 						out.println(business);
+						out.flush();
 					} else if (request[0].equals("ADDUSER")) {
 						out.println(YelpDBServer.addUser(request[1]));
+						out.flush();
 					} else if (request[0].equals("ADDRESTAURANT")) {
 						out.println(YelpDBServer.addRestarant(request[1]));
+						out.flush();
 					} else if (request[0].equals("ADDREVIEW")) {
 						out.println(YelpDBServer.addReview(request[1]));
+						out.flush();
 					}
 					else {
 						System.err.println("ERR: ILLEGAL_REQUEST");
