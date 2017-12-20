@@ -5,7 +5,7 @@ grammar Query;
 	package ca.ece.ubc.cpen221.mp5;
 }
 
-// terminals
+// terminals (tokens)
 
 LPAREN : '(';
 RPAREN : ')';

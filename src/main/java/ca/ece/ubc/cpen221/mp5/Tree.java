@@ -10,6 +10,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 
+@SuppressWarnings("deprecation")
 public class Tree {
 	
 	public Tree() {
