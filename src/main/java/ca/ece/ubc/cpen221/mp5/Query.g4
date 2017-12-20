@@ -1,5 +1,10 @@
 grammar Query;
 
+//insert package in the file
+@header{
+	package ca.ece.ubc.cpen221.mp5;
+}
+
 // terminals
 
 LPAREN : '(';
@@ -21,10 +26,11 @@ WS : [ \t\r\n]+ -> skip ;
 
 orExpr : andExpr ( OR andExpr )*;
 andExpr : atom ( AND atom)*;
-atom : in | category | rating | price | name | LPAREN orExpr RPAREN;
+atom : in | price| category | name | rating| LPAREN orExpr RPAREN;
 ineq : GT | GTE | LT | LTE | EQ;
 category : 'category' LPAREN STRING RPAREN;
 in : 'in' LPAREN STRING RPAREN;
 rating : 'rating' ineq NUM;
 price : 'price' ineq NUM;
 name : 'name' LPAREN STRING RPAREN;
+

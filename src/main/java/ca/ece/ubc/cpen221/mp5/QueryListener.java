@@ -1,4 +1,7 @@
-// Generated from Query.g4 by ANTLR 4.5.3
+// Generated from Query.g4 by ANTLR 4.7.1
+
+	package ca.ece.ubc.cpen221.mp5;
+
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
