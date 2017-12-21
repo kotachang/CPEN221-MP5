@@ -8,20 +8,25 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonString;
 import javax.json.stream.JsonParserFactory;
 
-public class YelpDBServer extends java.lang.Thread{
+public class YelpDBServer extends java.lang.Thread {
 	/** Default port number where the server listens for connections. */
 	public static final int YelpDBServer_PORT = 4949;
 	private static YelpDB database;
 
 	private ServerSocket serverSocket;
 	private static int userIds = 1;
+	private static int restuarantIds = 1;
+	private static int reviewIds = 1;
+
 	private volatile boolean isRunning;
+	private volatile boolean isClosed;
 
 	// Rep invariant: serverSocket != null
 	//
@@ -33,7 +38,7 @@ public class YelpDBServer extends java.lang.Thread{
 	// TODO data in handle()
 
 	/**
-	 * Make a FibonacciServerMulti that listens for connections on port.
+	 * Make a YelpDBServer that listens for connections on port.
 	 * 
 	 * @param port
 	 *            port number, requires 0 <= port <= 65535
@@ -53,31 +58,35 @@ public class YelpDBServer extends java.lang.Thread{
 	 *             if the main server socket is broken
 	 */
 	public void serve() throws IOException {
-		isRunning = false;
-		while (!isRunning) {
+		isRunning = true;
+		while (isRunning) {
 			// block until a client connects
-			final Socket socket = serverSocket.accept();
-			// create a new thread to handle that client
-			Thread handler = new Thread(new Runnable() {
-				public void run() {
-					try {
+			try {
+				final Socket socket = serverSocket.accept();
+				// create a new thread to handle that client
+				Thread handler = new Thread(new Runnable() {
+					public void run() {
 						try {
-							handle(socket);
-						} finally {
-							isRunning = true;
-							socket.close();
-							
+							try {
+								handle(socket);
+							} finally {
+								isRunning = false;
+								socket.close();
+
+							}
+						} catch (IOException ioe) {
+							// this exception wouldn't terminate serve(),
+							// since we're now on a different thread, but
+							// we still need to handle it
+							ioe.printStackTrace();
 						}
-					} catch (IOException ioe) {
-						// this exception wouldn't terminate serve(),
-						// since we're now on a different thread, but
-						// we still need to handle it
-						ioe.printStackTrace();
 					}
-				}
-			});
-			// start the thread
-			handler.start();
+				});
+				// start the thread
+				handler.start();
+			} catch (SocketException e) {
+				break;
+			}
 		}
 	}
 
@@ -96,7 +105,7 @@ public class YelpDBServer extends java.lang.Thread{
 		// that convert it from a byte stream to a character stream,
 		// and that buffer it so that we can read a line at a time
 		BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				
+
 		// similarly, wrap character=>bytestream converter around the
 		// socket output stream, and wrap a PrintWriter around that so
 		// that we have more convenient ways to write Java primitive
@@ -116,25 +125,26 @@ public class YelpDBServer extends java.lang.Thread{
 						String business = YelpDBServer.getRestaurant(request[1]);
 						out.println(business);
 						out.flush();
+						line = null;
 					} else if (request[0].equals("ADDUSER")) {
 						out.println(YelpDBServer.addUser(request[1]));
 						out.flush();
+						line = null;
 					} else if (request[0].equals("ADDRESTAURANT")) {
 						out.println(YelpDBServer.addRestarant(request[1]));
 						out.flush();
+						line = null;
 					} else if (request[0].equals("ADDREVIEW")) {
 						out.println(YelpDBServer.addReview(request[1]));
 						out.flush();
-					}
-					else {
+						line = null;
+					} else {
 						System.err.println("ERR: ILLEGAL_REQUEST");
+						out.println("");
+						out.flush();
+						line = null;
 					}
 
-					/*
-					 * int x = Integer.valueOf(line); // compute answer and send back to client
-					 * BigInteger y = fibonacci(x); System.err.println("reply: " + y);
-					 * out.println(y);
-					 */
 				} catch (NumberFormatException e) {
 					// complain about ill-formatted request
 					System.err.println("reply: err");
@@ -184,6 +194,9 @@ public class YelpDBServer extends java.lang.Thread{
 	public synchronized static String addRestarant(String restaurantInfo) {
 		JsonObject restaurantData = Json.createReader(new StringReader(restaurantInfo)).readObject();
 		try {
+			restaurantData = Json.createObjectBuilder(restaurantData).add("business_id", "" + restuarantIds)
+					.add("stars", "0.0").build();
+			restuarantIds++;
 			Restaurant newRestaurant = (Restaurant) database.parseBusiness(restaurantData);
 			database.addBusiness(newRestaurant);
 			return newRestaurant.getJson().toString();
@@ -196,19 +209,20 @@ public class YelpDBServer extends java.lang.Thread{
 	public synchronized static String addReview(String review) {
 		JsonObject reviewData = Json.createReader(new StringReader(review)).readObject();
 		try {
+			reviewData = Json.createObjectBuilder(reviewData).add("review_id", "" + reviewIds).build();
+			reviewIds++;
 			Review newReview = database.parseReview(reviewData);
-			if(newReview == null) {
+			if (newReview == null) {
 				String s = reviewData.getString("user_id");
-				if(!database.getUsers().contains(new User(s))) {
+				if (!database.getUsers().contains(new User(s))) {
 					System.err.println("ERR: NO_SUCH_USER");
 				}
 				s = reviewData.getString("business_id");
-				if(!database.getBusinesses().contains(new Business(s))) {
-					System.err.println("ERR: NO_SUCH_ RESTAURANT");
+				if (!database.getBusinesses().contains(new Business(s))) {
+					System.err.println("ERR: NO_SUCH_RESTAURANT");
 				}
 				return null;
-			}
-			else {
+			} else {
 				database.addReview(newReview);
 				return newReview.getJson().toString();
 			}
@@ -231,13 +245,18 @@ public class YelpDBServer extends java.lang.Thread{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void run() {
 		try {
 			this.serve();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void close() throws InterruptedException, IOException {
+		isRunning = false;
+		serverSocket.close();
 	}
 
 }
