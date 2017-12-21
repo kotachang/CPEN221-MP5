@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import javax.management.Query;
-
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import ca.ece.ubc.cpen221.mp5.QueryParser.AndExprContext;
@@ -18,7 +16,7 @@ import ca.ece.ubc.cpen221.mp5.QueryParser.OrExprContext;
 import ca.ece.ubc.cpen221.mp5.QueryParser.PriceContext;
 
 public class QueryListenerTreeCreater extends QueryBaseListener {
-	private Stack<Business> stack = new Stack<Business>();
+	//private Stack<Business> stack = new Stack<Business>();
 	List<Business> businesses;
 
 	public QueryListenerTreeCreater() throws IOException {
@@ -35,18 +33,20 @@ public class QueryListenerTreeCreater extends QueryBaseListener {
 	}
 
 	public void exitOrExpr(OrExprContext ctx) {
-
+		
 	}
 
 	public void exitIn(InContext ctx) {
-
+		
 	}
 
 	public void exitName(NameContext ctx) {
 		TerminalNode token = ctx.STRING();
 		String text = token.getText();
 		for (int i=0; i< businesses.size(); i++) {
-			if ()
+			if (businesses.get(i).name().equals(text)) {
+				//stack.push(businesses.get(i));
+			}
 		}
 	}
 
@@ -64,7 +64,6 @@ public class QueryListenerTreeCreater extends QueryBaseListener {
 
 	}
 
-	public List<Business> getQuery() {
-		return stack.get(0);
+	public void getQuery() {
 	}
 }
