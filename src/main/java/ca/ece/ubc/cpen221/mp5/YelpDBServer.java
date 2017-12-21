@@ -12,8 +12,16 @@ import java.net.SocketException;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonString;
-import javax.json.stream.JsonParserFactory;
+
+
+/**
+ * @AF: A server is created with the parameter of the port where the server
+ *      listens for connections. This server can handle multiple client queries
+ *      at once.
+ * 
+ * @RI: Requires that the serverSocket is not null.
+ *
+ */
 
 public class YelpDBServer extends java.lang.Thread {
 	/** Default port number where the server listens for connections. */
@@ -26,16 +34,8 @@ public class YelpDBServer extends java.lang.Thread {
 	private static int reviewIds = 1;
 
 	private volatile boolean isRunning;
-	private volatile boolean isClosed;
 
 	// Rep invariant: serverSocket != null
-	//
-	// Thread safety argument:
-	// TODO YelpDBServer_PORT
-	// TODO serverSocket
-	// TODO socket objects
-	// TODO readers and writers in handle()
-	// TODO data in handle()
 
 	/**
 	 * Make a YelpDBServer that listens for connections on port.
@@ -160,6 +160,14 @@ public class YelpDBServer extends java.lang.Thread {
 		}
 	}
 
+	/**
+	 * 
+	 * @param business
+	 *            String representing the business' ID
+	 * 
+	 * @return string of the restaurants information in JSON format, or null if the
+	 *         restaurant is not in the database.
+	 */
 	public synchronized static String getRestaurant(String business) {
 		Business find = new Business("Placeholder");
 		for (Business r : database.getBusinesses()) {
@@ -176,6 +184,14 @@ public class YelpDBServer extends java.lang.Thread {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param user
+	 *            string representing the user's name in JSON format. ex. {"name":
+	 *            "Me"}
+	 * @return a string of the added user's information in JSON format, or null if
+	 *         the string is incorrectly formated.
+	 */
 	public synchronized static String addUser(String user) {
 		JsonObject newUser = Json.createReader(new StringReader(user)).readObject();
 		User addUser = new User("" + userIds);
@@ -191,6 +207,14 @@ public class YelpDBServer extends java.lang.Thread {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param restaurantInfo
+	 *            a string representing the restaurant's information in JSON format
+	 *            (excluding the businessId)
+	 * @return a string of the added restaurant's information in JSON format, or
+	 *         null if the string is incorrectly formated
+	 */
 	public synchronized static String addRestarant(String restaurantInfo) {
 		JsonObject restaurantData = Json.createReader(new StringReader(restaurantInfo)).readObject();
 		try {
@@ -206,6 +230,14 @@ public class YelpDBServer extends java.lang.Thread {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param review
+	 *            a string representing the review's information in JSON format
+	 * @return a string of the added review's information in JSON format, or null if
+	 *         the string is incorrectly formated, or the database does not contain
+	 *         the user or the restaurant associated with the review.
+	 */
 	public synchronized static String addReview(String review) {
 		JsonObject reviewData = Json.createReader(new StringReader(review)).readObject();
 		try {
@@ -235,7 +267,7 @@ public class YelpDBServer extends java.lang.Thread {
 
 	/**
 	 * 
-	 * Start a FibonacciServerMulti running on the default port.
+	 * Start a YelpDBServer running on the default port.
 	 */
 	public static void main(String[] args) {
 		try {
@@ -254,6 +286,12 @@ public class YelpDBServer extends java.lang.Thread {
 		}
 	}
 
+	/**
+	 * Closes the current Server socket.
+	 * 
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
 	public void close() throws InterruptedException, IOException {
 		isRunning = false;
 		serverSocket.close();
