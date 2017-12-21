@@ -23,7 +23,7 @@ WS : [ \t\r\n]+ -> skip ;
 
 
 // non terminals
-
+expr : orExpr | andExpr ;
 orExpr : andExpr ( OR andExpr )*;
 andExpr : atom ( AND atom)*;
 atom : in | price| category | name | rating| LPAREN orExpr RPAREN;

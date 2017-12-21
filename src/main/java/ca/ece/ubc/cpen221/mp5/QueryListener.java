@@ -10,6 +10,16 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface QueryListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link QueryParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpr(QueryParser.ExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link QueryParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpr(QueryParser.ExprContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link QueryParser#orExpr}.
 	 * @param ctx the parse tree
 	 */
