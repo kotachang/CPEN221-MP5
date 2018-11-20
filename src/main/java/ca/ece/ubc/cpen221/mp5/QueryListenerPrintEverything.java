@@ -1,5 +1,11 @@
 package ca.ece.ubc.cpen221.mp5;
 
+/**
+ * AF: prints the progress of the nodes (roots)
+ * 
+ */
+
+
 public class QueryListenerPrintEverything extends QueryBaseListener {
 
 	public void andExprRoot(QueryParser.AndExprContext ctx) {
@@ -33,7 +39,7 @@ public class QueryListenerPrintEverything extends QueryBaseListener {
 	public void ratingRoot(QueryParser.RatingContext ctx) {
 		System.err.println("rating");
 	}
-	
+
 	public void categoryRoot(QueryParser.CategoryContext ctx) {
 		System.err.println("category");
 	}
