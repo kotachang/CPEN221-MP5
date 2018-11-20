@@ -1,4 +1,5 @@
 CPEN 221 / Machine Problem 5
+contributer : jyarschenko, kotachang
 
 Restaurants, Queries and Statistical Learning
 ===
